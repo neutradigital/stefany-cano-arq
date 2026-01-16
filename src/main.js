@@ -1,5 +1,5 @@
 import './style.css';
-import whooshSound from './sound/whoosh.mp3';
+import whooshSound from './sound/dingsound.mp3';
 
 // Definimos un espacio de nombres (Namespace) para tu UI
 const NeutraUI = {
