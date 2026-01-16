@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Caslon';
+  src: url(./fonts/LibreCaslonText-Regular.ttf);
+}
+
+h1 {
+  font-family: 'Caslon';
+}
+
+:root {
+  --bg-curtain: #0a0a0a; /* Estética minimalista Neutra */
+  --text-color: #ffffff;
+}
+
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Evita la selección de texto y el "tap highlight" en móviles */
+.no-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none;      /* IE 10 y Edge */
+  user-select: none;         /* Estándar */
+  -webkit-tap-highlight-color: transparent; /* Elimina el recuadro azul en móviles */
+}
+
+.curtain-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-curtain);
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  cursor: grab;
+  transition: transform 0.8s cubic-bezier(0.77, 0 , 0.175, 1);
+  will-change: transform;
+}
+
+.curtain-overlay.lifted {
+  transform: translateY(-100%);
+}
+
+.content-behind {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f4f4f4;
+}
