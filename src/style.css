@@ -1,60 +1,135 @@
 @import "tailwindcss";
 
+/* =========================================
+   1. FUENTES LOCALES (Cero dependencias externas)
+   ========================================= */
+
+/* H1: Big Caslon (Prestigio) */
 @font-face {
-  font-family: 'Caslon';
-  src: url(./fonts/LibreCaslonText-Regular.ttf);
+  font-family: 'Big Caslon';
+  /* Ajusta el nombre del archivo si es distinto, ej: BigCaslon.ttf */
+  src: url('./fonts/LibreCaslonText-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
+/* H2/H3: Gill Sans (Sofisticación) */
+@font-face {
+  font-family: 'Gill Sans';
+  /* Asegúrate de que este archivo esté en src/fonts/ */
+  src: url('./fonts/GillSans.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Body: Roboto (Legibilidad) - CONFIGURACIÓN LOCAL */
+@font-face {
+  font-family: 'Roboto';
+  /* Debes tener este archivo en src/fonts/ */
+  src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Opcional: Si tienes la versión Light o Bold de Roboto, agrégalas así: */
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/Roboto-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./fonts/Roboto-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =========================================
+   2. TEMA DE MARCA (Tailwind v4)
+   ========================================= */
+
+@theme {
+  /* Mapeo de Identidad Verbal a Técnica */
+  
+  /* Titulares principales (H1) -> Big Caslon */
+  --font-display: 'Big Caslon', serif;
+  
+  /* Subtítulos (H2/H3) -> Gill Sans */
+  --font-subtitle: 'Gill Sans', sans-serif;
+  
+  /* Texto corrido / UI -> Roboto Local */
+  --font-body: 'Roboto', sans-serif;
+
+  /* Paleta de Colores Oficial */
+  --color-brand-magenta: #9a1a63;
+  --color-brand-dark: #4D194D;
+  --color-brand-green: #4b6443;
+  --color-brand-black: #000000;
+  
+  /* Animaciones Personalizadas */
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in-up: fade-in-up 1s ease-out forwards;
+
+  @keyframes slide-up-reveal {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+  }
+}
+
+#custom-cursor {
+    transform: translate(-50%, -50%); /* Para que el centro del punto sea el puntero */
+}
+
+.reveal-mask {
+    overflow: hidden; /* La magia: oculta lo que está "abajo" */
+    display: block; /* Necesario para que el overflow funcione */
+}
+
+.reveal-text {
+    display: block;
+    transform: translateY(100%); /* Empieza abajo y oculto */
+    animation: slide-up-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+  
+  @keyframes fade-in-up {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+  }
+
+
+/* =========================================
+   3. ESTILOS BASE Y UTILIDADES
+   ========================================= */
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-brand-black);
+  background-color: #ffffff;
+  overflow-x: hidden; /* Evita scroll horizontal accidental en móviles */
+}
+
+/* Jerarquía Tipográfica Automática */
 h1 {
-  font-family: 'Caslon';
+  font-family: var(--font-display);
 }
 
-:root {
-  --bg-curtain: #0a0a0a; /* Estética minimalista Neutra */
-  --text-color: #ffffff;
+h2, h3, h4 {
+  font-family: var(--font-subtitle);
 }
 
-.viewport {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
+/* Estilos de Formulario (Input Minimalista) */
+.form-input {
+  @apply w-full border-b border-gray-300 py-3 px-0 text-gray-900 bg-transparent focus:outline-none focus:border-brand-magenta transition-colors duration-300 font-body placeholder:font-light;
 }
 
-/* Evita la selección de texto y el "tap highlight" en móviles */
-.no-select {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none;      /* IE 10 y Edge */
-  user-select: none;         /* Estándar */
-  -webkit-tap-highlight-color: transparent; /* Elimina el recuadro azul en móviles */
-}
-
-.curtain-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bg-curtain);
-  color: var(--text-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  cursor: grab;
-  transition: transform 0.8s cubic-bezier(0.77, 0 , 0.175, 1);
-  will-change: transform;
-}
-
-.curtain-overlay.lifted {
-  transform: translateY(-100%);
-}
-
-.content-behind {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #f4f4f4;
+/* Estilo para enlaces del menú móvil */
+.mobile-link {
+  @apply text-3xl font-display text-brand-dark hover:text-brand-magenta transition-colors duration-300;
 }
