@@ -5,7 +5,7 @@ import whooshSound from './sound/dinglandingpage.mp3';
 const NeutraApp = {
   lenisInstance: null,
 
-  // 1. INICIALIZACIÓN DE SCROLL (Control Global)
+  // 1. GESTIÓN DE SCROLL GLOBAL (Lenis)
   initSmoothScroll: function() {
     this.lenisInstance = new Lenis({
       duration: 1.2,
@@ -13,10 +13,8 @@ const NeutraApp = {
       smooth: true,
       smoothTouch: false,
     });
-
     this.lenisInstance.stop();
 
-    // Loop de animación sincronizado
     const raf = (time) => {
       this.lenisInstance.raf(time);
       this.updateParallax(); 
@@ -24,86 +22,66 @@ const NeutraApp = {
     }
     requestAnimationFrame(raf);
 
-    // Navegación suave por anclas
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         e.preventDefault();
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target) this.lenisInstance.scrollTo(target);
+        const targetId = anchor.getAttribute('href');
+        const target = document.querySelector(targetId);
+        if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
       });
     });
   },
 
-  // FUNCIÓN DE ACTUALIZACIÓN DE PARALLAX
   updateParallax: function() {
     if (!this.lenisInstance) return;
     const scrolled = this.lenisInstance.scroll; 
-    
     document.querySelectorAll('.parallax-img').forEach(img => {
       img.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0) scale(1.25)`;
     });
   },
 
-  // 2. CORTINA (Control de Revelado)
+  // 2. CORTINA DE ENTRADA
   initCurtain: function() {
     const curtain = document.getElementById('curtain');
-    if (!curtain) return;
-
-    let startY = 0;
-    const revealSound = new Audio(whooshSound);
-    revealSound.volume = 0.2;
+    const mainContent = document.getElementById('main-content');
+    if (!curtain || !mainContent) return;
 
     const executeReveal = () => {
-      revealSound.play().catch(() => {});
       curtain.style.transform = 'translateY(-100%)';
-      const mainContent = document.getElementById('main-content');
       mainContent.style.opacity = '1';
-      
       setTimeout(() => {
-        document.body.style.overflow = '';
-        document.body.classList.remove('overflow-hidden');
         mainContent.classList.remove('h-screen', 'overflow-hidden');
-        
+        document.body.classList.remove('overflow-hidden');
+        document.body.style.overflow = '';
         if (this.lenisInstance) this.lenisInstance.start();
         curtain.remove();
       }, 1200);
     };
-
-    curtain.addEventListener('touchstart', (e) => startY = e.touches[0].clientY);
-    curtain.addEventListener('touchend', (e) => {
-      if (startY - e.changedTouches[0].clientY > 80) executeReveal();
-    });
-    curtain.addEventListener('mousedown', (e) => startY = e.clientY);
-    curtain.addEventListener('mouseup', (e) => {
-      if (startY - e.clientY > 80) executeReveal();
-    });
+    curtain.addEventListener('mouseup', executeReveal);
+    curtain.addEventListener('touchend', executeReveal);
   },
 
-  // 3. PORTAFOLIO Y MODAL (Lógica de 6 columnas)
+  // 3. PORTAFOLIO (Grid + Logos)
   initPortfolio: function() {
     const grid = document.getElementById('project-grid');
     const modal = document.getElementById('project-modal');
     const panel = document.getElementById('modal-panel');
     const backdrop = document.getElementById('modal-backdrop');
-    
-    // Aislamiento de scroll para el modal
     const galleryScroll = document.getElementById('gallery-scroll');
-    const textScroll = document.getElementById('modal-text-content')?.parentElement;
 
     if (!grid) return;
-
     if (galleryScroll) galleryScroll.setAttribute('data-lenis-prevent', '');
-    if (textScroll) textScroll.setAttribute('data-lenis-prevent', '');
 
     grid.innerHTML = projects.slice(0, 5).map((p, i) => {
       const colSpan = i < 2 ? "md:col-span-3" : "md:col-span-2";
       const aspect = i < 2 ? "aspect-video" : "aspect-[3/4]";
       return `
-        <article class="${colSpan} relative ${aspect} overflow-hidden bg-gray-100 group cursor-pointer" data-id="${p.id}">
-          <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105" loading="lazy">
-          <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/40 transition-colors duration-500"></div>
+        <article class="${colSpan} relative ${aspect} overflow-hidden bg-gray-100 group cursor-pointer shadow-sm" data-id="${p.id}">
+          <img src="/src/logo/logotipo_letras.svg" class="absolute top-6 left-6 w-24 z-30 opacity-40 group-hover:opacity-100 transition-opacity duration-500">
+          <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" loading="lazy">
+          <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-green/40 transition-colors"></div>
           <div class="absolute bottom-0 left-0 p-8 w-full z-20">
-            <span class="text-[10px] font-body font-bold uppercase tracking-[0.2em] text-white/80 mb-2 block transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">${p.category}</span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/80 mb-2 block transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">${p.category}</span>
             <h3 class="text-2xl lg:text-4xl font-display text-white leading-none">${p.title}</h3>
           </div>
         </article>
@@ -132,74 +110,128 @@ const NeutraApp = {
     backdrop.onclick = closeModal;
   },
 
-  // 4. ABRIR MODAL
+  // 4. ABRIR MODAL (Logotipo + Video + Flecha Centrada)
   openModal: function(p, modal, panel, backdrop) {
-    document.getElementById('m-title').textContent = p.title;
-    document.getElementById('m-category').textContent = p.category;
-    document.getElementById('m-desc').textContent = p.description;
+    const textContainer = document.getElementById('modal-text-content');
+    const galleryScroll = document.getElementById('gallery-scroll');
+    const indicator = document.getElementById('scroll-indicator');
 
+    // Inyectar Texto y Logotipo
+    textContainer.innerHTML = `
+        <img src="/src/logo/logotipo_letras.svg" class="w-32 mb-20 lg:w-60 opacity-100" alt="Marca">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-green mb-4 block">${p.category}</span>
+        <h2 class="text-5xl lg:text-7xl font-display text-brand-dark mb-8 leading-[0.9]">${p.title}</h2>
+        <div class="flex items-center gap-6 text-xs font-body text-gray-400 mb-10 border-y border-gray-100 py-6 uppercase tracking-widest">
+            <span>${p.location || 'México'}</span> <span class="w-1.5 h-1.5 rounded-full bg-brand-magenta"></span> <span>${p.year || '2026'}</span>
+        </div>
+        <p class="text-base font-body text-gray-600 leading-relaxed text-justify">${p.description}</p>
+    `;
+
+    // Botón de Video Reel (Recuperado)
+    const videoFile = p.gallery.find(f => f.endsWith('.mp4'));
+    if (videoFile) {
+        const btn = document.createElement('button');
+        btn.className = "mt-10 flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] text-brand-magenta border border-brand-magenta/20 px-6 py-4 hover:bg-brand-magenta hover:text-white transition-all cursor-pointer group";
+        btn.innerHTML = `<svg class="w-3 h-3 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M3 22v-20l18 10-18 10z"/></svg> Reproducir Video`;
+        btn.onclick = () => this.showVideoLightbox(videoFile);
+        textContainer.appendChild(btn);
+    }
+
+    // Galería
     const gallery = document.getElementById('m-gallery');
-    gallery.innerHTML = p.gallery.map(f => 
-      f.endsWith('.mp4') 
-      ? `<video src="${f}" class="w-full" controls autoplay muted loop></video>` 
-      : `<img src="${f}" class="w-full h-auto" loading="lazy">`
-    ).join('');
+    gallery.innerHTML = p.gallery
+      .filter(f => !f.endsWith('.mp4'))
+      .map(f => `<img src="${f}" class="w-full h-auto object-cover" loading="lazy">`)
+      .join('');
+
+    // RESET DE LA FLECHA DE SCROLL (Garantizado en cada apertura)
+    if (indicator) {
+        indicator.innerHTML = `
+            <span class="text-xs uppercase tracking-[0.4em] text-white font-body mb-2">DESCUBRE MÁS</span>
+            <svg class="w-12 h-12 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        `;
+        indicator.classList.remove('hidden', 'opacity-0');
+        indicator.style.opacity = '1';
+        
+        // Función de ocultado al detectar scroll real
+        const handleScroll = () => {
+            if (galleryScroll.scrollTop > 40) {
+                indicator.style.opacity = '0';
+                setTimeout(() => indicator.classList.add('hidden'), 700);
+                galleryScroll.removeEventListener('scroll', handleScroll);
+            }
+        };
+        
+        // Limpiamos cualquier listener residual y añadimos el nuevo
+        galleryScroll.removeEventListener('scroll', handleScroll);
+        galleryScroll.addEventListener('scroll', handleScroll);
+    }
 
     modal.classList.remove('invisible');
-    document.body.style.overflow = 'hidden'; 
+    document.body.style.overflow = 'hidden';
     if (this.lenisInstance) this.lenisInstance.stop();
 
     requestAnimationFrame(() => {
       backdrop.classList.add('opacity-100');
       panel.classList.remove('translate-x-full');
+      if(galleryScroll) galleryScroll.scrollTop = 0; // Reset scroll de la galería
       
-      const galleryEl = document.getElementById('gallery-scroll');
-      if(galleryEl) galleryEl.scrollTop = 0;
-
       setTimeout(() => {
-        document.getElementById('modal-text-content').classList.remove('opacity-0', 'translate-y-4');
-        document.getElementById('m-gallery').classList.add('opacity-100');
+        textContainer.classList.remove('opacity-0', 'translate-y-8');
+        gallery.classList.add('opacity-100');
       }, 400);
     });
   },
 
-  // 5. NAVEGACIÓN (Transformación Hamburguesa -> X)
+  // LIGHTBOX DE VIDEO (Recuperado)
+  showVideoLightbox: function(url) {
+    const lb = document.createElement('div');
+    lb.className = "fixed inset-0 z-[400] bg-brand-green/98 backdrop-blur-xl flex items-center justify-center p-4 lg:p-20 transition-opacity duration-500 opacity-0";
+    lb.innerHTML = `
+        <button id="close-lb" class="absolute top-8 right-8 text-white text-5xl font-light hover:text-brand-magenta transition-colors cursor-pointer z-[410]">&times;</button>
+        <div class="w-full max-w-6xl aspect-video shadow-2xl">
+            <video src="${url}" class="w-full h-full object-contain" controls autoplay playsinline></video>
+        </div>
+    `;
+    document.body.appendChild(lb);
+    
+    requestAnimationFrame(() => lb.style.opacity = '1');
+
+    const closeLB = () => {
+        lb.style.opacity = '0';
+        setTimeout(() => lb.remove(), 500);
+    };
+
+    document.getElementById('close-lb').onclick = closeLB;
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLB(); }, { once: true });
+  },
+
+  // 5. NAVEGACIÓN MOBILE
   initNavigation: function() {
     const toggle = document.getElementById('menu-toggle');
     const menu = document.getElementById('mobile-menu');
-    const links = document.querySelectorAll('.mobile-link');
-    
     if (!toggle || !menu) return;
 
-    const closeMenu = () => {
-        toggle.classList.remove('active'); 
-        menu.classList.add('opacity-0', 'pointer-events-none');
-        document.body.style.overflow = ''; 
-        if (this.lenisInstance) this.lenisInstance.start();
-    };
-
-    const openMenu = () => {
-        toggle.classList.add('active'); 
-        menu.classList.remove('opacity-0', 'pointer-events-none');
-        document.body.style.overflow = 'hidden'; 
-        if (this.lenisInstance) this.lenisInstance.stop();
-    };
-
     toggle.onclick = () => {
-        const isOpening = !toggle.classList.contains('active');
-        if (isOpening) {
-            openMenu();
-        } else {
-            closeMenu();
-        }
+        const active = toggle.classList.toggle('active');
+        menu.classList.toggle('opacity-0', !active);
+        menu.classList.toggle('pointer-events-none', !active);
+        document.body.style.overflow = active ? 'hidden' : '';
+        if (this.lenisInstance) active ? this.lenisInstance.stop() : this.lenisInstance.start();
     };
 
-    links.forEach(link => {
-        link.addEventListener('click', closeMenu);
+    document.querySelectorAll('.mobile-link').forEach(link => {
+        link.onclick = () => {
+            toggle.classList.remove('active');
+            menu.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = '';
+            if (this.lenisInstance) this.lenisInstance.start();
+        };
     });
   },
 
-  // 6. CURSOR MAGNÉTICO
   initCursor: function() {
     const cursor = document.getElementById('custom-cursor');
     if (!cursor) return;
