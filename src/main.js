@@ -188,7 +188,7 @@ const NeutraApp = {
   // LIGHTBOX DE VIDEO (Recuperado)
   showVideoLightbox: function(url) {
     const lb = document.createElement('div');
-    lb.className = "fixed inset-0 z-[400] bg-brand-green/98 backdrop-blur-xl flex items-center justify-center p-4 lg:p-20 transition-opacity duration-500 opacity-0";
+    lb.className = "fixed inset-0 z-[400] bg-black backdrop-blur-xl flex items-center justify-center p-4 lg:p-20 transition-opacity duration-500 opacity-0";
     lb.innerHTML = `
         <button id="close-lb" class="absolute top-8 right-8 text-white text-5xl font-light hover:text-brand-magenta transition-colors cursor-pointer z-[410]">&times;</button>
         <div class="w-full max-w-6xl aspect-video shadow-2xl">
