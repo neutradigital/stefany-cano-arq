@@ -6,14 +6,17 @@ export const projects = [
     location: "Coatepec, Ver.",
     year: "2024",
     description: "Una integración orgánica con la niebla y la vegetación endémica. El reto fue mantener la privacidad sin sacrificar la luz natural.",
-    cover: "/images/project_california/fachada_cali.png", // CORREGIDO
+    cover: "/images/project_california/cali1.png", // CORREGIDO
     gallery: [
-      "/images/project_california/escaleras_cali.png",
-      "/images/project_california/fachada_cali.png",
-      "/images/project_california/fachada_pro_cali.png",
-      "/images/project_california/jardin_cali.png",
-      "/images/project_california/sala_cali.png",
-      "/images/project_california/terraza_nct_cali.png"
+      "/images/project_california/cali1.png",
+      "/images/project_california/cali2.png",
+      "/images/project_california/cali3.png",
+      "/images/project_california/cali4.png",
+      "/images/project_california/cali5.png",
+      "/images/project_california/cali6.png",
+      "/images/project_california/cali7.png",
+      "/images/project_california/cali8.png",
+      "/images/project_california/cali_planta_alta.mp4"
     ]
   },
   {
@@ -23,17 +26,20 @@ export const projects = [
     location: "Coatepec, Ver.",
     year: "2024",
     description: "Una integración orgánica con la niebla y la vegetación endémica. El reto fue mantener la privacidad sin sacrificar la luz natural.",
-    cover: "/images/project_caturra/fachada_cat.png", // CORREGIDO
+    cover: "/images/project_caturra/catu1.png", // CORREGIDO
     gallery: [
-      "/images/project_caturra/bano_cat.png",
-      "/images/project_caturra/cimen_cat.png",
-      "/images/project_caturra/come_ct.png",
-      "/images/project_caturra/constru_cat.png",
-      "/images/project_caturra/fachada_cat.png",
-      "/images/project_caturra/fogata_cat.png",
-      "/images/project_caturra/ropero_cat.png",
-      "/images/project_caturra/sala_cat.png",
-      "/images/project_caturra/window_cat.jpg"
+      "/images/project_caturra/catu1.png",
+      "/images/project_caturra/catu2.png",
+      "/images/project_caturra/catu3.png",
+      "/images/project_caturra/catu4.png",
+      "/images/project_caturra/catu5.png",
+      "/images/project_caturra/catu6.png",
+      "/images/project_caturra/catu7.png",
+      "/images/project_caturra/catu8.png",
+      "/images/project_caturra/catu9.png",
+      "/images/project_caturra/caturra_planta_alta.mp4",
+
+
     ]
   },
   {
@@ -43,18 +49,20 @@ export const projects = [
     location: "Coatepec, Ver.",
     year: "2024",
     description: "Una integración orgánica con la niebla y la vegetación endémica. El reto fue mantener la privacidad sin sacrificar la luz natural.",
-    cover: "/images/project_maya/fachada_may.png", // CORREGIDO
+    cover: "/images/project_maya/maya1.png", // CORREGIDO
     gallery: [
-      "/images/project_maya/atardecer_may.png",
-      "/images/project_maya/barra_may.png",
-      "/images/project_maya/cimiento_may.png",
-      "/images/project_maya/constru_may.jpg",
-      "/images/project_maya/fachada_may.png",
-      "/images/project_maya/fachada_noct_may.png",
-      "/images/project_maya/pared_may.png",
-      "/images/project_maya/plano_may.mp4",
-      "/images/project_maya/sala_may.png",
-      "/images/project_maya/sala2_may.png"
+      "/images/project_maya/maya1.png",
+      "/images/project_maya/maya2.png",
+      "/images/project_maya/maya3.png",
+      "/images/project_maya/maya4.png",
+      "/images/project_maya/maya5.png",
+      "/images/project_maya/maya6.png",
+      "/images/project_maya/maya7.png",
+      "/images/project_maya/maya8.png",
+      "/images/project_maya/maya9.jpg",
+      "/images/project_maya/maya10.png",
+      "/images/project_maya/maya_planta.mp4"
+
     ]
   },
   {
@@ -64,14 +72,13 @@ export const projects = [
     location: "Coatepec, Ver.",
     year: "2024",
     description: "Una integración orgánica con la niebla y la vegetación endémica. El reto fue mantener la privacidad sin sacrificar la luz natural.",
-    cover: "/images/project_palapa/fachada_palap.png", // CORREGIDO
+    cover: "/images/project_palapa/pala1.png", // CORREGIDO
     gallery: [
-      "/images/project_palapa/fachada_palap.png",
-      "/images/project_palapa/plano_palap.mp4",
-      "/images/project_palapa/plano2_palap.mp4",
-      "/images/project_palapa/room_palap.png",
-      "/images/project_palapa/sala_palap.png",
-      "/images/project_palapa/terraza_palap.png"
+      "/images/project_palapa/pala1.png",
+      "/images/project_palapa/pala2.png",
+      "/images/project_palapa/pala3.png",
+      "/images/project_palapa/pala4.png",
+      "/images/project_palapa/palapa_planta_alta.mp4"
     ]
   },
   {
@@ -81,19 +88,18 @@ export const projects = [
     location: "Coatepec, Ver.",
     year: "2024",
     description: "Una integración orgánica con la niebla y la vegetación endémica. El reto fue mantener la privacidad sin sacrificar la luz natural.",
-    cover: "/images/project_pinon/fachada_pin.png", // CORREGIDO
+    cover: "/images/project_pinon/pinion1.png", // CORREGIDO
     gallery: [
-      "/images/project_pinon/castillo_pin.jpeg",
-      "/images/project_pinon/cimen_pin.png",
-      "/images/project_pinon/colado_pin.png",
-      "/images/project_pinon/colado2_pin.png",
-      "/images/project_pinon/fachada_nct_pin.png",
-      "/images/project_pinon/fachada_pin.png",
-      "/images/project_pinon/kitch_pin.png",
-      "/images/project_pinon/plano_pin.mp4",
-      "/images/project_pinon/plano2_pin.mp4",
-      "/images/project_pinon/process_pin.png",
-      "/images/project_pinon/room_pin.png"
+      "/images/project_pinon/pinion1.png",
+      "/images/project_pinon/pinion2.png",
+      "/images/project_pinon/pinion3.png",
+      "/images/project_pinon/pinion4.png",
+      "/images/project_pinon/pinion5.png",
+      "/images/project_pinon/pinion6.png",
+      "/images/project_pinon/pinion7.png",
+      "/images/project_pinon/pinion8.png",
+      "/images/project_pinon/pinion8.png",
+      "/images/project_pinon/pinion_planta_alta.mp4"
     ]
   }
 ];
