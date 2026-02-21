@@ -1,135 +1,31 @@
 @import "tailwindcss";
 
-/* =========================================
-   1. FUENTES LOCALES (Cero dependencias externas)
-   ========================================= */
-
-/* H1: Big Caslon (Prestigio) */
-@font-face {
-  font-family: 'Big Caslon';
-  /* Ajusta el nombre del archivo si es distinto, ej: BigCaslon.ttf */
-  src: url('./fonts/LibreCaslonText-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* H2/H3: Gill Sans (Sofisticación) */
-@font-face {
-  font-family: 'Gill Sans';
-  /* Asegúrate de que este archivo esté en src/fonts/ */
-  src: url('./fonts/GillSans.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Body: Roboto (Legibilidad) - CONFIGURACIÓN LOCAL */
-@font-face {
-  font-family: 'Roboto';
-  /* Debes tener este archivo en src/fonts/ */
-  src: url('./fonts/Roboto-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Opcional: Si tienes la versión Light o Bold de Roboto, agrégalas así: */
-@font-face {
-  font-family: 'Roboto';
-  src: url('./fonts/Roboto-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: url('./fonts/Roboto-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* =========================================
-   2. TEMA DE MARCA (Tailwind v4)
-   ========================================= */
-
 @theme {
-  /* Mapeo de Identidad Verbal a Técnica */
+  --font-display: "Big Caslon", serif;
+  --font-subtitle: "Gill Sans", sans-serif;
+  --font-body: "Roboto", sans-serif;
   
-  /* Titulares principales (H1) -> Big Caslon */
-  --font-display: 'Big Caslon', serif;
-  
-  /* Subtítulos (H2/H3) -> Gill Sans */
-  --font-subtitle: 'Gill Sans', sans-serif;
-  
-  /* Texto corrido / UI -> Roboto Local */
-  --font-body: 'Roboto', sans-serif;
-
-  /* Paleta de Colores Oficial */
-  --color-brand-magenta: #9a1a63;
-  --color-brand-dark: #4D194D;
-  --color-brand-green: #4b6443;
-  --color-brand-black: #000000;
-  
-  /* Animaciones Personalizadas */
-  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-fade-in-up: fade-in-up 1s ease-out forwards;
-
-  @keyframes slide-up-reveal {
-      0% { transform: translateY(100%); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-  }
+  --color-brand-magenta: #E20074;
+  --color-brand-dark: #1A1A1A;
+  --color-brand-green: #2D5A27;
 }
 
-#custom-cursor {
-    transform: translate(-50%, -50%); /* Para que el centro del punto sea el puntero */
+/* Tipografías base */
+h1, h2, .font-display { font-family: var(--font-display); }
+h3, .font-subtitle { font-family: var(--font-subtitle); }
+body, p, button, .font-body { font-family: var(--font-body); }
+
+/* Animaciones */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.reveal-mask {
-    overflow: hidden; /* La magia: oculta lo que está "abajo" */
-    display: block; /* Necesario para que el overflow funcione */
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out forwards;
 }
 
-.reveal-text {
-    display: block;
-    transform: translateY(100%); /* Empieza abajo y oculto */
-    animation: slide-up-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-  
-  @keyframes fade-in-up {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-  }
-
-
-/* =========================================
-   3. ESTILOS BASE Y UTILIDADES
-   ========================================= */
-
-body {
-  font-family: var(--font-body);
-  color: var(--color-brand-black);
-  background-color: #ffffff;
-  overflow-x: hidden; /* Evita scroll horizontal accidental en móviles */
-}
-
-/* Jerarquía Tipográfica Automática */
-h1 {
-  font-family: var(--font-display);
-}
-
-h2, h3, h4 {
-  font-family: var(--font-subtitle);
-}
-
-/* Estilos de Formulario (Input Minimalista) */
+/* Estilo de inputs minimalista de autor */
 .form-input {
-  @apply w-full border-b border-gray-300 py-3 px-0 text-gray-900 bg-transparent focus:outline-none focus:border-brand-magenta transition-colors duration-300 font-body placeholder:font-light;
-}
-
-/* Estilo para enlaces del menú móvil */
-.mobile-link {
-  @apply text-3xl font-display text-brand-dark hover:text-brand-magenta transition-colors duration-300;
+    @apply w-full bg-transparent border-b border-gray-200 py-4 focus:border-brand-magenta outline-none transition-all font-body text-sm;
 }

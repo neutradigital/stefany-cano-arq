@@ -7,13 +7,13 @@
     <title>Stefany Cano | Arquitectura de Autor</title>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
   </head>
-  <body class="bg-white text-gray-900 m-0 p-0 overflow-hidden selection:bg-brand-magenta selection:text-white">
+  <body class="bg-white text-gray-900 m-0 p-0 overflow-hidden font-body selection:bg-brand-magenta selection:text-white">
 
     <div id="curtain" class="fixed inset-0 z-[300] flex flex-col justify-center items-center bg-[#fafafa] cursor-n-resize transition-transform duration-[1.2s] ease-[cubic-bezier(0.8,0,0.2,1)]">
         <div class="text-center flex flex-col gap-10 items-center relative">
             <img class="w-40 lg:w-36 opacity-0 animate-[fade-in-up_1s_ease-out_forwards_0.2s]" src="./src/logo/sca_logo.svg" alt="Logo">
             <div class="flex flex-col gap-4 items-center opacity-0 animate-[fade-in-up_1s_ease-out_forwards_0.7s]">
-                <p class="uppercase tracking-[0.5em] text-[9px] font-body font-medium text-gray-400">Desliza para descubrir</p>
+                <p class="uppercase tracking-[0.5em] text-[9px] font-subtitle font-medium text-gray-400">Desliza para descubrir</p>
                 <span class="text-3xl font-extralight text-brand-magenta animate-pulse-slow leading-none">↑</span>
             </div>
         </div>
@@ -23,206 +23,255 @@
       
       <nav class="fixed top-0 w-full z-[70] bg-white/90 backdrop-blur-sm border-b border-gray-100 transition-all duration-300" id="navbar">
         <div class="max-w-[1600px] mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="w-32 lg:w-40 block">
-                <img src="./src/logo/sca_logo.svg" alt="Stefany Cano Arquitectura" class="w-3/4">
+            <a href="#" id="nav-logo" class="w-32 lg:w-48 block">
+                <img src="./src/logo/sca_logo.svg" alt="Stefany Cano" class="w-2/4">
             </a>
 
-            <div class="hidden lg:flex gap-8 text-[11px] uppercase tracking-[0.15em] font-body font-medium text-gray-500">
-                <a href="#vision" class="hover:text-brand-magenta transition-colors">La Práctica</a>
-                <a href="#signature" class="hover:text-brand-magenta transition-colors">Arquitectura de Autor</a>
-                <a href="#portfolio" class="hover:text-brand-magenta transition-colors">Proyectos</a>
-                <a href="#compatibility" class="hover:text-brand-magenta transition-colors">Compatibilidad</a>
-                <a href="#contact" class="hover:text-brand-magenta transition-colors">Contacto</a>
+            <div class="hidden lg:flex gap-8 text-[11px] uppercase tracking-[0.15em] font-subtitle font-medium text-gray-500">
+                <a href="#practica" class="nav-link-home hover:text-brand-magenta transition-colors">La Práctica</a>
+                <a href="#portfolio" id="trigger-projects-page" class="hover:text-brand-magenta transition-colors">Proyectos</a>
+                <a href="#propuesta" class="nav-link-home hover:text-brand-magenta transition-colors">Mi Propuesta</a>
+                <a href="#equipo" class="nav-link-home hover:text-brand-magenta transition-colors">Equipo</a>
+                <a href="#blog" class="nav-link-home hover:text-brand-magenta transition-colors">Blog</a>
+                <a href="#contact" class="nav-link-home hover:text-brand-magenta transition-colors">Contacto</a>
             </div>
 
             <button id="menu-toggle" class="lg:hidden flex flex-col gap-1.5 z-[80] group relative w-10 h-10 items-center justify-center focus:outline-none">
-                <span class="w-6 h-0.5 bg-brand-dark transition-all duration-300 ease-in-out group-[.active]:rotate-45 group-[.active]:translate-y-2"></span>
-                <span class="w-6 h-0.5 bg-brand-dark transition-all duration-300 ease-in-out group-[.active]:opacity-0"></span>
-                <span class="w-6 h-0.5 bg-brand-dark transition-all duration-300 ease-in-out group-[.active]:-rotate-45 group-[.active]:-translate-y-2"></span>
+                <span class="w-6 h-0.5 bg-brand-dark transition-all duration-300 group-[.active]:rotate-45 group-[.active]:translate-y-2"></span>
+                <span class="w-6 h-0.5 bg-brand-dark transition-all duration-300 group-[.active]:opacity-0"></span>
+                <span class="w-6 h-0.5 bg-brand-dark transition-all duration-300 group-[.active]:-rotate-45 group-[.active]:-translate-y-2"></span>
             </button>
         </div>
       </nav>
 
-      <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col justify-center items-center gap-8 text-xl font-display text-brand-dark opacity-0 pointer-events-none transition-opacity duration-500">
-          <a href="#hero" class="mobile-link">Inicio</a>
-          <a href="#vision" class="mobile-link">La Práctica</a>
-          <a href="#signature" class="mobile-link">Arquitectura de Autor</a>
-          <a href="#portfolio" class="mobile-link">Proyectos</a>
-          <a href="#contact" class="mobile-link">Contacto</a>
-      </div>
-
-      <div class="flex-1 pt-20">
+      <div id="home-view" class="flex-1 pt-20 transition-all duration-700">
           
-          <section id="hero" class="relative min-h-[90vh] flex flex-col justify-center px-8 lg:px-24 py-20">
-            <div class="max-w-4xl z-10 animate-fade-in-up">
-                <h1 class="text-4xl lg:text-[140px] leading-[1.2] lg:leading-20 text-brand-magenta mb-6 lg:mb-20">
-                    Stefany Cano
-                </h1>
-                <p class="text-[20px] lg:text-3xl font-subtitle text-gray-800  lg:w-full mb-12 lg:mb-22 tracking-wide">
-                    Arquitectura donde la naturaleza, el diseño y la armonía conviven con intención.
-                </p>
-                <a href="#compatibility" class="inline-block border bg-brand-magenta border-brand-dark px-8 py-3 text-xs uppercase tracking-[0.2em] hover:bg-brand-green text-white transition-all duration-300">
-                    MENSAJE DE BIENVENIDA
-                </a>
-            </div>
-            <div class="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
-                <img class="parallax-img w-full h-full object-cover opacity-20 scale-80 origin-center will-change-transform transition-none" 
-                src="/images/background_sc.jpg" alt="Fondo">
-            </div>
+            <section id="hero" class="relative min-h-[95vh] flex flex-col justify-center px-8 lg:px-24 py-20 overflow-hidden">
+                
+                <div class="max-w-5xl z-10 animate-fade-in-up lg:pt-20">
+                    <h1 class="text-8xl lg:text-[170px] font-display text-brand-magenta mb-4 lg:mb-10 leading-none">Stefany Cano</h1>
+                    <h2 class="text-xl lg:text-3xl font-subtitle text-gray-600 font-light max-w-2xl mb-12 leading-snug">
+                        Arquitectura donde la naturaleza, el diseño y la armonía conviven con intención.
+                    </h2>
+                    
+                    <div class="flex flex-col lg:flex-row gap-6 items-start font-body">
+                        <button id="welcome-trigger" class="bg-brand-dark text-white px-8 py-4 text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all duration-500 cursor-pointer">
+                            Mensaje de bienvenida
+                        </button>
+                    </div>
+
+                    <div id="welcome-message" class="mt-10 max-w-2xl bg-[#fafafa] p-8 border-l-4 border-brand-magenta opacity-0 translate-y-4 pointer-events-none transition-all duration-700">
+                        <p class="text-lg font-body text-gray-700 leading-relaxed italic">
+                            "Hola, me encanta que estés aquí. Este espacio es una invitación a reconocer la arquitectura como experiencia sensorial, en diálogo con la naturaleza. Recorre el sitio como quien visita la casa de alguien cercano, con armonía y curiosidad."
+                        </p>
+                    </div>
+                </div>
+
+                <button id="audio-toggle" class="absolute bottom-15 lg:bottom-20 right-8 lg:right-10 z-20 border  bg-white/10 backdrop-blur-sm px-6 py-4 text-[10px] uppercase tracking-[0.3em] hover:bg-brand-dark hover:text-white transition-all duration-500 flex items-center gap-3 cursor-pointer group">
+                    <span class="relative flex h-2 w-2">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-magenta opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-magenta"></span>
+                    </span>
+                    <span class="group-hover:tracking-[0.4em] transition-all duration-500">Activa la experiencia sonora</span>
+                </button>
+
+                <div class="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
+                    <img class="parallax-img w-full h-full object-cover opacity-20 scale-125 will-change-transform transition-none" src="/images/background_sc.jpg" alt="Fondo">
+                </div>
+            </section>
+
+          <section id="practica" class="px-8 lg:px-24 py-32 bg-brand-magenta">
+              <div class="max-w-4xl mx-auto">
+                  <h3 class="text-3xl font-subtitle text-white uppercase tracking-widest mb-10">La práctica</h3>
+                  <p class="text-xl lg:text-2xl font-body text-white leading-relaxed text-justify">Pienso en la arquitectura como un arte consciente, guiada por una visión natural e integral. Cada proyecto se desarrolla tomando la experiencia de las personas como el eje del diseño, donde la luz, los colores, la ventilación y las texturas favorecen la claridad mental, confort físico y armonía emocional.</p>
+              </div>
           </section>
 
           <section id="vision" class="px-8 lg:px-24 py-32 bg-gray-50">
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 max-w-[1600px] mx-auto">
-                  <div class="flex flex-col gap-6">
-                      <h3 class="text-2xl font-subtitle text-brand-magenta uppercase tracking-widest">La práctica</h3>
-                      <p class="font-body text-gray-600 leading-relaxed text-justify">
-                          Pienso en la arquitectura como un arte consciente, guiada por una visión
-                          natural e integral. Cada proyecto se desarrolla tomando la experiencia de las
-                          personas como el eje del diseño, donde la luz, los colores, la ventilación y las
-                          texturas favorecen la claridad mental, confort físico y armonía emocional.
-                      </p>
-                  </div>
-                  <div class="flex flex-col gap-6">
-                      <h3 class="text-2xl font-subtitle text-brand-magenta uppercase tracking-widest">Visión</h3>
-                      <p class="font-body text-gray-600 leading-relaxed text-justify">
-                          Diseño proyectos donde la naturaleza se integra como estructura del espacio,
-                          guiando las decisiones arquitectónicas bajo principios que promueven una
-                         conexión sensorial y equilibrio ambiental para el beneficio de quien los habite.
-                      </p>
-                  </div>
-              </div>
-          </section>
-          <section id="portfolio" class="px-4 lg:px-24 py-32 bg-white">
-              <div class="max-w-[1600px] mx-auto">
-                  <div class="mb-20">
-                      <h2 class="text-4xl lg:text-5xl font-subtitle text-brand-dark mb-4 uppercase tracking-widest">Proyectos seleccionados</h2>
-                      <p class="font-body text-gray-500 max-w-xl">
-                          Evidencia curada que responde a una visión específica y a un proceso guiado por la autoría.
-                      </p>
-                  </div>
-                  <div id="project-grid" class="grid grid-cols-1 md:grid-cols-6 gap-6 lg:gap-10"></div>
+              <div class="max-w-4xl mx-auto text-right">
+                  <h3 class="text-3xl font-subtitle text-brand-dark uppercase tracking-widest mb-10">Visión</h3>
+                  <p class="text-xl lg:text-2xl font-body text-gray-600 leading-relaxed text-justify">Diseño proyectos donde la naturaleza se integra como estructura del espacio, guiando las decisiones arquitectónicas bajo principios que promueven una conexión sensorial y equilibrio ambiental para el beneficio de quien los habite.</p>
               </div>
           </section>
 
-          <section id="compatibility" class="px-8 lg:px-24 py-32 bg-brand-dark flex items-center justify-center">
-              <div class=" text-center">
-                  <h2 class="text-3xl lg:text-7xl font-subtitle text-white mb-10 uppercase tracking-widest">Mi Propuesta</h2>
-                  <div class="flex gap-28">
-                    <p class="font-body text-gray-100 text-left leading-relaxed mb-10 text-lg">
-                        Creo en una arquitectura diferente, una que cuida y acompaña.
-                            Todo parte de un deseo sencillo: dejar el mundo mejor de lo que lo
-                            encontramos. La naturaleza no es un recurso ni un ornamento, es compañera y
-                            coautora de cada espacio que imagino.
-                    </p>
-                    <p class="font-body text-gray-100 text-left leading-relaxed mb-10 text-lg">
-                            A través de este estudio busco compartir esa semilla de amor por la tierra,
-                            compartiendo mis ideas a quienes se acercan —los habitantes— mediante
-                            reflexiones en el blog y contenidos que se expanden en nuestras redes. No se
-                            trata de un capricho estético: está demostrado que el ser humano necesita la
-                            presencia constante de la madre naturaleza para vivir en plenitud.
-                    </p>
-                    <p class="font-body text-gray-100 text-left leading-relaxed mb-10 text-lg">
-                            Habitar un espacio donde la naturaleza se integra como protagonista es un
-                            privilegio que debería pertenecer a todos. Mi propuesta es clara: diseñar lugares
-                            que promuevan bienestar sin dañar el entorno, donde cada gesto arquitectónico
-                            sea un acto de armonía y respeto.
-                    </p>
+          <section id="portfolio" class="px-8 lg:px-24 py-40 bg-white flex flex-col items-center justify-center text-center overflow-hidden border-y border-gray-50">
+              <div class="relative group cursor-pointer" id="view-all-projects">
+                  <h2 class="text-5xl lg:text-[180px] font-display text-brand-dark leading-none uppercase tracking-tighter transition-transform duration-700 group-hover:scale-[1.02]">Proyectos</h2>
+                  <div class="mt-12 flex flex-col items-center gap-6">
+                      <span class="text-[11px] uppercase tracking-[0.6em] font-body text-gray-400">Explorar obras seleccionadas</span>
+                      <div class="w-px h-24 bg-gradient-to-b from-brand-magenta to-transparent animate-bounce"></div>
                   </div>
-                           <p class="font-body text-gray-100 leading-relaxed mb-10 text-lg">
-                         Si creamos una arquitectura en la que la naturaleza sea la protagonista,
-                            seguramente estaremos haciendo un bien no solo a la madre tierra, sino
-                            también a la humanidad. 
-                            <!-- Big Caslon -->
+              </div>
+          </section>
+
+        <section id="propuesta" class="px-8 lg:px-24 py-40 bg-brand-dark text-white relative overflow-hidden">
+            <div class="max-w-5xl mx-auto">
+                <h3 class="text-3xl font-subtitle text-brand-green uppercase tracking-[0.4em] mb-16">Mi propuesta</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 font-body text-gray-300 leading-relaxed text-lg">
+                    <div class="flex flex-col gap-8">
+                        <p class="text-white text-xl font-medium">“Creo en una arquitectura diferente, una que cuida y acompaña.”</p>
+                        <p>Todo parte de un deseo sencillo: dejar el mundo mejor de lo que lo encontramos. La naturaleza no es un recurso ni un ornamento, es compañera y coautora de cada espacio que imagino.</p>
+                        <p>A través de este estudio busco compartir esa semilla de amor por la tierra, compartiendo mis ideas a quienes se acercan —los habitantes— mediante reflexiones en el blog y contenidos que se expanden en nuestras redes.</p>
+                    </div>
+                    
+                    <div class="flex flex-col gap-8">
+                        <p>No se trata de un capricho estético: está demostrado que el ser humano necesita la presencia constante de la madre naturaleza para vivir en plenitud.</p>
+                        <p>Habitar un espacio donde la naturaleza se integra como protagonista es un privilegio que debería pertenecer a todos. Mi propuesta es clara: diseñar lugares que promuevan bienestar sin dañar el entorno, donde cada gesto arquitectónico sea un acto de armonía y respeto.</p>
+                    </div>
+                </div>
+
+                <div class="mt-24 pt-16 border-t border-white/10">
+                    <blockquote class="font-display text-4xl lg:text-6xl text-brand-magenta leading-tight mb-10">
+                        “Si creamos una arquitectura en la que la naturaleza sea la protagonista, seguramente estaremos haciendo un bien no solo a la madre tierra, sino también a la humanidad.”
+                    </blockquote>
+                    <cite class="text-2xl font-subtitle text-white not-italic">— Stefany Cano</cite>
+                </div>
+            </div>
+
+            <div class="absolute -bottom-20 -right-20 opacity-5 pointer-events-none">
+                <img src="./src/logo/sca_logo.svg" class="w-[500px]" alt="">
+            </div>
+        </section>
+
+          <section id="equipo" class="px-8 lg:px-24 py-32 bg-white">
+              <div class="max-w-[1600px] mx-auto">
+                  <h2 class="text-4xl lg:text-5xl font-subtitle text-brand-dark mb-16 uppercase tracking-widest text-center">Mi equipo</h2>
+                  <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16"></div>
+              </div>
+          </section>
+
+          <section id="blog" class="px-8 lg:px-24 py-40 bg-[#fafafa] border-y border-gray-100">
+              <div class="max-w-4xl mx-auto text-center">
+                  <h2 class="text-4xl lg:text-5xl font-subtitle text-brand-dark mb-10 uppercase tracking-widest">Bioblog</h2>
+                  <div class="flex flex-col gap-8 items-center">
+                    <p class="text-xl lg:text-2xl font-body text-gray-600 leading-relaxed italic max-w-2xl">
+                        “Un espacio donde se narra, se comparte y se escucha. La conversación fluye en relatos que siembran amor por la naturaleza y enseñan a habitar en armonía.”
                     </p>
-                  <p class="font-body text-white text-sm lg:text-2xl font-display uppercase tracking-[0.2em] border-t border-gray-200 pt-10">
-                      Stefany Cano
-                  </p>
+                    <a href="#" class="mt-10 inline-block text-xs uppercase tracking-[0.4em] font-body border-b border-brand-magenta pb-2 hover:text-brand-magenta transition-colors">Entrar a la conversación</a>
+                  </div>
               </div>
           </section>
 
           <section id="contact" class="px-8 lg:px-24 py-32 bg-white">
               <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
                   <div>
-                      <h2 class="text-6xl font-display text-brand-green mb-8 uppercase tracking-tighter">Contacto.</h2>
-                      <p class="font-body text-gray-600 mb-12 max-w-md">
-                         Cada proyecto es una experiencia sensorial que respira en armonía con la vida y
-                        la naturaleza, hablemos de lo que podemos crear juntos.
-                      </p>
-                      <div class="flex flex-col gap-6 text-sm mb-8 font-body text-gray-800">
-                          <p class="uppercase tracking-widest font-bold text-brand-dark">Coatepec, Veracruz.</p>
-                          <a href="mailto:proyectos@stefanycano.com" class="text-xl hover:text-brand-magenta transition-colors font-display">proyectos@stefanycano.com</a>
-                          <div class="flex gap-8 mt-6 text-xs uppercase tracking-[0.3em] text-brand-dark">
-                              <a href="https://www.instagram.com/stefanycano.arq?igsh=cndqOTV3Z3kwbXc5" target="_blank" class="hover:text-brand-magenta transition-colors">Instagram</a>
-                              <a href="https://www.facebook.com/share/1DE56Z7PzC/?mibextid=wwXIfr" target="_blank" class="hover:text-brand-magenta transition-colors">Facebook</a>
-                          </div>
-                      </div>
-                      <div>
-                            <p class="font-body text-2xl text-brand-dark mb-12 max-w-md">
-                                El camino comienza: recibe nuestras guías descargables, donde cada paso del
-                                proceso se revela con claridad.
-                            </p>
-                      </div>
+                      <h2 class="text-6xl font-display text-brand-dark mb-8 uppercase tracking-tighter">Contacto.</h2>
+                      <p class="font-body text-gray-600 text-lg">Cada proyecto es una experiencia sensorial que respira en armonía con la vida y la naturaleza, hablemos de lo que podemos crear juntos.</p>
                   </div>
-
-                  <form class="flex flex-col gap-10">
-                      <input type="text" placeholder="Nombre completo" class="form-input">
-                      <input type="email" placeholder="Correo electrónico" class="form-input">
-                      <select class="form-input text-gray-500 bg-transparent">
-                          <option value="" disabled selected>Tipo de proyecto</option>
-                          <option value="residencial">Residencial</option>
-                          <option value="comercial">Comercial</option>
-                          <option value="autor">Obra Pública</option>
-                      </select>
-                       <select class="form-input text-gray-500 bg-transparent">
-                          <option value="" disabled selected>Dimensión de proyecto</option>
-                          <option value="residencial">Proyecto nuevo</option>
-                          <option value="comercial">Remodelación</option>
-                          <option value="autor">Diseño interior</option>
-                      </select>
-                      <textarea placeholder="Descripción breve del entorno o visión" rows="1" class="form-input resize-none"></textarea>
-                      <div class="mt-10">
-                            <button type="submit" class="bg-brand-green text-white px-12 py-5 text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all duration-500 w-full lg:w-auto">
-                              <a href="https://wa.me/2225664204?text=Hola">Conversemos</a>
-                          </button>
+                  <form class="flex flex-col gap-10 font-body">
+                      <input type="text" placeholder="Nombre" class="form-input">
+                      <input type="email" placeholder="Correo" class="form-input">
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <select class="form-input text-gray-500 bg-transparent">
+                            <option value="" disabled selected>Tipo de proyecto</option>
+                            <option value="residencial">Residencial</option>
+                            <option value="comercial">Comercial</option>
+                            <option value="publica">Obra Pública</option>
+                        </select>
+                        <select class="form-input text-gray-500 bg-transparent">
+                            <option value="" disabled selected>Dimensión</option>
+                            <option value="nuevo">Proyecto nuevo</option>
+                            <option value="remodelacion">Remodelación</option>
+                            <option value="interior">Diseño interior</option>
+                        </select>
                       </div>
+                      <button type="submit" class="bg-brand-dark text-white px-12 py-5 text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all w-full lg:w-auto cursor-pointer">Conversemos</button>
                   </form>
               </div>
           </section>
 
-          <footer class="bg-white border-t border-gray-100 py-12 text-center">
-              <p class="text-[10px] text-gray-400 font-body uppercase tracking-widest">© 2026 Stefany Cano Arquitectura. Todos los derechos reservados.</p>
+          <section id="descargables" class="px-8 lg:px-24 py-24 bg-brand-magenta/5 border-t border-brand-magenta/10">
+              <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+                  <div class="max-w-2xl text-center lg:text-left">
+                    <p class="text-xl font-body text-brand-dark leading-relaxed italic">“El camino comienza: recibe nuestras guías descargables, donde cada paso del proceso se revela con claridad.”</p>
+                  </div>
+                  <div class="flex flex-col gap-6 w-full lg:w-auto font-body">
+                      <a href="#" class="group flex items-center justify-between gap-10 text-xs uppercase tracking-[0.3em] border-b border-brand-dark pb-4 hover:border-brand-magenta transition-all">
+                        <span>Mi proceso para tu proyecto</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                      </a>
+                      <a href="#" class="group flex items-center justify-between gap-10 text-xs uppercase tracking-[0.3em] border-b border-brand-dark pb-4 hover:border-brand-magenta transition-all">
+                        <span>Mi proceso para diseño interiores</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                      </a>
+                  </div>
+              </div>
+          </section>
+
+          <footer class="bg-white py-20 px-8 lg:px-24 border-t border-gray-100">
+              <div class="max-w-[1600px] mx-auto flex justify-between">
+                  <div class="flex flex-col gap-4 text-sm font-body text-gray-500">
+                      <p class="uppercase tracking-widest font-bold text-brand-dark">Stefany Cano Arquitectura</p>
+                      <p>Coatepec, Veracruz.</p>
+                      <div class="flex gap-6 mt-4">
+                        <a href="https://www.instagram.com/stefanycano.arq" target="_blank" class="hover:text-brand-magenta">Instagram</a>
+                        <a href="https://www.facebook.com/share/1DE56Z7PzC" target="_blank" class="hover:text-brand-magenta">Facebook</a>
+                      </div>
+                  </div>
+                  <div class="flex flex-col gap-4 text-[10px] uppercase tracking-widest text-gray-400 lg:text-right">
+                      <p>Experiencia sonora por: TungArt7 vía Pixbay Music</p>
+                      <a href="#">Términos y condiciones</a> <a href="#">Política de privacidad</a>
+                      <p class="mt-10 font-display text-xl text-brand-dark normal-case italic">Más que proyectar viviendas, creamos entornos.</p>
+                  </div>
+              </div>
           </footer>
       </div>
+
+     <div id="projects-view" data-lenis-prevent class="fixed inset-0 z-[65] bg-white opacity-0 pointer-events-none transition-opacity duration-700 overflow-y-auto pt-32 hidden">
+          <section class="px-8 lg:px-24 py-20">
+              <div class="max-w-5xl">
+                  <h1 class="text-6xl lg:text-[100px] font-display text-brand-dark mb-6">Obras seleccionadas</h1>
+                  <p class="text-xl font-body text-gray-500 max-w-2xl leading-relaxed">Una selección de proyectos que representan mi visión, el criterio y la intención en el diseño.</p>
+              </div>
+          </section>
+          <section class="px-4 lg:px-24 pb-32">
+              <div id="project-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+          </section>
+          <footer class="bg-gray-50 py-20 px-8 lg:px-24 text-center">
+              <button id="back-to-home" class="text-xs uppercase tracking-[0.3em] border-b border-brand-dark pb-2 hover:text-brand-magenta transition-colors cursor-pointer">Volver al inicio</button>
+          </footer>
+      </div>
+
     </main>
 
-    <div id="project-modal" class="fixed inset-0 z-[200] invisible transition-all duration-500">
-         <div id="modal-backdrop" class="absolute inset-0 bg-brand-dark/95 backdrop-blur-md opacity-0 transition-opacity duration-500 ease-out"></div>
-         <div id="modal-panel" class="absolute right-0 top-0 w-full lg:w-[88vw] h-full bg-[#fcfcfc] shadow-2xl transform translate-x-full transition-transform duration-[0.8s] flex flex-col lg:flex-row overflow-hidden">
-             
-             <button id="close-modal" class="absolute top-8 right-8 z-50 w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-xl hover:bg-brand-magenta hover:text-white transition-all duration-300 group">
-                 <span class="text-3xl leading-none">&times;</span>
-             </button>
+        <div id="project-modal" class="fixed inset-0 z-[200] invisible transition-all duration-500">
+            <div id="modal-backdrop" class="absolute inset-0 bg-brand-dark/95 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>
+            <div id="modal-panel" class="absolute right-0 top-0 w-full lg:w-[90vw] h-full bg-[#fcfcfc] shadow-2xl transform translate-x-full transition-transform duration-[0.8s] flex flex-col lg:flex-row overflow-hidden">
+                
+                <button id="close-modal" class="absolute top-8 right-8 z-[210] w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-xl hover:bg-brand-magenta hover:text-white transition-all duration-300 cursor-pointer">
+                    <span class="text-3xl leading-none">&times;</span>
+                </button>
 
-             <div class="w-full lg:w-[35%] h-auto lg:h-full p-8 lg:p-20 flex flex-col justify-center bg-white relative z-10 border-r border-gray-100 overflow-y-auto">
-                 <div id="modal-text-content" class="opacity-0 translate-y-8 transition-all duration-700">
-                     </div>
-             </div>
+                <div class="w-full lg:w-[35%] h-auto lg:h-full p-8 lg:p-20 flex flex-col justify-center bg-white border-r border-gray-100 overflow-y-auto">
+                    <div id="modal-text-content" class="opacity-0 translate-y-8 transition-all duration-700"></div>
+                    <div id="video-controls" class="mt-12 space-y-4"></div>
+                </div>
 
-             <div class="w-full lg:w-[65%] h-full relative bg-gray-50">
-                 
-                 <div id="gallery-scroll" class="w-full h-full overflow-y-auto scroll-smooth">
-                     <div id="m-gallery" class="flex flex-col gap-0 pb-32 opacity-0 transition-opacity duration-1000">
-                         </div>
-                 </div>
-
-                 <div id="scroll-indicator" class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 opacity-0 transition-all duration-700 pointer-events-none">
+                <div id="gallery-scroll" data-lenis-prevent class="w-full lg:w-[65%] h-full overflow-y-auto bg-gray-50 relative scroll-smooth">
+                    <div id="video-display" class="w-full bg-black aspect-video hidden relative">
+                        <video id="main-modal-video" class="w-full h-full object-contain" controls playsinline></video>
                     </div>
+                    
+                    <div id="m-gallery" class="flex flex-col gap-0 pb-32 opacity-100 transition-opacity duration-1000"></div>
 
+                    <div id="scroll-indicator" class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 opacity-0 transition-all duration-700 pointer-events-none">
+                        <span class="text-xs uppercase tracking-[0.4em] text-gray-500 font-body mb-2">Explora</span>
+                        <svg class="w-12 h-12 text-brand-magenta animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="video-modal" class="fixed inset-0 z-[300] invisible opacity-0 transition-all duration-500 flex items-center justify-center bg-brand-dark/98 backdrop-blur-xl">
+        <button id="close-video-modal" class="absolute top-8 right-8 text-white text-4xl hover:text-brand-magenta transition-colors cursor-pointer">&times;</button>
+        <div class="w-full max-w-6xl p-4 flex flex-col items-center gap-8">
+            <div class="w-full aspect-video bg-black shadow-2xl relative">
+                <video id="video-player-root" class="w-full h-full object-contain" controls playsinline></video>
              </div>
-         </div>
-    </div>
-
-    <div id="custom-cursor" class="fixed w-4 h-4 bg-brand-dark rounded-full pointer-events-none z-[9999] mix-blend-difference transition-transform duration-150 ease-out hidden lg:block translate-x-[-50%] translate-y-[-50%]"></div>
+                <div id="video-switcher-container" class="flex gap-4"></div>
+            </div>
+        </div>
 
     <script type="module" src="/src/main.js"></script>
   </body>

@@ -1,255 +1,257 @@
 import './style.css';
 import { projects } from './products/data.js';
+import ambientMusic from './sound/pista_ambiental_sc.mp3';
 import whooshSound from './sound/dinglandingpage.mp3';
+
+const teamData = [
+    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.jpg" },
+    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.jpg" },
+    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.jpg" },
+    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.jpg" },
+    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.jpg" },
+    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.jpg" }
+];
 
 const NeutraApp = {
   lenisInstance: null,
+  audioInstance: null,
 
-  // 1. GESTIÓN DE SCROLL GLOBAL (Lenis)
   initSmoothScroll: function() {
-    this.lenisInstance = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-      smoothTouch: false,
+    this.lenisInstance = new Lenis({ 
+        duration: 1.2, 
+        smooth: true,
+        prevent: (node) => node.hasAttribute('data-lenis-prevent') || node.closest('[data-lenis-prevent]')
     });
     this.lenisInstance.stop();
-
-    const raf = (time) => {
-      this.lenisInstance.raf(time);
-      this.updateParallax(); 
-      requestAnimationFrame(raf);
-    }
+    const raf = (time) => { this.lenisInstance.raf(time); this.updateParallax(); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = anchor.getAttribute('href');
-        const target = document.querySelector(targetId);
-        if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
-      });
-    });
   },
 
   updateParallax: function() {
     if (!this.lenisInstance) return;
     const scrolled = this.lenisInstance.scroll; 
-    document.querySelectorAll('.parallax-img').forEach(img => {
-      img.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0) scale(1.25)`;
+    document.querySelectorAll('.parallax-img').forEach(img => { 
+        img.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0) scale(1.25)`; 
     });
   },
 
-  // 2. CORTINA DE ENTRADA
   initCurtain: function() {
     const curtain = document.getElementById('curtain');
     const mainContent = document.getElementById('main-content');
-    if (!curtain || !mainContent) return;
+    if (!curtain) return;
 
     const executeReveal = () => {
+      const revealSound = new Audio(whooshSound);
+      revealSound.play().catch(() => {});
       curtain.style.transform = 'translateY(-100%)';
       mainContent.style.opacity = '1';
       setTimeout(() => {
         mainContent.classList.remove('h-screen', 'overflow-hidden');
         document.body.classList.remove('overflow-hidden');
-        document.body.style.overflow = '';
         if (this.lenisInstance) this.lenisInstance.start();
         curtain.remove();
       }, 1200);
     };
     curtain.addEventListener('mouseup', executeReveal);
-    curtain.addEventListener('touchend', executeReveal);
   },
 
-  // 3. PORTAFOLIO (Grid + Logos)
-  initPortfolio: function() {
-    const grid = document.getElementById('project-grid');
-    const modal = document.getElementById('project-modal');
-    const panel = document.getElementById('modal-panel');
-    const backdrop = document.getElementById('modal-backdrop');
-    const galleryScroll = document.getElementById('gallery-scroll');
+  initHeroEvents: function() {
+    const welcomeBtn = document.getElementById('welcome-trigger');
+    const welcomeMsg = document.getElementById('welcome-message');
+    const audioBtn = document.getElementById('audio-toggle');
 
-    if (!grid) return;
-    if (galleryScroll) galleryScroll.setAttribute('data-lenis-prevent', '');
-
-    grid.innerHTML = projects.slice(0, 5).map((p, i) => {
-      const colSpan = i < 2 ? "md:col-span-3" : "md:col-span-2";
-      const aspect = i < 2 ? "aspect-video" : "aspect-[3/4]";
-      return `
-        <article class="${colSpan} relative ${aspect} overflow-hidden bg-gray-100 group cursor-pointer shadow-sm" data-id="${p.id}">
-          <img src="/src/logo/logotipo_letras.svg" class="absolute top-6 left-6 w-24 z-30 opacity-40 group-hover:opacity-100 transition-opacity duration-500">
-          <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" loading="lazy">
-          <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-green/40 transition-colors"></div>
-          <div class="absolute bottom-0 left-0 p-8 w-full z-20">
-            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-white/80 mb-2 block transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">${p.category}</span>
-            <h3 class="text-2xl lg:text-4xl font-display text-white leading-none">${p.title}</h3>
-          </div>
-        </article>
-      `;
-    }).join('');
-
-    grid.addEventListener('click', (e) => {
-      const card = e.target.closest('article');
-      if (card) {
-        const p = projects.find(proj => proj.id == card.dataset.id);
-        this.openModal(p, modal, panel, backdrop);
-      }
-    });
-
-    const closeModal = () => {
-      panel.classList.add('translate-x-full');
-      backdrop.classList.remove('opacity-100');
-      setTimeout(() => {
-        modal.classList.add('invisible');
-        document.body.style.overflow = '';
-        if (this.lenisInstance) this.lenisInstance.start();
-      }, 500);
-    };
-
-    document.getElementById('close-modal').onclick = closeModal;
-    backdrop.onclick = closeModal;
-  },
-
-  // 4. ABRIR MODAL (Logotipo + Video + Flecha Centrada)
-  openModal: function(p, modal, panel, backdrop) {
-    const textContainer = document.getElementById('modal-text-content');
-    const galleryScroll = document.getElementById('gallery-scroll');
-    const indicator = document.getElementById('scroll-indicator');
-
-    // Inyectar Texto y Logotipo
-    textContainer.innerHTML = `
-        <img src="/src/logo/logotipo_letras.svg" class="w-32 mb-20 lg:w-60 opacity-100" alt="Marca">
-        <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-green mb-4 block">${p.category}</span>
-        <h2 class="text-5xl lg:text-7xl font-display text-brand-dark mb-8 leading-[0.9]">${p.title}</h2>
-        <div class="flex items-center gap-6 text-xs font-body text-gray-400 mb-10 border-y border-gray-100 py-6 uppercase tracking-widest">
-            <span>${p.location || 'México'}</span> <span class="w-1.5 h-1.5 rounded-full bg-brand-magenta"></span> <span>${p.year || '2026'}</span>
-        </div>
-        <p class="text-base font-body text-gray-600 leading-relaxed text-justify">${p.description}</p>
-    `;
-
-    // Botón de Video Reel (Recuperado)
-    const videoFile = p.gallery.find(f => f.endsWith('.mp4'));
-    if (videoFile) {
-        const btn = document.createElement('button');
-        btn.className = "mt-10 flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.3em] text-brand-magenta border border-brand-magenta/20 px-6 py-4 hover:bg-brand-magenta hover:text-white transition-all cursor-pointer group";
-        btn.innerHTML = `<svg class="w-3 h-3 fill-current group-hover:scale-110 transition-transform" viewBox="0 0 24 24"><path d="M3 22v-20l18 10-18 10z"/></svg> Reproducir Video`;
-        btn.onclick = () => this.showVideoLightbox(videoFile);
-        textContainer.appendChild(btn);
+    if(welcomeBtn && welcomeMsg) {
+        welcomeBtn.onclick = () => {
+            welcomeMsg.classList.toggle('opacity-0');
+            welcomeMsg.classList.toggle('translate-y-4');
+            welcomeMsg.classList.toggle('pointer-events-none');
+        };
     }
 
-    // Galería
-    const gallery = document.getElementById('m-gallery');
-    gallery.innerHTML = p.gallery
-      .filter(f => !f.endsWith('.mp4'))
-      .map(f => `<img src="${f}" class="w-full h-auto object-cover" loading="lazy">`)
-      .join('');
-
-    // RESET DE LA FLECHA DE SCROLL (Garantizado en cada apertura)
-    if (indicator) {
-        indicator.innerHTML = `
-            <span class="text-xs uppercase tracking-[0.4em] text-white font-body mb-2">DESCUBRE MÁS</span>
-            <svg class="w-12 h-12 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        `;
-        indicator.classList.remove('hidden', 'opacity-0');
-        indicator.style.opacity = '1';
-        
-        // Función de ocultado al detectar scroll real
-        const handleScroll = () => {
-            if (galleryScroll.scrollTop > 40) {
-                indicator.style.opacity = '0';
-                setTimeout(() => indicator.classList.add('hidden'), 700);
-                galleryScroll.removeEventListener('scroll', handleScroll);
+    if(audioBtn) {
+        audioBtn.onclick = () => {
+            if(!this.audioInstance) { 
+                this.audioInstance = new Audio(ambientMusic); 
+                this.audioInstance.loop = true; 
+                this.audioInstance.volume = 0.4;
+            }
+            if(this.audioInstance.paused) { 
+                this.audioInstance.play(); 
+                audioBtn.classList.add('bg-brand-dark', 'text-white');
+                audioBtn.querySelector('span:last-child').textContent = "Experiencia activa";
+            } else { 
+                this.audioInstance.pause(); 
+                audioBtn.classList.remove('bg-brand-dark', 'text-white');
+                audioBtn.querySelector('span:last-child').textContent = "Activa experiencia sonora";
             }
         };
-        
-        // Limpiamos cualquier listener residual y añadimos el nuevo
-        galleryScroll.removeEventListener('scroll', handleScroll);
-        galleryScroll.addEventListener('scroll', handleScroll);
+    }
+  },
+
+  initViewManager: function() {
+    const triggerBtn = document.getElementById('view-all-projects');
+    const backBtn = document.getElementById('back-to-home');
+    const projectsView = document.getElementById('projects-view');
+    const homeView = document.getElementById('home-view');
+
+    const showProjects = () => {
+        this.lenisInstance?.stop();
+        projectsView.classList.remove('hidden');
+        setTimeout(() => {
+            projectsView.classList.replace('opacity-0', 'opacity-100');
+            projectsView.classList.remove('pointer-events-none');
+            homeView.classList.add('opacity-0');
+        }, 50);
+    };
+
+    const showHome = () => {
+        projectsView.classList.replace('opacity-100', 'opacity-0');
+        projectsView.classList.add('pointer-events-none');
+        homeView.classList.remove('opacity-0');
+        setTimeout(() => { projectsView.classList.add('hidden'); this.lenisInstance?.start(); }, 700);
+    };
+
+    if(triggerBtn) triggerBtn.onclick = showProjects;
+    if(backBtn) backBtn.onclick = showHome;
+    document.getElementById('nav-logo').onclick = (e) => { e.preventDefault(); showHome(); };
+  },
+
+  initPortfolio: function() {
+    const gridFull = document.getElementById('project-grid-full');
+    const modal = document.getElementById('project-modal');
+
+    if (gridFull) {
+        gridFull.innerHTML = projects.map(p => `
+            <article class="relative aspect-[3/4] overflow-hidden bg-gray-100 group cursor-pointer shadow-sm project-card" data-id="${p.id}">
+              <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105">
+              <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/40 transition-colors"></div>
+              <div class="absolute bottom-0 left-0 p-8 w-full z-20">
+                <h3 class="text-2xl font-display text-white mb-2">${p.editorial_name}</h3>
+                <span class="text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location}</span>
+              </div>
+            </article>
+        `).join('');
     }
 
-    modal.classList.remove('invisible');
-    document.body.style.overflow = 'hidden';
-    if (this.lenisInstance) this.lenisInstance.stop();
-
-    requestAnimationFrame(() => {
-      backdrop.classList.add('opacity-100');
-      panel.classList.remove('translate-x-full');
-      if(galleryScroll) galleryScroll.scrollTop = 0; // Reset scroll de la galería
-      
-      setTimeout(() => {
-        textContainer.classList.remove('opacity-0', 'translate-y-8');
-        gallery.classList.add('opacity-100');
-      }, 400);
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.project-card');
+        if (card) {
+            this.openModal(projects.find(proj => proj.id == card.dataset.id), modal);
+        }
     });
+
+    document.getElementById('close-modal').onclick = () => {
+        document.getElementById('modal-panel').classList.add('translate-x-full');
+        document.getElementById('modal-backdrop').classList.remove('opacity-100');
+        setTimeout(() => { 
+            modal.classList.add('invisible');
+            document.body.style.overflow = '';
+            if (document.getElementById('projects-view').classList.contains('hidden')) this.lenisInstance?.start();
+        }, 500);
+    };
   },
 
-  // LIGHTBOX DE VIDEO (Recuperado)
-  showVideoLightbox: function(url) {
-    const lb = document.createElement('div');
-    lb.className = "fixed inset-0 z-[400] bg-black backdrop-blur-xl flex items-center justify-center p-4 lg:p-20 transition-opacity duration-500 opacity-0";
-    lb.innerHTML = `
-        <button id="close-lb" class="absolute top-8 right-8 text-white text-5xl font-light hover:text-brand-magenta transition-colors cursor-pointer z-[410]">&times;</button>
-        <div class="w-full max-w-6xl aspect-video shadow-2xl">
-            <video src="${url}" class="w-full h-full object-contain" controls autoplay playsinline></video>
+  // 1. MODAL PRINCIPAL: Imágenes y Texto
+  openModal: function(p, modal) {
+    const textContainer = document.getElementById('modal-text-content');
+    const galleryContainer = document.getElementById('m-gallery');
+    const galleryScroll = document.getElementById('gallery-scroll');
+
+    // Inyectar Info Editorial
+    textContainer.innerHTML = `
+        <img src="/src/logo/logotipo_letras.svg" class="w-40 mb-12 opacity-80">
+        <h2 class="text-5xl lg:text-7xl font-display text-brand-dark mb-10 leading-tight">${p.editorial_name}</h2>
+        <div class="space-y-8 text-lg font-body text-gray-600 leading-relaxed text-justify">
+            <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
+            <p>${p.description}</p>
         </div>
     `;
-    document.body.appendChild(lb);
-    
-    requestAnimationFrame(() => lb.style.opacity = '1');
 
-    const closeLB = () => {
-        lb.style.opacity = '0';
-        setTimeout(() => lb.remove(), 500);
-    };
+    // AÑADIR BOTÓN DE RECORRIDO (Si hay videos)
+    const videos = p.gallery.filter(f => f.endsWith('.mp4'));
+    if (videos.length > 0) {
+        const videoBtn = document.createElement('button');
+        videoBtn.className = "mt-12 w-full py-5 border border-brand-magenta text-brand-magenta text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-brand-magenta hover:text-white transition-all cursor-pointer";
+        videoBtn.innerText = "Ver Recorrido Virtual";
+        videoBtn.onclick = () => this.openVideoModal(videos);
+        textContainer.appendChild(videoBtn);
+    }
 
-    document.getElementById('close-lb').onclick = closeLB;
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLB(); }, { once: true });
-  },
+    // Galería (SOLO IMÁGENES)
+    galleryContainer.innerHTML = p.gallery
+        .filter(f => !f.endsWith('.mp4'))
+        .map(f => `<img src="${f}" class="w-full h-auto block object-cover" loading="eager">`)
+        .join('');
 
-  // 5. NAVEGACIÓN MOBILE
-  initNavigation: function() {
-    const toggle = document.getElementById('menu-toggle');
-    const menu = document.getElementById('mobile-menu');
-    if (!toggle || !menu) return;
+    modal.classList.remove('invisible');
+    this.lenisInstance?.stop();
+    document.body.style.overflow = 'hidden';
 
-    toggle.onclick = () => {
-        const active = toggle.classList.toggle('active');
-        menu.classList.toggle('opacity-0', !active);
-        menu.classList.toggle('pointer-events-none', !active);
-        document.body.style.overflow = active ? 'hidden' : '';
-        if (this.lenisInstance) active ? this.lenisInstance.stop() : this.lenisInstance.start();
-    };
-
-    document.querySelectorAll('.mobile-link').forEach(link => {
-        link.onclick = () => {
-            toggle.classList.remove('active');
-            menu.classList.add('opacity-0', 'pointer-events-none');
-            document.body.style.overflow = '';
-            if (this.lenisInstance) this.lenisInstance.start();
-        };
+    requestAnimationFrame(() => {
+        document.getElementById('modal-backdrop').classList.add('opacity-100');
+        document.getElementById('modal-panel').classList.remove('translate-x-full');
+        galleryScroll.scrollTop = 0;
+        setTimeout(() => textContainer.classList.remove('opacity-0', 'translate-y-8'), 400);
     });
   },
 
-  initCursor: function() {
-    const cursor = document.getElementById('custom-cursor');
-    if (!cursor) return;
-    document.onmousemove = (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
+  // 2. MODAL SECUNDARIO: Visualizador de Video con Switcher
+  openVideoModal: function(videos) {
+    const vModal = document.getElementById('video-modal');
+    const player = document.getElementById('video-player-root');
+    const switcher = document.getElementById('video-switcher-container');
+
+    switcher.innerHTML = '';
+    vModal.classList.remove('invisible');
+    setTimeout(() => vModal.classList.replace('opacity-0', 'opacity-100'), 10);
+
+    player.src = videos[0];
+    player.play();
+
+    // Crear botones Switcher si hay > 1 video
+    if (videos.length > 1) {
+        videos.forEach((v, idx) => {
+            const label = v.toLowerCase().includes('alta') ? 'Planta Alta' : 
+                          v.toLowerCase().includes('baja') ? 'Planta Baja' : `Vista ${idx + 1}`;
+            
+            const btn = document.createElement('button');
+            btn.className = "px-6 py-3 border border-white/20 text-white text-[9px] uppercase tracking-widest hover:border-brand-magenta transition-all cursor-pointer";
+            btn.innerText = label;
+            btn.onclick = () => {
+                player.src = v;
+                player.play();
+                switcher.querySelectorAll('button').forEach(b => b.classList.remove('bg-brand-magenta', 'border-brand-magenta'));
+                btn.classList.add('bg-brand-magenta', 'border-brand-magenta');
+            };
+            if(idx === 0) btn.classList.add('bg-brand-magenta', 'border-brand-magenta');
+            switcher.appendChild(btn);
+        });
+    }
+
+    document.getElementById('close-video-modal').onclick = () => {
+        player.pause();
+        vModal.classList.replace('opacity-100', 'opacity-0');
+        setTimeout(() => vModal.classList.add('invisible'), 500);
     };
-    document.querySelectorAll('a, button, article').forEach(el => {
-      el.onmouseenter = () => cursor.classList.add('scale-[3]', 'bg-brand-magenta/50');
-      el.onmouseleave = () => cursor.classList.remove('scale-[3]', 'bg-brand-magenta/50');
-    });
+  },
+
+  initTeam: function() {
+    const grid = document.getElementById('team-grid');
+    if (!grid) return;
+    grid.innerHTML = teamData.map(m => `
+        <div class="group flex flex-col gap-6">
+            <div class="aspect-[3/4] overflow-hidden bg-gray-100"><img src="${m.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div>
+            <div><h4 class="text-3xl font-display text-brand-dark">${m.name}</h4><p class="text-[10px] font-subtitle text-brand-magenta uppercase tracking-widest mb-4">${m.role}</p><p class="text-sm font-body text-gray-500 leading-relaxed">${m.desc}</p></div>
+        </div>
+    `).join('');
   }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initSmoothScroll();
   NeutraApp.initCurtain();
-  NeutraApp.initNavigation();
+  NeutraApp.initViewManager();
   NeutraApp.initPortfolio();
-  if (window.innerWidth > 1024) NeutraApp.initCursor();
+  NeutraApp.initTeam();
+  NeutraApp.initHeroEvents();
 });
