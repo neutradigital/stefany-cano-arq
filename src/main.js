@@ -230,6 +230,7 @@ const NeutraApp = {
               <div class="absolute bottom-0 left-0 p-6 md:p-8 w-full z-20">
                 <h3 class="text-xl md:text-2xl font-display text-white mb-2">${p.editorial_name}</h3>
                 <span class="text-[9px] md:text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location}</span>
+                <p class="text-[9px] md:text-[16px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.year}</p>
               </div>
             </article>
         `).join('');
@@ -263,6 +264,7 @@ const NeutraApp = {
         <div class="space-y-4 lg:space-y-8 text-sm md:text-base lg:text-lg font-body text-gray-600 leading-relaxed text-left lg:text-justify">
             <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
             <p>${p.description}</p>
+            <p>${p.year}</p>
         </div>
     `;
 

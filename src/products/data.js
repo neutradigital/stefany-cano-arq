@@ -2,12 +2,12 @@ export const projects = [
   {
     id: 1,
     title: "Casa California",
-    editorial_name: "Casa California",
-    intervention_type: "Obra en proceso",
+    editorial_name: "California",
+    intervention_type: "Obra incompleta",
     location: "Misantla, Veracruz",
-    year: "2024",
+    year: "2019",
     narrative_intro: "El lujo convive con sensaciones.",
-    description: "Un domo de cristal que da la bienvenida a la luz y recibe con calidez a quien llegue. Los acabados de pecho paloma adornan las ventanas, muros y escaleras. En el Patio Mayor: jardín, alberca y asador invitan a la convivencia y a la celebración. Una atmósfera donde la armonía habita con elegancia.",
+    description: "Un domo de cristal que da la bienvenida a la luz y recibe con calidez a quien llegue. Los acabados de pecho paloma adornan las ventanas, muros y escaleras. En el Patio Mayor: jardín, alberca y asador invitan a la convivencia y a la celebración. Una casa donde la armonía habita con elegancia.",
     cover: "/images/project_california/cali1.png",
     gallery: [
       "/images/project_california/cali1.png",
@@ -18,19 +18,19 @@ export const projects = [
       "/images/project_california/cali6.png",
       "/images/project_california/cali7.png",
       "/images/project_california/cali8.png",
-      "/images/project_california/cali_planta_alta.mp4",
-      "/images/project_california/cali_planta_baja.mp4"
+      "/images/project_california/california_alta.mp4",
+      "/images/project_california/california_baja.mp4"
     ]
   },
   {
     id: 2,
     title: "Casa Caturra",
-    editorial_name: "Casa Caturra",
-    intervention_type: "Arquitectura de Autor",
+    editorial_name: "Caturra",
+    intervention_type: "Obra completa",
     location: "Coatepec, Veracruz",
-    year: "2023",
+    year: "2015",
     narrative_intro: "Calor y luz que abrazan.",
-    description: "Su jardín interior funciona como eje y corazón del proyecto. Un muro llorón que, al caer el agua, nos recuerda el fluir de la vida. La chimenea brinda el calor y cercanía en ambos niveles. Una arquitectura diseñada para abrazar al habitante con calidez constante.",
+    description: "Su jardín interior funciona como eje y corazón del proyecto. Un muro llorón que, al caer el agua, nos recuerda el fluir de la vida. La chimenea brinda el calor y cercanía en ambos niveles. Una casa que te abraza con calidez.",
     cover: "/images/project_caturra/catu1.png",
     gallery: [
       "/images/project_caturra/catu1.png",
@@ -42,19 +42,19 @@ export const projects = [
       "/images/project_caturra/catu7.png",
       "/images/project_caturra/catu8.png",
       "/images/project_caturra/catu9.png",
-      "/images/project_caturra/caturra_planta_alta.mp4",
-       "/images/project_caturra/caturra_planta_baja.mp4"
+      "/images/project_caturra/caturra_alta.mp4",
+       "/images/project_caturra/caturra_baja.mp4"
     ]
   },
   {
     id: 3,
     title: "Casa Maya",
-    editorial_name: "Casa Maya",
-    intervention_type: "Diseño Integral",
+    editorial_name: "Maya",
+    intervention_type: "Obra incompleta",
     location: "Estanzuela, Veracruz",
     year: "2024",
-    narrative_intro: "Un gesto de comodidad y cercanía.",
-    description: "Una única planta pensada para que la arquitectura respire a través de sus jardines: frontal, interior y trasero. Las piezas permiten lo esencial de la vida a través de la iluminación y ventilación natural. Una casa que reúne lo esencial sin renunciar a las sensaciones profundas.",
+    narrative_intro: "Una única planta como gesto de comodidad y cercanía.",
+    description: "El diseño está pensado para que la casa respire a través de los jardines: frontal, interior y trasero. Las piezas permiten lo esencial de la vida a través de la iluminación y ventilación natural. Una casa que reúne lo esencial sin renunciar a las sensaciones. En Maya es dejar que la luz, el aire y el jardín ordenen la vida.",
     cover: "/images/project_maya/maya1.png",
     gallery: [
       "/images/project_maya/maya1.png",
@@ -67,38 +67,37 @@ export const projects = [
       "/images/project_maya/maya8.png",
       "/images/project_maya/maya9.jpg",
       "/images/project_maya/maya10.png",
-      "/images/project_maya/maya_planta.mp4",
-      "/images/project_maya/maya_baja.mp4"
+      "/images/project_maya/maya.mp4",
     ]
   },
   {
     id: 4,
     title: "Casa Palapa",
-    editorial_name: "Casa Palapa",
-    intervention_type: "Proyección Arquitectónica",
+    editorial_name: "Palapa",
+    intervention_type: "Proyección arquitectónica",
     location: "Boquilla de Oro, Veracruz",
     year: "2024",
-    narrative_intro: "Descanso y disfrute frente al mar.",
-    description: "La brisa marina entra por el balcón. El Roof Garden eleva la vista y el rumor de las olas enamora con su armonía sonora. El diseño protege la calma y respeta la palapa original donde inicia todo el relato. Una obra donde el mar descansa contigo.",
+    narrative_intro: "Descanso y disfrute a pocos metros del mar.",
+    description: "La brisa marina entra por el balcón. El Roof Garden eleva la vista y el rumor de las olas enamora con su armonía sonora. El diseño protege la calma y a la palapa donde inicia todo. Una casa donde el mar descansa contigo.",
     cover: "/images/project_palapa/pala1.png",
     gallery: [
       "/images/project_palapa/pala1.png",
       "/images/project_palapa/pala2.png",
       "/images/project_palapa/pala3.png",
       "/images/project_palapa/pala4.png",
-      "/images/project_palapa/palapa_planta_alta.mp4",
-      "/images/project_palapa/palapa_planta_baja.mp4"
+      "/images/project_palapa/palapa_alta.mp4",
+      "/images/project_palapa/palapa_baja.mp4"
     ]
   },
   {
     id: 5,
     title: "Casa Piñón",
-    editorial_name: "Casa Piñón",
-    intervention_type: "Residencial de Autor",
+    editorial_name: "Piñón",
+    intervention_type: "Obra incompleta",
     location: "Las Vigas, Veracruz",
-    year: "2024",
-    narrative_intro: "Integración silenciosa al paisaje.",
-    description: "Inspirada en el estilo nórdico, esta experiencia protege y se funde con el bosque. El interior nos brinda texturas de madera y el entorno el aroma a pino. La armonía se expresa en la luz tamizada que dibuja patrones sobre suelos naturales. Una casa diseñada para convivir con el entorno boscoso.",
+    year: "2022",
+    narrative_intro: "Una experiencia que protege y se integra al paisaje.",
+    description: "Su diseño está inspirado en el estilo nórdico. El interior nos brinda texturas de madera y el entorno el aroma a pino. Dos plantas que permiten conexión y contemplación. La armonía se expresa en la luz tamizada que dibuja patrones sobre suelos de madera. Una casa que convive con el bosque.",
     cover: "/images/project_pinon/pinion1.png",
     gallery: [
       "/images/project_pinon/pinion1.png",
@@ -109,8 +108,8 @@ export const projects = [
       "/images/project_pinon/pinion6.png",
       "/images/project_pinon/pinion7.png",
       "/images/project_pinon/pinion8.png",
-      "/images/project_pinon/pinion_planta_alta.mp4",
-      "/images/project_pinon/pinion_planta_baja.mp4"
+      "/images/project_pinon/pinion_alta.mp4",
+      "/images/project_pinon/pinion_baja.mp4"
     ]
   }
 ];
