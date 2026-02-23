@@ -3,18 +3,47 @@ import { projects } from './products/data.js';
 import ambientMusic from './sound/pista_ambiental_sc.mp3';
 
 const teamData = [
-    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.pmg" },
-    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.png" },
-    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.png" },
-    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.png" },
-    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.png" },
-    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.png" }
+    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.jpg" },
+    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.jpg" },
+    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.jpg" },
+    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.jpg" },
+    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.jpg" },
+    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.jpg" }
 ];
 
 const NeutraApp = {
   lenisInstance: null,
   audioInstance: null,
 
+  // --- 1. MÉTODOS DE CAMBIO DE VISTA (Centralizados para rigor técnico) ---
+  showProjects: function() {
+    const projectsView = document.getElementById('projects-view');
+    const homeView = document.getElementById('home-view');
+    
+    this.lenisInstance?.stop();
+    projectsView.classList.remove('hidden');
+    setTimeout(() => {
+        projectsView.classList.replace('opacity-0', 'opacity-100');
+        projectsView.classList.remove('pointer-events-none');
+        homeView.classList.add('opacity-0');
+        projectsView.scrollTop = 0;
+    }, 50);
+  },
+
+  showHome: function() {
+    const projectsView = document.getElementById('projects-view');
+    const homeView = document.getElementById('home-view');
+    
+    projectsView.classList.replace('opacity-100', 'opacity-0');
+    projectsView.classList.add('pointer-events-none');
+    homeView.classList.remove('opacity-0');
+    setTimeout(() => { 
+        projectsView.classList.add('hidden'); 
+        this.lenisInstance?.start(); 
+    }, 700);
+  },
+
+  // --- 2. INICIALIZACIONES ---
   initSmoothScroll: function() {
     this.lenisInstance = new Lenis({ 
         duration: 1.2, 
@@ -25,12 +54,24 @@ const NeutraApp = {
     const raf = (time) => { this.lenisInstance.raf(time); this.updateParallax(); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
+    // Listener Global de Navegación (Blindado para Proyectos)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
-        if(anchor.id === 'trigger-projects-page' || anchor.classList.contains('nav-link-projects')) return;
+        const targetId = anchor.getAttribute('href');
+        if(anchor.id === 'trigger-projects-page' || targetId === '#') return;
+        
         e.preventDefault();
-        const target = document.querySelector(anchor.getAttribute('href'));
-        if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
+
+        // FIX CRÍTICO: Si estamos en la vista de proyectos, volvemos al home antes de scrollear
+        const projectsView = document.getElementById('projects-view');
+        if (!projectsView.classList.contains('hidden')) {
+            this.showHome();
+        }
+
+        const target = document.querySelector(targetId);
+        if (target && this.lenisInstance) {
+          this.lenisInstance.scrollTo(target);
+        }
       });
     });
   },
@@ -40,6 +81,83 @@ const NeutraApp = {
     const scrolled = this.lenisInstance.scroll; 
     document.querySelectorAll('.parallax-img').forEach(img => { 
         img.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0) scale(1.25)`; 
+    });
+  },
+
+  initMobileMenu: function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const logo = document.getElementById('nav-logo');
+    if (!menuToggle || !logo) return;
+
+    const navContainer = logo.nextElementSibling;
+    if (!navContainer) return;
+
+    // Logo dinámico
+    let mobileLogo = document.getElementById('mobile-menu-logo');
+    if (!mobileLogo) {
+        mobileLogo = document.createElement('img');
+        mobileLogo.id = 'mobile-menu-logo';
+        mobileLogo.src = './src/logo/sca_logo.svg';
+        mobileLogo.className = 'hidden absolute bottom-12 left-1/2 transform -translate-x-1/2 w-24 opacity-30 pointer-events-none transition-opacity duration-700';
+        navContainer.appendChild(mobileLogo);
+    }
+
+    const originalClasses = navContainer.className;
+    const mobileClasses = "fixed inset-0 w-full h-[100dvh] bg-white flex flex-col items-center justify-center gap-8 md:gap-12 z-[65] text-2xl md:text-4xl font-display uppercase tracking-[0.2em] text-brand-dark";
+
+    const closeMenu = () => {
+        menuToggle.classList.remove('active');
+        navContainer.className = originalClasses;
+        mobileLogo.classList.remove('block');
+        mobileLogo.classList.add('hidden');
+        document.body.style.overflow = '';
+        this.lenisInstance?.start();
+    };
+
+    const openMenu = () => {
+        navContainer.className = mobileClasses;
+        mobileLogo.classList.remove('hidden');
+        mobileLogo.classList.add('block');
+        document.body.style.overflow = 'hidden';
+        this.lenisInstance?.stop();
+    };
+
+    menuToggle.addEventListener('click', () => {
+        if (menuToggle.classList.contains('active')) closeMenu();
+        else { menuToggle.classList.add('active'); openMenu(); }
+    });
+
+    // Navegación dentro del menú móvil (Reutilizando showHome)
+    navContainer.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            if (window.innerWidth < 1024) {
+                e.preventDefault(); 
+                const targetId = link.getAttribute('href');
+                closeMenu(); 
+
+                setTimeout(() => {
+                    if (link.id === 'trigger-projects-page') {
+                        this.showProjects();
+                    } else if (targetId && targetId !== '#') {
+                        const projectsView = document.getElementById('projects-view');
+                        if (!projectsView.classList.contains('hidden')) this.showHome();
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement && this.lenisInstance) {
+                            this.lenisInstance.scrollTo(targetElement);
+                        }
+                    }
+                }, 150);
+            }
+        });
+    });
+
+    logo.addEventListener('click', () => {
+        if (window.innerWidth < 1024 && menuToggle.classList.contains('active')) {
+            closeMenu();
+            if (!document.getElementById('projects-view').classList.contains('hidden')) this.showHome();
+            setTimeout(() => this.lenisInstance?.scrollTo(0), 100);
+        }
     });
   },
 
@@ -57,21 +175,32 @@ const NeutraApp = {
     }
 
     if(audioBtn) {
+        const textSpan = audioBtn.lastElementChild;
         audioBtn.onclick = () => {
+            if (!audioBtn.style.minWidth) {
+                audioBtn.style.minWidth = `${audioBtn.offsetWidth}px`;
+                textSpan.style.display = 'inline-block';
+                textSpan.style.textAlign = 'center';
+                textSpan.style.width = '100%';
+            }
             if(!this.audioInstance) { 
                 this.audioInstance = new Audio(ambientMusic); 
                 this.audioInstance.loop = true; 
                 this.audioInstance.volume = 0.4;
             }
-            if(this.audioInstance.paused) { 
-                this.audioInstance.play(); 
-                audioBtn.classList.add('bg-brand-dark', 'text-white');
-                audioBtn.querySelector('span:last-child').textContent = "Experiencia activa";
-            } else { 
-                this.audioInstance.pause(); 
-                audioBtn.classList.remove('bg-brand-dark', 'text-white');
-                audioBtn.querySelector('span:last-child').textContent = "Activa experiencia sonora";
-            }
+            textSpan.style.opacity = '0';
+            setTimeout(() => {
+                if(this.audioInstance.paused) { 
+                    this.audioInstance.play(); 
+                    audioBtn.classList.add('bg-brand-dark', 'text-white');
+                    textSpan.textContent = "Experiencia activa";
+                } else { 
+                    this.audioInstance.pause(); 
+                    audioBtn.classList.remove('bg-brand-dark', 'text-white');
+                    textSpan.textContent = "Activa la experiencia sonora";
+                }
+                textSpan.style.opacity = '1';
+            }, 200);
         };
     }
   },
@@ -79,61 +208,41 @@ const NeutraApp = {
   initViewManager: function() {
     const triggerBtn = document.getElementById('view-all-projects');
     const backBtn = document.getElementById('back-to-home');
-    const projectsView = document.getElementById('projects-view');
-    const homeView = document.getElementById('home-view');
-
-    const showProjects = () => {
-        this.lenisInstance?.stop();
-        projectsView.classList.remove('hidden');
-        setTimeout(() => {
-            projectsView.classList.replace('opacity-0', 'opacity-100');
-            projectsView.classList.remove('pointer-events-none');
-            homeView.classList.add('opacity-0');
-        }, 50);
+    if(triggerBtn) triggerBtn.onclick = () => this.showProjects();
+    if(backBtn) backBtn.onclick = () => this.showHome();
+    document.getElementById('nav-logo').onclick = (e) => { 
+        if (!document.getElementById('projects-view').classList.contains('hidden')) {
+            e.preventDefault();
+            this.showHome();
+        }
     };
-
-    const showHome = () => {
-        projectsView.classList.replace('opacity-100', 'opacity-0');
-        projectsView.classList.add('pointer-events-none');
-        homeView.classList.remove('opacity-0');
-        setTimeout(() => { 
-            projectsView.classList.add('hidden'); 
-            this.lenisInstance?.start(); 
-        }, 700);
-    };
-
-    if(triggerBtn) triggerBtn.onclick = showProjects;
-    if(backBtn) backBtn.onclick = showHome;
-    document.getElementById('nav-logo').onclick = (e) => { e.preventDefault(); showHome(); };
   },
 
   initPortfolio: function() {
     const gridFull = document.getElementById('project-grid-full');
     const modal = document.getElementById('project-modal');
 
-// Dentro de NeutraApp.initPortfolio:
-            if (gridFull) {
-                gridFull.innerHTML = projects.map(p => `
-                    <article class="relative w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-2.5rem)] aspect-[3/4] overflow-hidden bg-gray-100 group cursor-pointer shadow-sm project-card" data-id="${p.id}">
-                    <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" loading="lazy">
-                    <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/40 transition-colors"></div>
-                    <div class="absolute bottom-0 left-0 p-8 w-full z-20">
-                        <h3 class="text-2xl font-display text-white mb-2">${p.editorial_name}</h3>
-                        <span class="text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location}</span>
-                    </div>
-                    </article>
-                `).join('');
-            }
+    if (gridFull) {
+        gridFull.innerHTML = projects.map(p => `
+            <article class="relative w-full md:w-[calc((100%-2.5rem)/2)] lg:w-[calc((100%-5rem)/3)] aspect-[3/4] overflow-hidden bg-gray-100 group cursor-pointer shadow-sm project-card" data-id="${p.id}">
+              <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" loading="lazy">
+              <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/40 transition-colors"></div>
+              <div class="absolute bottom-0 left-0 p-6 md:p-8 w-full z-20">
+                <h3 class="text-xl md:text-2xl font-display text-white mb-2">${p.editorial_name}</h3>
+                <span class="text-[9px] md:text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location}</span>
+              </div>
+            </article>
+        `).join('');
+    }
 
     document.addEventListener('click', (e) => {
         const card = e.target.closest('.project-card');
-        if (card) {
-            this.openModal(projects.find(proj => proj.id == card.dataset.id), modal);
-        }
+        if (card) this.openModal(projects.find(proj => proj.id == card.dataset.id), modal);
     });
 
     document.getElementById('close-modal').onclick = () => {
-        document.getElementById('modal-panel').classList.add('translate-x-full');
+        const panel = document.getElementById('modal-panel');
+        panel.classList.add('translate-x-full', 'lg:translate-x-full');
         document.getElementById('modal-backdrop').classList.remove('opacity-100');
         setTimeout(() => { 
             modal.classList.add('invisible');
@@ -149,9 +258,9 @@ const NeutraApp = {
     const galleryScroll = document.getElementById('gallery-scroll');
 
     textContainer.innerHTML = `
-        <img src="/src/logo/logotipo_completo.svg" class="w-40 mb-12 opacity-80">
-        <h2 class="text-5xl lg:text-7xl font-display text-brand-dark mb-10 leading-tight">${p.editorial_name}</h2>
-        <div class="space-y-8 text-lg font-body text-gray-600 leading-relaxed text-justify">
+        <img src="/src/logo/sca_logo.svg" class="w-20 md:w-28 lg:w-40 mb-6 lg:mb-12 opacity-80">
+        <h2 class="text-4xl md:text-5xl lg:text-7xl font-display text-brand-dark mb-4 lg:mb-10 leading-tight">${p.editorial_name}</h2>
+        <div class="space-y-4 lg:space-y-8 text-sm md:text-base lg:text-lg font-body text-gray-600 leading-relaxed text-left lg:text-justify">
             <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
             <p>${p.description}</p>
         </div>
@@ -159,11 +268,11 @@ const NeutraApp = {
 
     const videos = p.gallery.filter(f => f.endsWith('.mp4'));
     if (videos.length > 0) {
-        const videoBtn = document.createElement('button');
-        videoBtn.className = "mt-12 w-full py-5 border border-brand-magenta text-brand-magenta text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-brand-magenta hover:text-white transition-all cursor-pointer";
-        videoBtn.innerText = "Ver Recorrido Virtual";
-        videoBtn.onclick = () => this.openVideoModal(videos);
-        textContainer.appendChild(videoBtn);
+        const videoBtnDesktop = document.createElement('button');
+        videoBtnDesktop.className = "hidden lg:block mt-12 w-full py-5 border border-brand-magenta text-brand-magenta text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-brand-magenta hover:text-white transition-all cursor-pointer";
+        videoBtnDesktop.innerText = "Ver Recorrido Virtual";
+        videoBtnDesktop.onclick = () => this.openVideoModal(videos);
+        textContainer.appendChild(videoBtnDesktop);
     }
 
     galleryContainer.innerHTML = p.gallery
@@ -171,13 +280,29 @@ const NeutraApp = {
         .map(f => `<img src="${f}" class="w-full h-auto block object-cover" loading="eager">`)
         .join('');
 
+    const existingMobileBtn = document.getElementById('mobile-video-btn');
+    if (existingMobileBtn) existingMobileBtn.remove();
+
+    if (videos.length > 0) {
+        const mobileBtnWrapper = document.createElement('div');
+        mobileBtnWrapper.id = 'mobile-video-btn';
+        mobileBtnWrapper.className = "lg:hidden sticky bottom-0 left-0 w-full p-4 md:p-6 bg-gradient-to-t from-white via-white/90 to-transparent z-30 flex justify-center pb-8 md:pb-10";
+        const mobileBtn = document.createElement('button');
+        mobileBtn.className = "w-full max-w-xs py-4 md:py-5 bg-brand-dark text-white text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold shadow-2xl hover:bg-brand-magenta transition-all rounded-sm cursor-pointer";
+        mobileBtn.innerText = "Ver Recorrido";
+        mobileBtn.onclick = () => this.openVideoModal(videos);
+        mobileBtnWrapper.appendChild(mobileBtn);
+        galleryScroll.appendChild(mobileBtnWrapper);
+    }
+
     modal.classList.remove('invisible');
     this.lenisInstance?.stop();
     document.body.style.overflow = 'hidden';
 
     requestAnimationFrame(() => {
         document.getElementById('modal-backdrop').classList.add('opacity-100');
-        document.getElementById('modal-panel').classList.remove('translate-x-full');
+        const panel = document.getElementById('modal-panel');
+        panel.classList.remove('translate-x-full', 'lg:translate-x-full');
         galleryScroll.scrollTop = 0;
         setTimeout(() => textContainer.classList.remove('opacity-0', 'translate-y-8'), 400);
     });
@@ -187,11 +312,9 @@ const NeutraApp = {
     const vModal = document.getElementById('video-modal');
     const player = document.getElementById('video-player-root');
     const switcher = document.getElementById('video-switcher-container');
-
     switcher.innerHTML = '';
     vModal.classList.remove('invisible');
     setTimeout(() => vModal.classList.replace('opacity-0', 'opacity-100'), 10);
-
     player.src = videos[0];
     player.play();
 
@@ -212,7 +335,6 @@ const NeutraApp = {
             switcher.appendChild(btn);
         });
     }
-
     document.getElementById('close-video-modal').onclick = () => {
         player.pause();
         vModal.classList.replace('opacity-100', 'opacity-0');
@@ -224,9 +346,16 @@ const NeutraApp = {
     const grid = document.getElementById('team-grid');
     if (!grid) return;
     grid.innerHTML = teamData.map(m => `
-        <div class="group flex flex-col gap-6">
-            <div class="aspect-[3/4] overflow-hidden bg-gray-100"><img src="${m.img}" class="w-full h-full object-cover  group-hover:scale-110 transition-all duration-700"></div>
-            <div><h4 class="text-3xl font-display text-brand-dark">${m.name}</h4><p class="text-[10px] font-subtitle text-brand-magenta uppercase tracking-widest mb-4">${m.role}</p><p class="text-sm font-body text-gray-500 leading-relaxed">${m.desc}</p></div>
+        <div class="group flex flex-col gap-4 md:gap-6 w-full md:w-[calc((100%-2.5rem)/2)] lg:w-[calc((100%-8rem)/3)]">
+            <div class="aspect-[3/4] overflow-hidden bg-gray-100 relative">
+                <div class="absolute inset-0 bg-brand-dark/5 mix-blend-multiply group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none"></div>
+                <img src="${m.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" loading="lazy">
+            </div>
+            <div class="text-center md:text-left">
+                <h4 class="text-2xl md:text-3xl font-display text-brand-dark">${m.name}</h4>
+                <p class="text-[9px] md:text-[10px] font-subtitle text-brand-magenta uppercase tracking-widest mb-3 md:mb-4">${m.role}</p>
+                <p class="text-xs md:text-sm font-body text-gray-500 leading-relaxed">${m.desc}</p>
+            </div>
         </div>
     `).join('');
   }
@@ -234,6 +363,7 @@ const NeutraApp = {
 
 document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initSmoothScroll();
+  NeutraApp.initMobileMenu();
   NeutraApp.initViewManager();
   NeutraApp.initPortfolio();
   NeutraApp.initTeam();
