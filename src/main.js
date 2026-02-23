@@ -3,25 +3,41 @@ import { projects } from './products/data.js';
 import ambientMusic from './sound/pista_ambiental_sc.mp3';
 
 const teamData = [
-    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.jpg" },
-    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.jpg" },
-    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.jpg" },
-    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.jpg" },
-    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.jpg" },
-    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.jpg" }
+    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.png" },
+    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.png" },
+    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.png" },
+    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.png" },
+    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.png" },
+    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.png" }
 ];
 
 const NeutraApp = {
   lenisInstance: null,
   audioInstance: null,
 
-  // --- 1. MÉTODOS DE CAMBIO DE VISTA (Centralizados para rigor técnico) ---
+  // --- 1. MÉTODOS MAESTROS DE VISTA ---
+  
+  // MÉTODO NUEVO: Elimina el escudo visual tras cargar
+// MÉTODO MAESTRO DE REVELACIÓN (Corregido: CSS Specificity)
+  revealSite: function() {
+    const main = document.getElementById('main-content');
+    if (!main) return;
+    
+    requestAnimationFrame(() => {
+        // Al aplicarlo como style, vencemos la regla del ID del <head>
+        main.style.visibility = 'visible';
+        main.style.opacity = '1'; 
+    });
+  },
+
   showProjects: function() {
     const projectsView = document.getElementById('projects-view');
     const homeView = document.getElementById('home-view');
     
     this.lenisInstance?.stop();
-    projectsView.classList.remove('hidden');
+    // Quitamos el escudo antes de animar
+    projectsView.classList.remove('spa-view-shield', 'hidden');
+    
     setTimeout(() => {
         projectsView.classList.replace('opacity-0', 'opacity-100');
         projectsView.classList.remove('pointer-events-none');
@@ -37,6 +53,7 @@ const NeutraApp = {
     projectsView.classList.replace('opacity-100', 'opacity-0');
     projectsView.classList.add('pointer-events-none');
     homeView.classList.remove('opacity-0');
+    
     setTimeout(() => { 
         projectsView.classList.add('hidden'); 
         this.lenisInstance?.start(); 
@@ -54,7 +71,6 @@ const NeutraApp = {
     const raf = (time) => { this.lenisInstance.raf(time); this.updateParallax(); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
 
-    // Listener Global de Navegación (Blindado para Proyectos)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
@@ -62,7 +78,6 @@ const NeutraApp = {
         
         e.preventDefault();
 
-        // FIX CRÍTICO: Si estamos en la vista de proyectos, volvemos al home antes de scrollear
         const projectsView = document.getElementById('projects-view');
         if (!projectsView.classList.contains('hidden')) {
             this.showHome();
@@ -92,7 +107,6 @@ const NeutraApp = {
     const navContainer = logo.nextElementSibling;
     if (!navContainer) return;
 
-    // Logo dinámico
     let mobileLogo = document.getElementById('mobile-menu-logo');
     if (!mobileLogo) {
         mobileLogo = document.createElement('img');
@@ -127,7 +141,6 @@ const NeutraApp = {
         else { menuToggle.classList.add('active'); openMenu(); }
     });
 
-    // Navegación dentro del menú móvil (Reutilizando showHome)
     navContainer.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', (e) => {
             if (window.innerWidth < 1024) {
@@ -223,14 +236,14 @@ const NeutraApp = {
     const modal = document.getElementById('project-modal');
 
     if (gridFull) {
+        // Renderizamos la estructura correcta del año y el escudo en el HTML base del modal
         gridFull.innerHTML = projects.map(p => `
             <article class="relative w-full md:w-[calc((100%-2.5rem)/2)] lg:w-[calc((100%-5rem)/3)] aspect-[3/4] overflow-hidden bg-gray-100 group cursor-pointer shadow-sm project-card" data-id="${p.id}">
               <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" loading="lazy">
               <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/40 transition-colors"></div>
               <div class="absolute bottom-0 left-0 p-6 md:p-8 w-full z-20">
                 <h3 class="text-xl md:text-2xl font-display text-white mb-2">${p.editorial_name}</h3>
-                <span class="text-[9px] md:text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location}</span>
-                <p class="text-[9px] md:text-[16px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.year}</p>
+                <span class="text-[9px] md:text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location} • ${p.year}</span>
               </div>
             </article>
         `).join('');
@@ -245,8 +258,10 @@ const NeutraApp = {
         const panel = document.getElementById('modal-panel');
         panel.classList.add('translate-x-full', 'lg:translate-x-full');
         document.getElementById('modal-backdrop').classList.remove('opacity-100');
+        
         setTimeout(() => { 
-            modal.classList.add('invisible');
+            // Restauramos el escudo técnico al cerrar
+            modal.classList.add('invisible', 'spa-view-shield');
             document.body.style.overflow = '';
             if (document.getElementById('projects-view').classList.contains('hidden')) this.lenisInstance?.start();
         }, 500);
@@ -264,7 +279,7 @@ const NeutraApp = {
         <div class="space-y-4 lg:space-y-8 text-sm md:text-base lg:text-lg font-body text-gray-600 leading-relaxed text-left lg:text-justify">
             <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
             <p>${p.description}</p>
-            <p>${p.year}</p>
+            <p class="text-brand-magenta font-subtitle uppercase tracking-widest text-xs">${p.year} - ${p.intervention_type}</p>
         </div>
     `;
 
@@ -297,7 +312,8 @@ const NeutraApp = {
         galleryScroll.appendChild(mobileBtnWrapper);
     }
 
-    modal.classList.remove('invisible');
+    // Quitamos el escudo antes de mostrar el modal
+    modal.classList.remove('spa-view-shield', 'invisible');
     this.lenisInstance?.stop();
     document.body.style.overflow = 'hidden';
 
@@ -315,7 +331,10 @@ const NeutraApp = {
     const player = document.getElementById('video-player-root');
     const switcher = document.getElementById('video-switcher-container');
     switcher.innerHTML = '';
-    vModal.classList.remove('invisible');
+    
+    // Quitamos el escudo
+    vModal.classList.remove('spa-view-shield', 'invisible');
+    
     setTimeout(() => vModal.classList.replace('opacity-0', 'opacity-100'), 10);
     player.src = videos[0];
     player.play();
@@ -340,7 +359,9 @@ const NeutraApp = {
     document.getElementById('close-video-modal').onclick = () => {
         player.pause();
         vModal.classList.replace('opacity-100', 'opacity-0');
-        setTimeout(() => vModal.classList.add('invisible'), 500);
+        
+        // Restauramos el escudo al cerrar
+        setTimeout(() => vModal.classList.add('invisible', 'spa-view-shield'), 500);
     };
   },
 
@@ -351,7 +372,7 @@ const NeutraApp = {
         <div class="group flex flex-col gap-4 md:gap-6 w-full md:w-[calc((100%-2.5rem)/2)] lg:w-[calc((100%-8rem)/3)]">
             <div class="aspect-[3/4] overflow-hidden bg-gray-100 relative">
                 <div class="absolute inset-0 bg-brand-dark/5 mix-blend-multiply group-hover:bg-transparent transition-colors duration-700 z-10 pointer-events-none"></div>
-                <img src="${m.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" loading="lazy">
+                <img src="${m.img}" class="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" loading="lazy">
             </div>
             <div class="text-center md:text-left">
                 <h4 class="text-2xl md:text-3xl font-display text-brand-dark">${m.name}</h4>
@@ -360,6 +381,58 @@ const NeutraApp = {
             </div>
         </div>
     `).join('');
+  },
+
+  // INTEGRACIÓN DEL FORMULARIO DE WEB3FORMS
+  initContactForm: function() {
+    const form = document.getElementById('contact-form');
+    const btn = document.getElementById('submit-btn');
+
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const object = Object.fromEntries(formData);
+      const json = JSON.stringify(object);
+
+      const originalText = btn.innerText;
+      btn.innerText = "Enviando...";
+      btn.disabled = true;
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
+      })
+      .then(async (response) => {
+        let result = await response.json();
+        if (response.status === 200) {
+          btn.innerText = "Mensaje Recibido";
+          btn.classList.replace('bg-brand-dark', 'bg-green-600');
+          form.reset();
+        } else {
+          btn.innerText = "Error en el envío";
+          console.error("Error del servidor:", result.message);
+        }
+      })
+      .catch(error => {
+        btn.innerText = "Fallo de conexión";
+        console.error("Error técnico:", error);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.classList.remove('bg-green-600');
+          if(!btn.classList.contains('bg-brand-dark')) btn.classList.add('bg-brand-dark');
+          btn.disabled = false;
+        }, 4000);
+      });
+    });
   }
 };
 
@@ -370,4 +443,8 @@ document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initPortfolio();
   NeutraApp.initTeam();
   NeutraApp.initHeroEvents();
+  NeutraApp.initContactForm(); // Ejecutamos la validación del formulario
+  
+  // ORDEN FINAL: Mostrar el sitio tras cargar el DOM
+  NeutraApp.revealSite();
 });
