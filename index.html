@@ -7,14 +7,14 @@
     <title>Stefany Cano | Arquitectura de Autor</title>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
   </head>
-  <body class="bg-white text-gray-900 m-0 p-0 font-body selection:bg-brand-magenta selection:text-white">
+  <body class="bg-white text-gray-900 m-0 p-0 font-body selection:bg-brand-magenta selection:text-white overflow-x-hidden">
 
-    <main id="main-content" class="relative transition-opacity duration-1000 flex flex-col">
+    <main id="main-content" class="relative transition-opacity duration-1000 flex flex-col w-full overflow-x-hidden">
       
       <nav class="fixed top-0 w-full z-[70] bg-white/90 backdrop-blur-sm border-b border-gray-100 transition-all duration-300" id="navbar">
-        <div class="max-w-[1600px] mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" id="nav-logo" class="w-32 lg:w-48 block">
-                <img src="./src/logo/sca_logo.svg" alt="Stefany Cano" class="w-2/4">
+        <div class="max-w-[1600px] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            <a href="#" id="nav-logo" class="w-24 md:w-32 lg:w-48 block">
+                <img src="./src/logo/sca_logo.svg" alt="Stefany Cano" class="w-full lg:w-2/4">
             </a>
 
             <div class="hidden lg:flex gap-8 text-[11px] uppercase tracking-[0.15em] font-subtitle font-medium text-gray-500">
@@ -34,34 +34,34 @@
         </div>
       </nav>
 
-      <div id="home-view" class="flex-1 pt-20 transition-all duration-700">
+      <div id="home-view" class="flex-1 pt-16 md:pt-20 transition-all duration-700 w-full overflow-hidden">
           
-            <section id="hero" class="relative min-h-[95vh] flex flex-col justify-center px-8 lg:px-24 py-20 overflow-hidden">
-                <div class="max-w-5xl z-10 animate-fade-in-up lg:pt-20">
-                    <h1 class="text-8xl lg:text-[170px] font-display text-brand-magenta mb-4 lg:mb-10 leading-none">Stefany Cano</h1>
-                    <h2 class="text-xl lg:text-3xl font-subtitle text-gray-600 font-light max-w-2xl mb-12 leading-snug">
+            <section id="hero" class="relative min-h-[90vh] md:min-h-[95vh] flex flex-col justify-center px-6 md:px-12 lg:px-24 py-20 overflow-hidden">
+                <div class="max-w-5xl z-10 animate-fade-in-up mt-10 lg:pt-20">
+                    <h1 class="text-[60px] md:text-8xl lg:text-[170px] font-display text-brand-magenta mb-4 lg:mb-10 leading-[0.9]">Stefany Cano</h1>
+                    <h2 class="text-lg md:text-xl lg:text-3xl font-subtitle text-gray-600 font-light max-w-2xl mb-8 md:mb-12 leading-snug">
                         Arquitectura donde la naturaleza, el diseño y la armonía conviven con intención.
                     </h2>
                     
-                    <div class="flex flex-col lg:flex-row gap-6 items-start font-body">
-                        <button id="welcome-trigger" class="bg-brand-dark text-white px-8 py-4 text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all duration-500 cursor-pointer">
+                    <div class="flex flex-col sm:flex-row gap-4 md:gap-6 items-start font-body w-full sm:w-auto">
+                        <button id="welcome-trigger" class="bg-brand-dark text-white px-6 md:px-8 py-4 text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all duration-500 cursor-pointer w-full sm:w-auto">
                             Mensaje de bienvenida
                         </button>
                     </div>
 
-                    <div id="welcome-message" class="mt-10 max-w-2xl bg-[#fafafa] p-8 border-l-4 border-brand-magenta opacity-0 translate-y-4 pointer-events-none transition-all duration-700">
-                        <p class="text-lg font-body text-gray-700 leading-relaxed italic">
+                    <div id="welcome-message" class="mt-8 md:mt-10 max-w-2xl bg-[#fafafa] p-6 md:p-8 border-l-4 border-brand-magenta opacity-0 translate-y-4 pointer-events-none transition-all duration-700">
+                        <p class="text-base md:text-lg font-body text-gray-700 leading-relaxed italic">
                             "Hola, me encanta que estés aquí. Este espacio es una invitación a reconocer la arquitectura como experiencia sensorial, en diálogo con la naturaleza. Recorre el sitio como quien visita la casa de alguien cercano, con armonía y curiosidad."
                         </p>
                     </div>
                 </div>
 
-                <button id="audio-toggle" class="absolute bottom-15 lg:bottom-20 right-8 lg:right-10 z-20 border bg-white/10 backdrop-blur-sm px-6 py-4 text-[10px] uppercase tracking-[0.3em] hover:bg-brand-dark hover:text-white transition-all duration-500 flex items-center gap-3 cursor-pointer group">
-                    <span class="relative flex h-2 w-2">
+                <button id="audio-toggle" class="absolute bottom-8 md:bottom-15 lg:bottom-20 right-6 md:right-8 lg:right-10 z-20 border bg-white/30 md:bg-white/10 backdrop-blur-md px-4 md:px-6 py-3 md:py-4 text-[9px] md:text-[10px] uppercase tracking-[0.2em] md:tracking-[0.3em] hover:bg-brand-dark hover:text-white transition-all duration-500 flex items-center gap-2 md:gap-3 cursor-pointer group">
+                    <span class="relative flex h-2 w-2 shrink-0">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-magenta opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-magenta"></span>
                     </span>
-                    <span class="group-hover:tracking-[0.4em] transition-all duration-500">Activa la experiencia sonora</span>
+                    <span class="group-hover:tracking-[0.3em] md:group-hover:tracking-[0.4em] transition-all duration-500 whitespace-nowrap">Activa la experiencia sonora</span>
                 </button>
 
                 <div class="absolute inset-0 w-full h-full z-[-1] overflow-hidden">
@@ -69,175 +69,188 @@
                 </div>
             </section>
 
-          <section id="practica" class="px-8 lg:px-24 py-32 bg-brand-magenta">
+          <section id="practica" class="px-6 md:px-12 lg:px-24 py-24 md:py-32 bg-brand-magenta">
               <div class="max-w-4xl mx-auto">
-                  <h3 class="text-3xl font-subtitle text-white uppercase tracking-widest mb-10">La práctica</h3>
-                  <p class="text-xl lg:text-2xl font-body text-white leading-relaxed text-justify">Pienso en la arquitectura como un arte consciente, guiada por una visión natural e integral. Cada proyecto se desarrolla tomando la experiencia de las personas como el eje del diseño, donde la luz, los colores, la ventilación y las texturas favorecen la claridad mental, confort físico y armonía emocional.</p>
+                  <h3 class="text-2xl md:text-3xl font-subtitle text-white uppercase tracking-widest mb-6 md:mb-10">La práctica</h3>
+                  <p class="text-lg md:text-xl lg:text-2xl font-body text-white/90 leading-relaxed text-left md:text-justify">Pienso en la arquitectura como un arte consciente, guiada por una visión natural e integral. Cada proyecto se desarrolla tomando la experiencia de las personas como el eje del diseño, donde la luz, los colores, la ventilación y las texturas favorecen la claridad mental, confort físico y armonía emocional.</p>
               </div>
           </section>
 
-          <section id="vision" class="px-8 lg:px-24 py-32 bg-gray-50">
-              <div class="max-w-4xl mx-auto text-right">
-                  <h3 class="text-3xl font-subtitle text-brand-dark uppercase tracking-widest mb-10">Visión</h3>
-                  <p class="text-xl lg:text-2xl font-body text-gray-600 leading-relaxed text-justify">Diseño proyectos donde la naturaleza se integra como estructura del espacio, guiando las decisiones arquitectónicas bajo principios que promueven una conexión sensorial y equilibrio ambiental para el beneficio de quien los habite.</p>
+          <section id="vision" class="px-6 md:px-12 lg:px-24 py-24 md:py-32 bg-gray-50">
+              <div class="max-w-4xl mx-auto md:text-right">
+                  <h3 class="text-2xl md:text-3xl font-subtitle text-brand-dark uppercase tracking-widest mb-6 md:mb-10">Visión</h3>
+                  <p class="text-lg md:text-xl lg:text-2xl font-body text-gray-600 leading-relaxed text-left md:text-justify">Diseño proyectos donde la naturaleza se integra como estructura del espacio, guiando las decisiones arquitectónicas bajo principios que promueven una conexión sensorial y equilibrio ambiental para el beneficio de quien los habite.</p>
               </div>
           </section>
 
-          <section id="portfolio" class="px-8 lg:px-24 py-40 bg-white flex flex-col items-center justify-center text-center overflow-hidden border-y border-gray-50">
-              <div class="relative group cursor-pointer" id="view-all-projects">
-                  <h2 class="text-5xl lg:text-[180px] font-display text-brand-dark leading-none uppercase tracking-tight transition-transform duration-700 group-hover:scale-[1.02]">Proyectos</h2>
-                  <div class="mt-12 flex flex-col items-center gap-6">
-                      <span class="text-[11px] uppercase tracking-[0.6em] font-body text-gray-400">Haz click para explorar las obras seleccionadas</span>
+          <section id="portfolio" class="px-6 md:px-12 lg:px-24 py-32 md:py-40 bg-white flex flex-col items-center justify-center text-center overflow-hidden border-y border-gray-50">
+              <div class="relative group cursor-pointer w-full" id="view-all-projects">
+                  <h2 class="text-5xl md:text-7xl lg:text-[180px] font-display text-brand-dark leading-none uppercase tracking-tight transition-transform duration-700 group-hover:scale-[1.02] break-words">Proyectos</h2>
+                  <div class="mt-8 md:mt-12 flex flex-col items-center gap-4 md:gap-6">
+                      <span class="text-[9px] md:text-[11px] uppercase tracking-[0.4em] md:tracking-[0.6em] font-body text-gray-400 max-w-[250px] md:max-w-none">Haz click para explorar las obras seleccionadas</span>
                   </div>
               </div>
           </section>
 
-          <section id="propuesta" class="px-8 lg:px-24 py-40 bg-linear-to-b from-brand-green from-50% to-brand-dark to-50% text-white relative overflow-hidden">
-            <div class="max-w-5xl mx-auto">
-                <h3 class="text-3xl lg:text-5xl font-display text-white uppercase tracking-[0.4em] mb-16">Mi propuesta</h3>
+        <section id="propuesta" class="px-6 md:px-12 lg:px-24 py-24 md:py-40 bg-linear-to-b from-brand-green from-50% to-brand-dark to-50% text-white relative overflow-hidden">
+            <div class="max-w-5xl mx-auto relative z-10">
+                <h3 class="text-2xl md:text-3xl lg:text-5xl font-display text-white uppercase tracking-[0.2em] md:tracking-[0.4em] mb-12 md:mb-16">Mi propuesta</h3>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 font-body text-gray-300 leading-relaxed text-lg">
-                    <div class="flex flex-col gap-8">
-                        <p class="text-white text-xl font-medium">“Creo en una arquitectura diferente, una que cuida y acompaña.”</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 font-body text-white leading-relaxed text-base md:text-lg">
+                    <div class="flex flex-col gap-6 md:gap-8">
+                        <p class="text-white text-lg md:text-xl font-medium">“Creo en una arquitectura diferente, una que cuida y acompaña.”</p>
                         <p>Todo parte de un deseo sencillo: dejar el mundo mejor de lo que lo encontramos. La naturaleza no es un recurso ni un ornamento, es compañera y coautora de cada espacio que imagino.</p>
                         <p>A través de este estudio busco compartir esa semilla de amor por la tierra, compartiendo mis ideas a quienes se acercan —los habitantes— mediante reflexiones en el blog.</p>
                     </div>
                     
-                    <div class="flex flex-col gap-8">
+                    <div class="flex flex-col gap-6 md:gap-8 mt-4 md:mt-0">
                         <p>No se trata de un capricho estético: está demostrado que el ser humano necesita la presencia constante de la madre naturaleza para vivir en plenitud.</p>
                         <p>Habitar un espacio donde la naturaleza se integra como protagonista es un privilegio que debería pertenecer a todos. Mi propuesta es clara: diseñar lugares que promuevan bienestar sin dañar el entorno.</p>
                     </div>
                 </div>
 
-                <div class="mt-24 pt-16">
-                    <blockquote class="font-display text-4xl lg:text-6xl text-brand-magenta leading-tight mb-10">
+                <div class="mt-16 md:mt-24 pt-12 md:pt-16">
+                    <blockquote class="font-display text-3xl md:text-4xl lg:text-6xl text-brand-magenta leading-tight mb-8 md:mb-10">
                         “Si creamos una arquitectura en la que la naturaleza sea la protagonista, seguramente estaremos haciendo un bien no solo a la madre tierra, sino también a la humanidad.”
                     </blockquote>
-                    <cite class="text-2xl lg:text-4xl font-light font-subtitle text-white not-italic">— Stefany Cano</cite>
+                    <cite class="text-xl md:text-2xl lg:text-4xl font-light font-subtitle text-white not-italic block">— Stefany Cano</cite>
                 </div>
             </div>
-            <div class="absolute -bottom-20 -right-20 opacity-5 pointer-events-none">
-                <img src="./src/logo/sca_logo.svg" class="w-[500px]" alt="">
+            <div class="absolute -bottom-10 -right-10 md:-bottom-20 md:-right-20 opacity-5 pointer-events-none">
+                <img src="./src/logo/sca_logo.svg" class="w-[300px] md:w-[500px]" alt="">
             </div>
-          </section>
+        </section>
 
-          <section id="equipo" class="px-8 lg:px-24 py-32 bg-white">
+          <section id="equipo" class="px-6 md:px-12 lg:px-24 py-24 md:py-32 bg-white">
               <div class="max-w-[1600px] mx-auto">
-                  <h2 class="text-4xl lg:text-5xl font-subtitle text-brand-dark mb-16 uppercase tracking-widest text-center">Mi equipo</h2>
-                  <div id="team-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16"></div>
+                  <h2 class="text-3xl md:text-4xl lg:text-5xl font-subtitle text-brand-dark mb-12 md:mb-16 uppercase tracking-widest text-center">Mi equipo</h2>
+                  <div id="team-grid" class="flex flex-wrap justify-center gap-8 md:gap-10 lg:gap-16"></div>
               </div>
           </section>
 
-          <section id="blog" class="px-8 lg:px-24 py-40 bg-brand-magenta text-white border-y border-gray-100">
+          <section id="blog" class="px-6 md:px-12 lg:px-24 py-24 md:py-40 bg-brand-magenta text-white border-y border-gray-100">
               <div class="max-w-4xl mx-auto text-center">
-                  <h2 class="text-4xl lg:text-6xl font-display mb-10 uppercase tracking-widest">Bioblog</h2>
-                  <div class="flex flex-col gap-8 items-center">
-                    <p class="text-xl lg:text-2xl font-subtitle leading-relaxed italic max-w-2xl">
+                  <h2 class="text-3xl md:text-4xl lg:text-6xl font-display mb-8 md:mb-10 uppercase tracking-widest">Bioblog</h2>
+                  <div class="flex flex-col gap-6 md:gap-8 items-center">
+                    <p class="text-lg md:text-xl lg:text-2xl font-subtitle leading-relaxed italic max-w-2xl px-4 md:px-0">
                         “Un espacio donde se narra, se comparte y se escucha. La conversación fluye en relatos que siembran amor por la naturaleza y enseñan a habitar en armonía.”
                     </p>
-                    <a href="#" class="mt-10 inline-block text-xs uppercase tracking-[0.4em] font-body border-b border-brand-magenta pb-2 hover:text-brand-magenta transition-colors">Entrar a la conversación</a>
+                    <a href="#" class="mt-6 md:mt-10 inline-block text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] font-body border-b border-brand-dark pb-2 hover:border-white transition-colors">Entrar a la conversación</a>
                   </div>
               </div>
           </section>
 
-          <section id="contact" class="px-8 lg:px-24 py-32 bg-white">
-              <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
+          <section id="contact" class="px-6 md:px-12 lg:px-24 py-24 md:py-32 bg-white">
+              <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
                   <div>
-                      <h2 class="text-6xl font-display text-brand-dark mb-8 uppercase tracking-tighter">Contacto.</h2>
-                      <p class="font-body text-gray-600 text-lg">Cada proyecto es una experiencia sensorial que respira en armonía con la vida y la naturaleza, hablemos de lo que podemos crear juntos.</p>
+                      <h2 class="text-5xl md:text-6xl lg:text-7xl font-display text-brand-dark mb-6 md:mb-8 uppercase tracking-wide">Contacto.</h2>
+                      <p class="font-body text-gray-600 text-base md:text-lg">Cada proyecto es una experiencia sensorial que respira en armonía con la vida y la naturaleza, hablemos de lo que podemos crear juntos.</p>
                   </div>
-                  <form class="flex flex-col gap-10 font-body">
+                  <form class="flex flex-col gap-8 md:gap-10 font-body w-full">
                       <input type="text" placeholder="Nombre" class="form-input">
                       <input type="email" placeholder="Correo" class="form-input">
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <select class="form-input text-gray-500 bg-transparent"><option value="" disabled selected>Tipo de proyecto</option><option value="residencial">Residencial</option><option value="comercial">Comercial</option><option value="publica">Obra Pública</option></select>
-                        <select class="form-input text-gray-500 bg-transparent"><option value="" disabled selected>Dimensión</option><option value="nuevo">Proyecto nuevo</option><option value="remodelacion">Remodelación</option><option value="interior">Diseño interior</option></select>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+                        <select class="form-input text-gray-500 bg-transparent w-full text-ellipsis overflow-hidden whitespace-nowrap appearance-none rounded-none"><option value="" disabled selected>Tipo de proyecto</option><option value="residencial">Residencial</option><option value="comercial">Comercial</option><option value="publica">Obra Pública</option></select>
+                        <select class="form-input text-gray-500 bg-transparent w-full text-ellipsis overflow-hidden whitespace-nowrap appearance-none rounded-none"><option value="" disabled selected>Dimensión</option><option value="nuevo">Proyecto nuevo</option><option value="remodelacion">Remodelación</option><option value="interior">Diseño interior</option></select>
                       </div>
-                      <button type="submit" class="bg-brand-dark text-white px-12 py-5 text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all w-full lg:w-auto cursor-pointer">Conversemos</button>
+                      <button type="submit" class="bg-brand-dark text-white px-8 md:px-12 py-4 md:py-5 text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all w-full lg:w-auto cursor-pointer mt-4">Conversemos</button>
                   </form>
               </div>
           </section>
 
-          <section id="descargables" class="px-8 lg:px-24 py-24 bg-brand-magenta/5 border-t border-brand-magenta/10">
-              <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
+          <section id="descargables" class="px-6 md:px-12 lg:px-24 py-16 md:py-24 bg-brand-magenta/5 border-t border-brand-magenta/10">
+              <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-12">
                   <div class="max-w-2xl text-center lg:text-left">
-                    <p class="text-xl font-body text-brand-dark leading-relaxed italic">“El camino comienza: recibe nuestras guías descargables, donde cada paso del proceso se revela con claridad.”</p>
+                    <p class="text-lg md:text-xl font-body text-brand-dark leading-relaxed italic">“El camino comienza: recibe nuestras guías descargables, donde cada paso del proceso se revela con claridad.”</p>
                   </div>
-                  <div class="flex flex-col gap-6 w-full lg:w-auto font-body">
-                      <a href="./src/guides/guia_procesos_proyectos.pdf" class="group flex items-center justify-between gap-10 text-xs uppercase tracking-[0.3em] border-b border-brand-dark pb-4 hover:border-brand-magenta transition-all">
-                        <span>Mi proceso para tu proyecto</span>
-                        <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  <div class="flex flex-col gap-4 md:gap-6 w-full lg:w-auto font-body">
+                      <a href="./src/guides/guia_procesos_proyectos.pdf" class="group flex items-center justify-between gap-6 md:gap-10 text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.3em] border-b border-brand-dark pb-3 md:pb-4 hover:border-brand-magenta transition-all w-full">
+                        <span class="truncate">Mi proceso para tu proyecto</span>
+                        <svg class="w-3 h-3 md:w-4 md:h-4 shrink-0 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                       </a>
-                      <a href="./src/guides/guia_procesos_interiores.pdf" class="group flex items-center justify-between gap-10 text-xs uppercase tracking-[0.3em] border-b border-brand-dark pb-4 hover:border-brand-magenta transition-all">
-                        <span>Mi proceso para diseño interiores</span>
-                        <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                      <a href="./src/guides/guia_procesos_interiores.pdf" class="group flex items-center justify-between gap-6 md:gap-10 text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.3em] border-b border-brand-dark pb-3 md:pb-4 hover:border-brand-magenta transition-all w-full">
+                        <span class="truncate">Mi proceso para interiores</span>
+                        <svg class="w-3 h-3 md:w-4 md:h-4 shrink-0 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                       </a>
                   </div>
               </div>
           </section>
 
-          <footer class="bg-white py-20 px-8 lg:px-24 border-t border-gray-100">
-              <div class="max-w-[1600px] mx-auto flex justify-between">
-                  <div class="flex flex-col gap-4 text-sm font-body text-gray-500">
-                      <img src="./src/logo/sca_logo.svg" alt="logotipo" class="w-20 lg:w-32">
+          <footer class="bg-white py-12 md:py-20 px-6 md:px-12 lg:px-24 border-t border-gray-100">
+              <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between gap-10 md:gap-0 items-center md:items-start text-center md:text-left">
+                  <div class="flex flex-col items-center md:items-start gap-4 text-xs md:text-sm font-body text-gray-500">
+                      <img src="./src/logo/sca_logo.svg" alt="logotipo" class="w-16 md:w-20 lg:w-32 mb-2">
                       <p>Coatepec, Veracruz.</p>
-                      <div class="flex gap-6 mt-4">
+                      <div class="flex justify-center md:justify-start gap-6 mt-2 md:mt-4">
                         <a href="https://www.instagram.com/stefanycano.arq" target="_blank" class="hover:text-brand-magenta">Instagram</a>
                         <a href="https://www.facebook.com/share/1DE56Z7PzC" target="_blank" class="hover:text-brand-magenta">Facebook</a>
                       </div>
                   </div>
-                  <div class="flex flex-col gap-4 text-[10px] uppercase tracking-widest text-gray-400 lg:text-right">
-                      <a href="#">Términos y condiciones</a> <a href="#">Política de privacidad</a>
-                      <p class="mt-10 font-display text-xl text-brand-dark normal-case italic">Más que proyectar viviendas, creamos entornos.</p>
+                  <div class="flex flex-col items-center md:items-end gap-3 md:gap-4 text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-widest text-gray-400 mt-6 md:mt-0">
+                      <div class="flex gap-4 md:gap-6">
+                        <a href="#" class="hover:text-brand-dark">Términos y condiciones</a> 
+                        <a href="#" class="hover:text-brand-dark">Política de privacidad</a>
+                      </div>
+                      <p class="mt-6 md:mt-10 font-display text-lg md:text-xl text-brand-dark normal-case italic">Más que proyectar viviendas, creamos entornos.</p>
                   </div>
               </div>
           </footer>
       </div>
 
-      <div id="projects-view" data-lenis-prevent class="fixed inset-0 z-[65] bg-white opacity-0 pointer-events-none transition-opacity duration-700 overflow-y-auto pt-32 hidden">
-          <section class="px-8 lg:px-24 py-20">
-              <div class="max-w-5xl">
-                  <h1 class="text-6xl lg:text-[100px] font-display text-brand-dark mb-6">Obras seleccionadas</h1>
-                  <p class="text-xl font-body text-gray-500 max-w-2xl leading-relaxed">Una selección de proyectos que representan mi visión, el criterio y la intención en el diseño.</p>
-              </div>
-          </section>
-          <section class="px-4 lg:px-24 pb-32">
-              <div id="project-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
-          </section>
-          <footer class="bg-gray-50 py-20 px-8 lg:px-24 text-center">
-              <button id="back-to-home" class="text-xs uppercase tracking-[0.3em] border-b border-brand-dark pb-2 hover:text-brand-magenta transition-colors cursor-pointer">Volver al inicio</button>
-          </footer>
-      </div>
+    <div id="projects-view" data-lenis-prevent class="fixed inset-0 z-[65] bg-white opacity-0 pointer-events-none transition-opacity duration-700 overflow-y-auto pt-24 md:pt-32 hidden">
+        <section class="px-6 md:px-12 lg:px-24 py-12 md:py-20">
+            <div class="max-w-5xl">
+                <h1 class="text-4xl md:text-6xl lg:text-[100px] font-display text-brand-dark mb-4 md:mb-6">Obras seleccionadas</h1>
+                <p class="text-base md:text-xl font-body text-gray-500 max-w-2xl leading-relaxed">
+                    Una selección de proyectos que representan mi visión, el criterio y la intención en el diseño.
+                </p>
+            </div>
+        </section>
+
+        <section class="px-6 md:px-12 lg:px-24 pb-20 md:pb-32 w-full">
+            <div id="project-grid-full" class="flex flex-wrap justify-center gap-6 md:gap-10 w-full">
+                </div>
+        </section>
+
+        <footer class="bg-gray-50 py-16 md:py-20 px-6 md:px-12 lg:px-24 text-center">
+            <button id="back-to-home" class="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] border-b border-brand-dark pb-2 hover:text-brand-magenta transition-colors cursor-pointer">
+                Volver al inicio
+            </button>
+        </footer>
+    </div>
 
     </main>
 
     <div id="project-modal" class="fixed inset-0 z-[200] invisible transition-all duration-500">
         <div id="modal-backdrop" class="absolute inset-0 bg-brand-dark/95 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>
-        <div id="modal-panel" class="absolute right-0 top-0 w-full lg:w-[90vw] h-full bg-[#fcfcfc] shadow-2xl transform translate-x-full transition-transform duration-[0.8s] flex flex-col lg:flex-row overflow-hidden">
-            <button id="close-modal" class="absolute top-8 right-8 z-[210] w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-xl hover:bg-brand-magenta hover:text-white transition-all duration-300 cursor-pointer">
-                <span class="text-3xl leading-none">&times;</span>
+        <div id="modal-panel" class="absolute right-0 top-0 w-full lg:w-[90vw] h-full bg-[#fcfcfc] shadow-2xl transform translate-x-full lg:translate-x-full transition-transform duration-[0.8s] flex flex-col lg:flex-row overflow-hidden">
+            
+            <button id="close-modal" class="absolute top-4 right-4 md:top-8 md:right-8 z-[210] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white shadow-xl hover:bg-brand-magenta hover:text-white transition-all duration-300 cursor-pointer">
+                <span class="text-2xl md:text-3xl leading-none">&times;</span>
             </button>
-            <div class="w-full lg:w-[35%] h-auto lg:h-full p-8 lg:p-20 flex flex-col justify-center bg-white border-r border-gray-100 overflow-y-auto">
-                <div id="modal-text-content" class="opacity-0 translate-y-8 transition-all duration-700"></div>
-                <div id="video-controls" class="mt-12 space-y-4"></div>
+            
+            <div class="w-full lg:w-[35%] h-1/2 lg:h-full p-6 md:p-12 lg:p-20 flex flex-col justify-center bg-white border-b lg:border-b-0 lg:border-r border-gray-100 overflow-y-auto shrink-0 relative z-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] lg:shadow-none">
+                <div id="modal-text-content" class="opacity-0 translate-y-8 transition-all duration-700 w-full"></div>
+                <div id="video-controls" class="mt-8 md:mt-12 space-y-4 w-full"></div>
             </div>
-            <div id="gallery-scroll" data-lenis-prevent class="w-full lg:w-[65%] h-full overflow-y-auto bg-gray-50 relative scroll-smooth">
-                <div id="m-gallery" class="flex flex-col gap-0 pb-32 opacity-100 transition-opacity duration-1000"></div>
-                <div id="scroll-indicator" class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 opacity-0 transition-all duration-700 pointer-events-none">
-                    <span class="text-xs uppercase tracking-[0.4em] text-gray-500 font-body mb-2">Explora</span>
-                    <svg class="w-12 h-12 text-brand-magenta animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            
+            <div id="gallery-scroll" data-lenis-prevent class="w-full lg:w-[65%] h-1/2 lg:h-full overflow-y-auto bg-gray-50 relative scroll-smooth flex-1">
+                <div id="m-gallery" class="flex flex-col gap-0 pb-20 md:pb-32 opacity-100 transition-opacity duration-1000 w-full"></div>
+                <div id="scroll-indicator" class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 md:gap-3 opacity-0 transition-all duration-700 pointer-events-none">
+                    <span class="text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] text-gray-500 font-body mb-1 md:mb-2 bg-white/80 md:bg-transparent px-2 rounded backdrop-blur-sm md:backdrop-blur-none">Explora</span>
+                    <svg class="w-8 h-8 md:w-12 md:h-12 text-brand-magenta animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="video-modal" class="fixed inset-0 z-[300] invisible opacity-0 transition-all duration-500 flex items-center justify-center bg-brand-dark/98 backdrop-blur-xl">
-        <button id="close-video-modal" class="absolute top-8 right-8 text-white text-4xl hover:text-brand-magenta transition-colors cursor-pointer">&times;</button>
-        <div class="w-full max-w-6xl p-4 flex flex-col items-center gap-8">
-            <div class="w-full aspect-video bg-black shadow-2xl relative">
+    <div id="video-modal" class="fixed inset-0 z-[300] invisible opacity-0 transition-all duration-500 flex flex-col items-center justify-center bg-brand-dark/98 backdrop-blur-xl p-4 md:p-8">
+        <button id="close-video-modal" class="absolute top-4 right-4 md:top-8 md:right-8 text-white text-3xl md:text-4xl hover:text-brand-magenta transition-colors cursor-pointer z-50">&times;</button>
+        <div class="w-full max-w-6xl flex flex-col items-center gap-6 md:gap-8 mt-10 md:mt-0">
+            <div class="w-full aspect-video bg-black shadow-2xl relative rounded-sm overflow-hidden">
                 <video id="video-player-root" class="w-full h-full object-contain" controls playsinline></video>
             </div>
-            <div id="video-switcher-container" class="flex gap-4"></div>
+            <div id="video-switcher-container" class="flex flex-wrap justify-center gap-2 md:gap-4 w-full"></div>
         </div>
     </div>
 

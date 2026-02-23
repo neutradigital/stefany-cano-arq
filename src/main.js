@@ -3,12 +3,12 @@ import { projects } from './products/data.js';
 import ambientMusic from './sound/pista_ambiental_sc.mp3';
 
 const teamData = [
-    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.jpg" },
-    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.jpg" },
-    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.jpg" },
-    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.jpg" },
-    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.jpg" },
-    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.jpg" }
+    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.pmg" },
+    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.png" },
+    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.png" },
+    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.png" },
+    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.png" },
+    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.png" }
 ];
 
 const NeutraApp = {
@@ -111,18 +111,19 @@ const NeutraApp = {
     const gridFull = document.getElementById('project-grid-full');
     const modal = document.getElementById('project-modal');
 
-    if (gridFull) {
-        gridFull.innerHTML = projects.map(p => `
-            <article class="relative aspect-[3/4] overflow-hidden bg-gray-100 group cursor-pointer shadow-sm project-card" data-id="${p.id}">
-              <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105">
-              <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/40 transition-colors"></div>
-              <div class="absolute bottom-0 left-0 p-8 w-full z-20">
-                <h3 class="text-2xl font-display text-white mb-2">${p.editorial_name}</h3>
-                <span class="text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location}</span>
-              </div>
-            </article>
-        `).join('');
-    }
+// Dentro de NeutraApp.initPortfolio:
+            if (gridFull) {
+                gridFull.innerHTML = projects.map(p => `
+                    <article class="relative w-full md:w-[calc(50%-1.25rem)] lg:w-[calc(33.333%-2.5rem)] aspect-[3/4] overflow-hidden bg-gray-100 group cursor-pointer shadow-sm project-card" data-id="${p.id}">
+                    <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" loading="lazy">
+                    <div class="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/40 transition-colors"></div>
+                    <div class="absolute bottom-0 left-0 p-8 w-full z-20">
+                        <h3 class="text-2xl font-display text-white mb-2">${p.editorial_name}</h3>
+                        <span class="text-[10px] font-subtitle uppercase tracking-[0.2em] text-white/60">${p.location}</span>
+                    </div>
+                    </article>
+                `).join('');
+            }
 
     document.addEventListener('click', (e) => {
         const card = e.target.closest('.project-card');
@@ -224,7 +225,7 @@ const NeutraApp = {
     if (!grid) return;
     grid.innerHTML = teamData.map(m => `
         <div class="group flex flex-col gap-6">
-            <div class="aspect-[3/4] overflow-hidden bg-gray-100"><img src="${m.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div>
+            <div class="aspect-[3/4] overflow-hidden bg-gray-100"><img src="${m.img}" class="w-full h-full object-cover  group-hover:scale-110 transition-all duration-700"></div>
             <div><h4 class="text-3xl font-display text-brand-dark">${m.name}</h4><p class="text-[10px] font-subtitle text-brand-magenta uppercase tracking-widest mb-4">${m.role}</p><p class="text-sm font-body text-gray-500 leading-relaxed">${m.desc}</p></div>
         </div>
     `).join('');
