@@ -1,15 +1,14 @@
 import './style.css';
 import { projects } from './products/data.js';
 import ambientMusic from './sound/pista_ambiental_sc.mp3';
-import whooshSound from './sound/dinglandingpage.mp3';
 
 const teamData = [
     { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.jpg" },
-    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.png" },
-    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.png" },
-    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.png" },
-    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.png" },
-    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.png" }
+    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.jpg" },
+    { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.jpg" },
+    { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.jpg" },
+    { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.jpg" },
+    { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.jpg" }
 ];
 
 const NeutraApp = {
@@ -22,9 +21,18 @@ const NeutraApp = {
         smooth: true,
         prevent: (node) => node.hasAttribute('data-lenis-prevent') || node.closest('[data-lenis-prevent]')
     });
-    this.lenisInstance.stop();
+    this.lenisInstance.start();
     const raf = (time) => { this.lenisInstance.raf(time); this.updateParallax(); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        if(anchor.id === 'trigger-projects-page' || anchor.classList.contains('nav-link-projects')) return;
+        e.preventDefault();
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
+      });
+    });
   },
 
   updateParallax: function() {
@@ -33,26 +41,6 @@ const NeutraApp = {
     document.querySelectorAll('.parallax-img').forEach(img => { 
         img.style.transform = `translate3d(0, ${scrolled * 0.5}px, 0) scale(1.25)`; 
     });
-  },
-
-  initCurtain: function() {
-    const curtain = document.getElementById('curtain');
-    const mainContent = document.getElementById('main-content');
-    if (!curtain) return;
-
-    const executeReveal = () => {
-      const revealSound = new Audio(whooshSound);
-      revealSound.play().catch(() => {});
-      curtain.style.transform = 'translateY(-100%)';
-      mainContent.style.opacity = '1';
-      setTimeout(() => {
-        mainContent.classList.remove('h-screen', 'overflow-hidden');
-        document.body.classList.remove('overflow-hidden');
-        if (this.lenisInstance) this.lenisInstance.start();
-        curtain.remove();
-      }, 1200);
-    };
-    curtain.addEventListener('mouseup', executeReveal);
   },
 
   initHeroEvents: function() {
@@ -108,7 +96,10 @@ const NeutraApp = {
         projectsView.classList.replace('opacity-100', 'opacity-0');
         projectsView.classList.add('pointer-events-none');
         homeView.classList.remove('opacity-0');
-        setTimeout(() => { projectsView.classList.add('hidden'); this.lenisInstance?.start(); }, 700);
+        setTimeout(() => { 
+            projectsView.classList.add('hidden'); 
+            this.lenisInstance?.start(); 
+        }, 700);
     };
 
     if(triggerBtn) triggerBtn.onclick = showProjects;
@@ -151,15 +142,13 @@ const NeutraApp = {
     };
   },
 
-  // 1. MODAL PRINCIPAL: Imágenes y Texto
   openModal: function(p, modal) {
     const textContainer = document.getElementById('modal-text-content');
     const galleryContainer = document.getElementById('m-gallery');
     const galleryScroll = document.getElementById('gallery-scroll');
 
-    // Inyectar Info Editorial
     textContainer.innerHTML = `
-        <img src="/src/logo/logotipo_letras.svg" class="w-40 mb-12 opacity-80">
+        <img src="/src/logo/logotipo_completo.svg" class="w-40 mb-12 opacity-80">
         <h2 class="text-5xl lg:text-7xl font-display text-brand-dark mb-10 leading-tight">${p.editorial_name}</h2>
         <div class="space-y-8 text-lg font-body text-gray-600 leading-relaxed text-justify">
             <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
@@ -167,7 +156,6 @@ const NeutraApp = {
         </div>
     `;
 
-    // AÑADIR BOTÓN DE RECORRIDO (Si hay videos)
     const videos = p.gallery.filter(f => f.endsWith('.mp4'));
     if (videos.length > 0) {
         const videoBtn = document.createElement('button');
@@ -177,7 +165,6 @@ const NeutraApp = {
         textContainer.appendChild(videoBtn);
     }
 
-    // Galería (SOLO IMÁGENES)
     galleryContainer.innerHTML = p.gallery
         .filter(f => !f.endsWith('.mp4'))
         .map(f => `<img src="${f}" class="w-full h-auto block object-cover" loading="eager">`)
@@ -195,7 +182,6 @@ const NeutraApp = {
     });
   },
 
-  // 2. MODAL SECUNDARIO: Visualizador de Video con Switcher
   openVideoModal: function(videos) {
     const vModal = document.getElementById('video-modal');
     const player = document.getElementById('video-player-root');
@@ -208,12 +194,10 @@ const NeutraApp = {
     player.src = videos[0];
     player.play();
 
-    // Crear botones Switcher si hay > 1 video
     if (videos.length > 1) {
         videos.forEach((v, idx) => {
             const label = v.toLowerCase().includes('alta') ? 'Planta Alta' : 
                           v.toLowerCase().includes('baja') ? 'Planta Baja' : `Vista ${idx + 1}`;
-            
             const btn = document.createElement('button');
             btn.className = "px-6 py-3 border border-white/20 text-white text-[9px] uppercase tracking-widest hover:border-brand-magenta transition-all cursor-pointer";
             btn.innerText = label;
@@ -240,7 +224,7 @@ const NeutraApp = {
     if (!grid) return;
     grid.innerHTML = teamData.map(m => `
         <div class="group flex flex-col gap-6">
-            <div class="aspect-[3/4] overflow-hidden bg-gray-100"><img src="${m.img}" class="w-full h-full object-cover hover:scale-110 transition-all duration-700"></div>
+            <div class="aspect-[3/4] overflow-hidden bg-gray-100"><img src="${m.img}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"></div>
             <div><h4 class="text-3xl font-display text-brand-dark">${m.name}</h4><p class="text-[10px] font-subtitle text-brand-magenta uppercase tracking-widest mb-4">${m.role}</p><p class="text-sm font-body text-gray-500 leading-relaxed">${m.desc}</p></div>
         </div>
     `).join('');
@@ -249,7 +233,6 @@ const NeutraApp = {
 
 document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initSmoothScroll();
-  NeutraApp.initCurtain();
   NeutraApp.initViewManager();
   NeutraApp.initPortfolio();
   NeutraApp.initTeam();
