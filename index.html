@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./src/logo/sca_logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="./src/logo/favicon_magenta.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stefany Cano | Arquitectura de Autor</title>
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
@@ -88,7 +88,7 @@
               </div>
           </section>
 
-          <section id="portfolio" class="px-6 md:px-12 lg:px-24 py-32 md:py-40 bg-white flex flex-col items-center justify-center text-center overflow-hidden border-y border-gray-50">
+        <section id="portfolio" class="min-h-[100dvh] px-6 md:px-12 lg:px-24 bg-white flex flex-col items-center justify-center text-center overflow-hidden border-y border-gray-50">
               <div class="relative group cursor-pointer w-full" id="view-all-projects">
                   <h2 class="text-5xl md:text-7xl lg:text-8xl xl:text-[180px] font-display text-brand-dark leading-none uppercase tracking-tight transition-transform duration-700 group-hover:scale-[1.02] break-words">Proyectos</h2>
                   <div class="mt-8 md:mt-12 flex flex-col items-center gap-4 md:gap-6">
@@ -133,7 +133,7 @@
               </div>
           </section>
 
-          <section id="blog" class="px-6 md:px-12 lg:px-24 py-24 md:py-40 bg-brand-magenta text-white border-y border-gray-100">
+        <section id="blog" class="min-h-[100dvh] px-6 md:px-12 lg:px-24 bg-brand-magenta text-white flex flex-col items-center justify-center">
               <div class="max-w-4xl mx-auto text-center">
                   <h2 class="text-3xl md:text-4xl lg:text-6xl font-display mb-8 md:mb-10 uppercase tracking-widest">Bioblog</h2>
                   <div class="flex flex-col gap-6 md:gap-8 items-center">
@@ -145,76 +145,87 @@
               </div>
           </section>
 
-          <section id="contact" class="px-6 md:px-12 lg:px-24 py-24 md:py-32 bg-white">
-              <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-                  <div>
-                      <h2 class="text-5xl md:text-6xl xl:text-7xl font-display text-brand-dark mb-6 md:mb-8 uppercase tracking-wide">Contacto</h2>
-                      <p class="font-body text-gray-600 text-base md:text-lg">Cada proyecto es una experiencia sensorial que respira en armonía con la vida y la naturaleza, hablemos de lo que podemos crear juntos.</p>
+    <section id="contact" class="px-6 md:px-12 lg:px-24 pt-20 md:pt-28 pb-12 md:pb-16 bg-white relative">
+              <div class="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+                  
+                  <div class="flex flex-col justify-between h-full w-full">
+                      
+                      <div class="flex flex-col gap-4 md:gap-6">
+                          <h2 class="text-5xl md:text-6xl xl:text-7xl font-display text-brand-dark uppercase tracking-wide leading-none">Contacto.</h2>
+                          <p class="font-body text-gray-600 text-sm md:text-base max-w-lg leading-relaxed">Cada proyecto es una experiencia sensorial que respira en armonía con la vida y la naturaleza, hablemos de lo que podemos crear juntos.</p>
+                          
+                          <div class="flex flex-col gap-4 mt-2">
+                              <a href="mailto:proyectos@stefanycanoarq.com" class="font-subtitle text-base md:text-xl text-brand-dark hover:text-brand-magenta transition-colors w-fit border-b border-brand-dark hover:border-brand-magenta pb-1">proyectos@stefanycanoarq.com</a>
+                              
+                              <div class="flex flex-wrap font-subtitle text-[10px] uppercase tracking-[0.2em] gap-5 text-gray-500 mt-2">
+                                  <a href="https://www.instagram.com/stefanycano.arq" target="_blank" class="hover:text-brand-magenta transition-colors">Instagram</a>
+                                  <a href="https://www.facebook.com/share/1DE56Z7PzC" target="_blank" class="hover:text-brand-magenta transition-colors">Facebook</a>
+                                  <a href="https://wa.me/2225664204?text=Hola!" target="_blank" class="hover:text-brand-magenta transition-colors">222 566 4204</a>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="mt-10 lg:mt-auto pt-6 flex flex-col gap-3">
+                          <img src="./src/logo/sca_logo.svg" alt="Stefany Cano Arquitectura" class="w-12 md:w-16 opacity-80">
+                          <p class="font-display text-lg md:text-xl lg:text-2xl text-brand-dark italic leading-snug max-w-xs">Más que proyectar viviendas, creamos entornos.</p>
+                      </div>
                   </div>
-                  <form id="contact-form" class="flex flex-col gap-8 md:gap-10 font-body w-full">
+
+                  <form id="contact-form" class="flex flex-col gap-6 md:gap-8 font-body w-full">
                       <input type="hidden" name="access_key" value="a0ab5c88-94f0-42fd-8b09-6fe2c76fa522">
                       <input type="hidden" name="subject" value="Nuevo Prospecto - Neutra Arquitectura">
                       <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 
-                      <input type="text" name="name" placeholder="Nombre" class="form-input" required>
-                      <input type="email" name="email" placeholder="Correo" class="form-input" required>
+                      <input type="text" name="name" placeholder="Nombre" class="form-input text-sm" required>
+                      <input type="email" name="email" placeholder="Correo" class="form-input text-sm" required>
                       
-                      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-                        <select name="project_type" class="form-input text-gray-500 bg-transparent w-full text-ellipsis overflow-hidden whitespace-nowrap appearance-none rounded-none" required>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <select name="project_type" class="form-input text-gray-500 bg-transparent w-full text-ellipsis overflow-hidden whitespace-nowrap appearance-none rounded-none border-b border-gray-300 pb-2 text-sm focus:outline-none focus:border-brand-dark transition-colors cursor-pointer" required>
                             <option value="" disabled selected>Tipo de proyecto</option>
                             <option value="Residencial">Residencial</option>
                             <option value="Comercial">Comercial</option>
                             <option value="Obra Pública">Obra Pública</option>
                         </select>
-                        <select name="dimension" class="form-input text-gray-500 bg-transparent w-full text-ellipsis overflow-hidden whitespace-nowrap appearance-none rounded-none" required>
+                        <select name="dimension" class="form-input text-gray-500 bg-transparent w-full text-ellipsis overflow-hidden whitespace-nowrap appearance-none rounded-none border-b border-gray-300 pb-2 text-sm focus:outline-none focus:border-brand-dark transition-colors cursor-pointer" required>
                             <option value="" disabled selected>Dimensión</option>
                             <option value="Proyecto nuevo">Proyecto nuevo</option>
                             <option value="Remodelación">Remodelación</option>
                             <option value="Diseño interior">Diseño interior</option>
                         </select>
                       </div>
-                      <button type="submit" id="submit-btn" class="bg-brand-dark text-white px-8 md:px-12 py-4 md:py-5 text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all w-full lg:w-auto cursor-pointer mt-4">Conversemos</button>
+                      <button type="submit" id="submit-btn" class="bg-brand-dark text-white px-8 md:px-12 py-3 md:py-4 text-[9px] md:text-[10px] uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all w-full lg:w-auto cursor-pointer mt-2">Conversemos</button>
                   </form>
               </div>
           </section>
 
-          <section id="descargables" class="px-6 md:px-12 lg:px-24 py-16 md:py-24 bg-brand-magenta/5 border-t border-brand-magenta/10">
-              <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-12">
-                  <div class="max-w-2xl text-center lg:text-left">
-                    <p class="text-lg md:text-xl font-body text-brand-dark leading-relaxed italic">“El camino comienza: recibe nuestras guías descargables, donde cada paso del proceso se revela con claridad.”</p>
+          <section id="descargables" class="px-6 md:px-12 lg:px-24 py-8 md:py-10 bg-brand-magenta/5 border-y border-brand-magenta/10">
+              <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+                  <div class="w-full md:w-1/2 text-center md:text-left">
+                    <p class="text-sm md:text-base font-body text-brand-dark leading-snug italic max-w-lg">“El camino comienza: recibe nuestras guías descargables, donde cada paso del proceso se revela con claridad.”</p>
                   </div>
-                  <div class="flex flex-col gap-4 md:gap-6 w-full lg:w-auto font-body">
-                      <a href="./src/guides/guia_procesos_proyectos.pdf" class="group flex items-center justify-between gap-6 md:gap-10 text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.3em] border-b border-brand-dark pb-3 md:pb-4 hover:border-brand-magenta transition-all w-full">
-                        <span class="truncate">Mi proceso para tu proyecto</span>
-                        <svg class="w-3 h-3 md:w-4 md:h-4 shrink-0 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  <div class="flex flex-col sm:flex-row gap-4 md:gap-8 w-full md:w-1/2 justify-end font-body">
+                      <a href="./src/guides/guia_procesos_proyectos.pdf" class="group flex items-center justify-between gap-4 text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em] border-b border-brand-dark pb-2 hover:border-brand-magenta transition-all w-full sm:w-auto shrink-0">
+                        <span class="truncate">Guía: Tu proyecto</span>
+                        <svg class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                       </a>
-                      <a href="./src/guides/guia_procesos_interiores.pdf" class="group flex items-center justify-between gap-6 md:gap-10 text-[10px] md:text-xs uppercase tracking-[0.1em] md:tracking-[0.3em] border-b border-brand-dark pb-3 md:pb-4 hover:border-brand-magenta transition-all w-full">
-                        <span class="truncate">Mi proceso para interiores</span>
-                        <svg class="w-3 h-3 md:w-4 md:h-4 shrink-0 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                      <a href="./src/guides/guia_procesos_interiores.pdf" class="group flex items-center justify-between gap-4 text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-[0.2em] border-b border-brand-dark pb-2 hover:border-brand-magenta transition-all w-full sm:w-auto shrink-0">
+                        <span class="truncate">Guía: Interiores</span>
+                        <svg class="w-3 h-3 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                       </a>
                   </div>
               </div>
           </section>
 
-          <footer class="bg-white py-12 md:py-20 px-6 md:px-12 lg:px-24 border-t border-gray-100">
-              <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between gap-10 md:gap-0 items-center md:items-start text-center md:text-left">
-                  <div class="flex flex-col items-center md:items-start gap-4 text-xs md:text-sm font-body text-gray-500">
-                      <img src="./src/logo/sca_logo.svg" alt="logotipo" class="w-16 md:w-20 lg:w-32 mb-2">
+          <footer class="bg-white py-6 md:py-8 px-6 md:px-12 lg:px-24">
+              <div class="max-w-[1600px] mx-auto flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 items-center text-center sm:text-left">
+                  <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-6 text-[10px] md:text-xs font-body text-gray-400">
                       <p>Coatepec, Veracruz.</p>
-                      <a href="">proyectos@stefanycanoarq.com</a>
-                      <div class="flex justify-center md:justify-start gap-6 mt-2 md:mt-4">
-                        <a href="https://www.instagram.com/stefanycano.arq" target="_blank" class="hover:text-brand-magenta">Instagram</a>
-                        <a href="https://www.facebook.com/share/1DE56Z7PzC" target="_blank" class="hover:text-brand-magenta">Facebook</a>
-                        <a href="https://wa.me/2225664204?text=Hola!" target="_blank" class="hover:text-brand-magenta">222 566 4204</a>
-                      </div>
-                      <p class="hover:text-brand-magenta">Experiencia sonora por: TungArt7 vía Pixbay Music</p>
+                      <span class="hidden sm:block">•</span>
+                      <p>Sonido: TungArt7 vía Pixbay</p>
                   </div>
-                  <div class="flex flex-col items-center md:items-end gap-3 md:gap-4 text-[9px] md:text-[10px] uppercase tracking-[0.1em] md:tracking-widest text-gray-400 mt-6 md:mt-0">
-                      <div class="flex gap-4 md:gap-6">
-                        <a href="#" class="text-brand-magenta hover:text-brand-dark">Términos y condiciones</a> 
-                        <a href="#" class="text-brand-magenta hover:text-brand-dark">Política de privacidad</a>
-                      </div>
-                      <p class="mt-6 md:mt-10 font-display text-lg md:text-xl lg:text-3xl text-brand-dark normal-case italic">Más que proyectar viviendas, creamos entornos.</p>
+                  <div class="flex gap-4 md:gap-6 text-[9px] md:text-[10px] uppercase tracking-[0.1em] font-body">
+                        <a href="#" class="text-gray-400 hover:text-brand-magenta transition-colors">Términos</a> 
+                        <a href="#" class="text-gray-400 hover:text-brand-magenta transition-colors">Privacidad</a>
                   </div>
               </div>
           </footer>
@@ -245,7 +256,7 @@
     </main>
 
     <div id="project-modal" class="spa-view-shield fixed inset-0 z-[200] invisible transition-all duration-500">
-        <div id="modal-backdrop" class="absolute inset-0 bg-brand-dark/95 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>
+        <div id="modal-backdrop" class="absolute inset-0 bg-brand-dark/25 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>
         <div id="modal-panel" class="absolute right-0 top-0 w-full lg:w-[90vw] h-full bg-[#fcfcfc] shadow-2xl transform translate-x-full lg:translate-x-full transition-transform duration-[0.8s] flex flex-col lg:flex-row overflow-hidden">
             
             <button id="close-modal" class="absolute top-4 right-4 md:top-8 md:right-8 z-[210] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-white shadow-xl hover:bg-brand-magenta hover:text-white transition-all duration-300 cursor-pointer">
@@ -276,7 +287,7 @@
         <div class="w-full max-w-6xl max-h-[90vh] flex flex-col items-center justify-between gap-4 md:gap-6 mt-10 md:mt-0">
             
             <div class="shrink-0 animate-fade-in">
-                <img src="./src/logo/sca_logo.svg" alt="Stefany Cano Arquitectura" class="w-16 lg:w-24 opacity-80 brightness-0 invert">
+                <img src="./src/logo/logotipo_letras.svg" alt="Stefany Cano Arquitectura" class="w-16 md:w-30 lg:w-70 opacity-80 brightness-0 invert">
             </div>
 
             <div class="w-full flex-1 max-h-[60vh] lg:max-h-[65vh] aspect-video bg-black shadow-2xl relative rounded-sm overflow-hidden border border-white/5">

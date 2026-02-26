@@ -17,14 +17,10 @@ const NeutraApp = {
 
   // --- 1. MÉTODOS MAESTROS DE VISTA ---
   
-  // MÉTODO NUEVO: Elimina el escudo visual tras cargar
-// MÉTODO MAESTRO DE REVELACIÓN (Corregido: CSS Specificity)
   revealSite: function() {
     const main = document.getElementById('main-content');
     if (!main) return;
-    
     requestAnimationFrame(() => {
-        // Al aplicarlo como style, vencemos la regla del ID del <head>
         main.style.visibility = 'visible';
         main.style.opacity = '1'; 
     });
@@ -35,7 +31,6 @@ const NeutraApp = {
     const homeView = document.getElementById('home-view');
     
     this.lenisInstance?.stop();
-    // Quitamos el escudo antes de animar
     projectsView.classList.remove('spa-view-shield', 'hidden');
     
     setTimeout(() => {
@@ -55,7 +50,7 @@ const NeutraApp = {
     homeView.classList.remove('opacity-0');
     
     setTimeout(() => { 
-        projectsView.classList.add('hidden'); 
+        projectsView.classList.add('hidden', 'spa-view-shield'); 
         this.lenisInstance?.start(); 
     }, 700);
   },
@@ -79,13 +74,20 @@ const NeutraApp = {
         e.preventDefault();
 
         const projectsView = document.getElementById('projects-view');
-        if (!projectsView.classList.contains('hidden')) {
-            this.showHome();
-        }
-
         const target = document.querySelector(targetId);
-        if (target && this.lenisInstance) {
-          this.lenisInstance.scrollTo(target);
+
+        // LÓGICA DE ENRUTAMIENTO ORQUESTADA
+        if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
+            this.showHome();
+            // Esperamos a que showHome termine (700ms) y Lenis despierte antes de viajar
+            setTimeout(() => {
+                if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
+            }, 750);
+        } else {
+            // Si ya estamos en home, viajamos de inmediato
+            if (target && this.lenisInstance) {
+              this.lenisInstance.scrollTo(target);
+            }
         }
       });
     });
@@ -148,19 +150,29 @@ const NeutraApp = {
                 const targetId = link.getAttribute('href');
                 closeMenu(); 
 
-                setTimeout(() => {
-                    if (link.id === 'trigger-projects-page') {
-                        this.showProjects();
-                    } else if (targetId && targetId !== '#') {
-                        const projectsView = document.getElementById('projects-view');
-                        if (!projectsView.classList.contains('hidden')) this.showHome();
-                        
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement && this.lenisInstance) {
-                            this.lenisInstance.scrollTo(targetElement);
-                        }
+                if (link.id === 'trigger-projects-page') {
+                    setTimeout(() => this.showProjects(), 150);
+                } else if (targetId && targetId !== '#') {
+                    const projectsView = document.getElementById('projects-view');
+                    
+                    // LÓGICA DE ENRUTAMIENTO ORQUESTADA (MÓVIL)
+                    if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
+                        this.showHome();
+                        // Tiempo de cierre del menú (150ms) + Tiempo de cierre de proyectos (700ms)
+                        setTimeout(() => {
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement && this.lenisInstance) this.lenisInstance.scrollTo(targetElement);
+                        }, 850);
+                    } else {
+                        // Solo esperamos a que cierre el menú
+                        setTimeout(() => {
+                            const targetElement = document.querySelector(targetId);
+                            if (targetElement && this.lenisInstance) {
+                                this.lenisInstance.scrollTo(targetElement);
+                            }
+                        }, 150);
                     }
-                }, 150);
+                }
             }
         });
     });
@@ -168,8 +180,14 @@ const NeutraApp = {
     logo.addEventListener('click', () => {
         if (window.innerWidth < 1024 && menuToggle.classList.contains('active')) {
             closeMenu();
-            if (!document.getElementById('projects-view').classList.contains('hidden')) this.showHome();
-            setTimeout(() => this.lenisInstance?.scrollTo(0), 100);
+            const projectsView = document.getElementById('projects-view');
+            
+            if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
+                this.showHome();
+                setTimeout(() => this.lenisInstance?.scrollTo(0), 850);
+            } else {
+                setTimeout(() => this.lenisInstance?.scrollTo(0), 100);
+            }
         }
     });
   },
@@ -223,10 +241,16 @@ const NeutraApp = {
     const backBtn = document.getElementById('back-to-home');
     if(triggerBtn) triggerBtn.onclick = () => this.showProjects();
     if(backBtn) backBtn.onclick = () => this.showHome();
+    
     document.getElementById('nav-logo').onclick = (e) => { 
-        if (!document.getElementById('projects-view').classList.contains('hidden')) {
+        const projectsView = document.getElementById('projects-view');
+        if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
             e.preventDefault();
             this.showHome();
+            setTimeout(() => this.lenisInstance?.scrollTo(0), 750);
+        } else {
+            e.preventDefault();
+            this.lenisInstance?.scrollTo(0);
         }
     };
   },
@@ -236,7 +260,6 @@ const NeutraApp = {
     const modal = document.getElementById('project-modal');
 
     if (gridFull) {
-        // Renderizamos la estructura correcta del año y el escudo en el HTML base del modal
         gridFull.innerHTML = projects.map(p => `
             <article class="relative w-full md:w-[calc((100%-2.5rem)/2)] lg:w-[calc((100%-5rem)/3)] aspect-[3/4] overflow-hidden bg-gray-100 group cursor-pointer shadow-sm project-card" data-id="${p.id}">
               <img src="${p.cover}" class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105" loading="lazy">
@@ -260,10 +283,9 @@ const NeutraApp = {
         document.getElementById('modal-backdrop').classList.remove('opacity-100');
         
         setTimeout(() => { 
-            // Restauramos el escudo técnico al cerrar
             modal.classList.add('invisible', 'spa-view-shield');
             document.body.style.overflow = '';
-            if (document.getElementById('projects-view').classList.contains('hidden')) this.lenisInstance?.start();
+            if (document.getElementById('projects-view').classList.contains('hidden') === false) this.lenisInstance?.start();
         }, 500);
     };
   },
@@ -277,9 +299,9 @@ const NeutraApp = {
         <img src="/src/logo/sca_logo.svg" class="w-20 md:w-28 lg:w-40 mb-6 lg:mb-12 opacity-80">
         <h2 class="text-4xl md:text-5xl lg:text-7xl font-display text-brand-dark mb-4 lg:mb-10 leading-tight">${p.editorial_name}</h2>
         <div class="space-y-4 lg:space-y-8 text-sm md:text-base lg:text-lg font-body text-gray-600 leading-relaxed text-left lg:text-justify">
-            <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
+        <p class="text-brand-magenta text-center md:text-[20px] font-subtitle uppercase tracking-wide text-xs">${p.year} ● ${p.location}</p>
             <p>${p.description}</p>
-            <p class="text-brand-magenta font-subtitle uppercase tracking-widest text-xs">${p.year} - ${p.intervention_type}</p>
+            <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
         </div>
     `;
 
@@ -312,7 +334,6 @@ const NeutraApp = {
         galleryScroll.appendChild(mobileBtnWrapper);
     }
 
-    // Quitamos el escudo antes de mostrar el modal
     modal.classList.remove('spa-view-shield', 'invisible');
     this.lenisInstance?.stop();
     document.body.style.overflow = 'hidden';
@@ -332,7 +353,6 @@ const NeutraApp = {
     const switcher = document.getElementById('video-switcher-container');
     switcher.innerHTML = '';
     
-    // Quitamos el escudo
     vModal.classList.remove('spa-view-shield', 'invisible');
     
     setTimeout(() => vModal.classList.replace('opacity-0', 'opacity-100'), 10);
@@ -359,8 +379,6 @@ const NeutraApp = {
     document.getElementById('close-video-modal').onclick = () => {
         player.pause();
         vModal.classList.replace('opacity-100', 'opacity-0');
-        
-        // Restauramos el escudo al cerrar
         setTimeout(() => vModal.classList.add('invisible', 'spa-view-shield'), 500);
     };
   },
@@ -383,7 +401,6 @@ const NeutraApp = {
     `).join('');
   },
 
-  // INTEGRACIÓN DEL FORMULARIO DE WEB3FORMS
   initContactForm: function() {
     const form = document.getElementById('contact-form');
     const btn = document.getElementById('submit-btn');
@@ -443,8 +460,6 @@ document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initPortfolio();
   NeutraApp.initTeam();
   NeutraApp.initHeroEvents();
-  NeutraApp.initContactForm(); // Ejecutamos la validación del formulario
-  
-  // ORDEN FINAL: Mostrar el sitio tras cargar el DOM
+  NeutraApp.initContactForm(); 
   NeutraApp.revealSite();
 });
