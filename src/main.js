@@ -11,6 +11,28 @@ const teamData = [
     { name: "Edder", role: "Publicista", desc: "El narrador de la esencia del estudio; convierte ideas en relatos que respiran identidad y claridad.", img: "/images/team/edder.png" }
 ];
 
+// --- NUEVO: BASE DE DATOS DEL BLOG ---
+const blogData = [
+    {
+        id: 1,
+        title: "El diseño consciente: Habitar con intención",
+        category: "Reflexión",
+        date: "Noviembre 2025",
+        read_time: "4 min",
+        cover: "/images/project_maya/maya1.png", 
+        content: "<p>La arquitectura moderna a menudo olvida que no somos máquinas habitando cajas, sino seres vivos que responden a estímulos naturales.</p><br><p>En este artículo exploramos cómo la integración de elementos pasivos y materiales crudos no solo reduce la huella de carbono del proyecto, sino que disminuye los niveles de cortisol de quienes habitan el espacio en su día a día. El lujo real ya no es el mármol importado, sino la capacidad de un espacio para devolvernos la paz mental tras una jornada laboral intensa.</p><br><p>Abrazar la imperfección de la piedra, dejar que la madera respire y permitir que la luz moldee los volúmenes son las directrices de la práctica contemporánea que aplicamos en el estudio.</p>"
+    },
+    {
+        id: 2,
+        title: "Materiales crudos y la acústica del silencio",
+        category: "Materialidad",
+        date: "Diciembre 2025",
+        read_time: "6 min",
+        cover: "/images/project_pinon/pinion1.png",
+        content: "<p>El sonido rebotando en paredes lisas y artificiales genera una fatiga auditiva imperceptible pero constante. Es uno de los males silenciosos de las viviendas genéricas.</p><br><p>Al utilizar maderas sin tratar, estucos naturales y texturas porosas, logramos absorber la reverberación acústica. Devolvemos al espacio el silencio necesario para el descanso y la contemplación profunda.</p>"
+    }
+];
+
 const NeutraApp = {
   lenisInstance: null,
   audioInstance: null,
@@ -41,22 +63,48 @@ const NeutraApp = {
     }, 50);
   },
 
-  showHome: function() {
-    const projectsView = document.getElementById('projects-view');
+  // --- NUEVO: MÉTODO SHOW BLOG ---
+  showBlog: function() {
+    const blogView = document.getElementById('blog-view');
     const homeView = document.getElementById('home-view');
     
-    projectsView.classList.replace('opacity-100', 'opacity-0');
-    projectsView.classList.add('pointer-events-none');
+    this.lenisInstance?.stop();
+    blogView.classList.remove('spa-view-shield', 'hidden');
+    
+    setTimeout(() => {
+        blogView.classList.replace('opacity-0', 'opacity-100');
+        blogView.classList.remove('pointer-events-none');
+        homeView.classList.add('opacity-0');
+        blogView.scrollTop = 0;
+    }, 50);
+  },
+
+  showHome: function() {
+    const projectsView = document.getElementById('projects-view');
+    const blogView = document.getElementById('blog-view'); // Integrado
+    const homeView = document.getElementById('home-view');
+    
+    // Apagamos visualmente las vistas activas
+    if (projectsView && !projectsView.classList.contains('hidden')) {
+        projectsView.classList.replace('opacity-100', 'opacity-0');
+        projectsView.classList.add('pointer-events-none');
+    }
+    if (blogView && !blogView.classList.contains('hidden')) {
+        blogView.classList.replace('opacity-100', 'opacity-0');
+        blogView.classList.add('pointer-events-none');
+    }
+
     homeView.classList.remove('opacity-0');
     
     setTimeout(() => { 
-        projectsView.classList.add('hidden', 'spa-view-shield'); 
+        if(projectsView) projectsView.classList.add('hidden', 'spa-view-shield'); 
+        if(blogView) blogView.classList.add('hidden', 'spa-view-shield'); 
         this.lenisInstance?.start(); 
     }, 700);
   },
 
   // --- 2. INICIALIZACIONES ---
-  initSmoothScroll: function() {
+initSmoothScroll: function() {
     this.lenisInstance = new Lenis({ 
         duration: 1.2, 
         smooth: true,
@@ -69,22 +117,26 @@ const NeutraApp = {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
-        if(anchor.id === 'trigger-projects-page' || targetId === '#') return;
+        
+        // CORRECCIÓN QUIRÚRGICA: Liberamos a 'Proyectos' de la restricción.
+        // Ahora solo bloqueamos las anclas vacías ('#') y el botón interno del Blog.
+        if(anchor.id === 'trigger-blog-page' || targetId === '#') return;
         
         e.preventDefault();
 
         const projectsView = document.getElementById('projects-view');
+        const blogView = document.getElementById('blog-view');
         const target = document.querySelector(targetId);
 
-        // LÓGICA DE ENRUTAMIENTO ORQUESTADA
-        if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
+        const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
+                               (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
+
+        if (inInternalView) {
             this.showHome();
-            // Esperamos a que showHome termine (700ms) y Lenis despierte antes de viajar
             setTimeout(() => {
                 if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
             }, 750);
         } else {
-            // Si ya estamos en home, viajamos de inmediato
             if (target && this.lenisInstance) {
               this.lenisInstance.scrollTo(target);
             }
@@ -152,19 +204,22 @@ const NeutraApp = {
 
                 if (link.id === 'trigger-projects-page') {
                     setTimeout(() => this.showProjects(), 150);
+                } else if (link.id === 'trigger-blog-page') { // Agregado Trigger Blog
+                    setTimeout(() => this.showBlog(), 150);
                 } else if (targetId && targetId !== '#') {
                     const projectsView = document.getElementById('projects-view');
+                    const blogView = document.getElementById('blog-view');
                     
-                    // LÓGICA DE ENRUTAMIENTO ORQUESTADA (MÓVIL)
-                    if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
+                    const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
+                                           (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
+
+                    if (inInternalView) {
                         this.showHome();
-                        // Tiempo de cierre del menú (150ms) + Tiempo de cierre de proyectos (700ms)
                         setTimeout(() => {
                             const targetElement = document.querySelector(targetId);
                             if (targetElement && this.lenisInstance) this.lenisInstance.scrollTo(targetElement);
                         }, 850);
                     } else {
-                        // Solo esperamos a que cierre el menú
                         setTimeout(() => {
                             const targetElement = document.querySelector(targetId);
                             if (targetElement && this.lenisInstance) {
@@ -181,8 +236,12 @@ const NeutraApp = {
         if (window.innerWidth < 1024 && menuToggle.classList.contains('active')) {
             closeMenu();
             const projectsView = document.getElementById('projects-view');
+            const blogView = document.getElementById('blog-view');
             
-            if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
+            const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
+                                   (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
+
+            if (inInternalView) {
                 this.showHome();
                 setTimeout(() => this.lenisInstance?.scrollTo(0), 850);
             } else {
@@ -239,12 +298,30 @@ const NeutraApp = {
   initViewManager: function() {
     const triggerBtn = document.getElementById('view-all-projects');
     const backBtn = document.getElementById('back-to-home');
+    
+    // Botones del Blog
+    const triggerBlogBtn = document.getElementById('trigger-blog-page');
+    const backBtnBlog = document.getElementById('back-to-home-from-blog');
+
     if(triggerBtn) triggerBtn.onclick = () => this.showProjects();
     if(backBtn) backBtn.onclick = () => this.showHome();
     
+    if(triggerBlogBtn) {
+        triggerBlogBtn.onclick = (e) => {
+            e.preventDefault();
+            this.showBlog();
+        };
+    }
+    if(backBtnBlog) backBtnBlog.onclick = () => this.showHome();
+    
     document.getElementById('nav-logo').onclick = (e) => { 
         const projectsView = document.getElementById('projects-view');
-        if (!projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) {
+        const blogView = document.getElementById('blog-view');
+        
+        const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
+                               (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
+
+        if (inInternalView) {
             e.preventDefault();
             this.showHome();
             setTimeout(() => this.lenisInstance?.scrollTo(0), 750);
@@ -383,6 +460,98 @@ const NeutraApp = {
     };
   },
 
+  // --- NUEVO: MÓDULO DEL BLOG ---
+  initBlog: function() {
+    const grid = document.getElementById('blog-grid-full');
+    const modal = document.getElementById('article-modal');
+
+    if (grid) {
+        grid.innerHTML = blogData.map(b => `
+            <article class="group cursor-pointer blog-card flex flex-col gap-4 md:gap-6" data-id="${b.id}">
+                <div class="w-full aspect-[4/3] overflow-hidden bg-gray-100 relative">
+                    <img src="${b.cover}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.5s]" loading="lazy">
+                    <div class="absolute top-4 left-4 bg-white px-3 py-1 text-[9px] uppercase tracking-widest text-brand-dark font-subtitle shadow-md">${b.category}</div>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3 text-[10px] text-brand-magenta font-subtitle uppercase tracking-widest mb-3">
+                        <span>${b.date}</span>
+                        <span class="text-gray-300">•</span>
+                        <span>${b.read_time}</span>
+                    </div>
+                    <h3 class="text-2xl md:text-3xl font-display text-brand-dark group-hover:text-brand-magenta transition-colors leading-tight">${b.title}</h3>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.blog-card');
+        if (card) this.openArticleModal(blogData.find(post => post.id == card.dataset.id), modal);
+    });
+
+    // Control de cierre del artículo
+    const closeBtn = document.getElementById('close-article-modal');
+    if (closeBtn) {
+        closeBtn.onclick = () => {
+            const panel = document.getElementById('article-panel');
+            panel.classList.add('translate-y-full');
+            document.getElementById('article-backdrop').classList.remove('opacity-100');
+            
+            setTimeout(() => { 
+                modal.classList.add('invisible', 'spa-view-shield');
+                document.body.style.overflow = 'hidden'; 
+                document.getElementById('article-panel').scrollTop = 0;
+            }, 500);
+        };
+    }
+  },
+
+  openArticleModal: function(post, modal) {
+    const header = document.getElementById('article-header');
+    const cover = document.getElementById('article-cover');
+    const content = document.getElementById('article-content');
+
+    header.innerHTML = `
+        <div class="inline-block border-b border-brand-magenta pb-2 mb-6">
+            <span class="text-[10px] md:text-xs uppercase tracking-[0.2em] font-subtitle text-brand-magenta">${post.category}</span>
+        </div>
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-display text-brand-dark mb-6 leading-tight max-w-3xl mx-auto">${post.title}</h2>
+        <div class="flex items-center justify-center gap-4 text-xs font-subtitle uppercase tracking-widest text-gray-500">
+            <span>${post.date}</span>
+            <span>•</span>
+            <span>Lectura de ${post.read_time}</span>
+        </div>
+    `;
+
+    cover.innerHTML = `<img src="${post.cover}" class="w-full h-full object-cover">`;
+    content.innerHTML = `<div class="prose prose-lg prose-gray max-w-none prose-p:mb-6 prose-p:text-justify md:prose-p:text-left">${post.content}</div>`;
+
+    header.classList.remove('opacity-100', 'translate-y-0');
+    header.classList.add('opacity-0', 'translate-y-8');
+    cover.classList.remove('opacity-100');
+    cover.classList.add('opacity-0');
+    content.classList.remove('opacity-100', 'translate-y-0');
+    content.classList.add('opacity-0', 'translate-y-8');
+
+    modal.classList.remove('spa-view-shield', 'invisible');
+    
+    requestAnimationFrame(() => {
+        document.getElementById('article-backdrop').classList.add('opacity-100');
+        const panel = document.getElementById('article-panel');
+        panel.classList.remove('translate-y-full');
+        
+        setTimeout(() => {
+            header.classList.replace('opacity-0', 'opacity-100');
+            header.classList.replace('translate-y-8', 'translate-y-0');
+        }, 400);
+        setTimeout(() => cover.classList.replace('opacity-0', 'opacity-100'), 600);
+        setTimeout(() => {
+            content.classList.replace('opacity-0', 'opacity-100');
+            content.classList.replace('translate-y-8', 'translate-y-0');
+        }, 800);
+    });
+  },
+
   initTeam: function() {
     const grid = document.getElementById('team-grid');
     if (!grid) return;
@@ -458,6 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initMobileMenu();
   NeutraApp.initViewManager();
   NeutraApp.initPortfolio();
+  NeutraApp.initBlog(); // Inicializamos el Blog
   NeutraApp.initTeam();
   NeutraApp.initHeroEvents();
   NeutraApp.initContactForm(); 

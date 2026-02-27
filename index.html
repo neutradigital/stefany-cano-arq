@@ -140,7 +140,7 @@
                     <p class="text-lg md:text-xl lg:text-2xl font-subtitle leading-relaxed italic max-w-2xl px-4 md:px-0">
                         “Un espacio donde se narra, se comparte y se escucha. La conversación fluye en relatos que siembran amor por la naturaleza y enseñan a habitar en armonía.”
                     </p>
-                    <a href="#" class="mt-6 md:mt-10 inline-block text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] font-body border-b border-brand-dark pb-2 hover:border-white transition-colors">Entrar</a>
+                    <a href="#" id="trigger-blog-page" class="mt-6 md:mt-10 inline-block text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] font-body border-b border-brand-dark pb-2 hover:border-white transition-colors">Entrar</a>
                   </div>
               </div>
           </section>
@@ -275,6 +275,44 @@
                     <svg class="w-8 h-8 md:w-12 md:h-12 text-brand-magenta animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="blog-view" data-lenis-prevent class="spa-view-shield fixed inset-0 z-[65] bg-[#fafafa] opacity-0 pointer-events-none transition-opacity duration-700 overflow-y-auto pt-24 md:pt-32 hidden">
+        <section class="px-6 md:px-12 lg:px-24 py-12 md:py-20 border-b border-gray-200">
+            <div class="max-w-5xl">
+                <h1 class="text-4xl md:text-6xl lg:text-[100px] font-display text-brand-dark mb-4 md:mb-6">Bioblog</h1>
+                <p class="text-base md:text-2xl font-subtitle text-gray-500 max-w-2xl leading-relaxed">
+                    Reflexiones, procesos y aprendizajes sobre el arte de crear espacios que abrazan la naturaleza.
+                </p>
+            </div>
+        </section>
+
+        <section class="px-6 md:px-12 lg:px-24 pb-20 md:pb-32 pt-16 w-full">
+            <div id="blog-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 w-full max-w-[1600px] mx-auto">
+                </div>
+        </section>
+
+        <footer class="bg-gray-100 py-16 md:py-20 px-6 md:px-12 lg:px-24 text-center">
+            <button id="back-to-home-from-blog" class="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] border-b border-brand-dark pb-2 hover:text-brand-magenta transition-colors cursor-pointer">
+                Volver al inicio
+            </button>
+        </footer>
+    </div>
+
+    <div id="article-modal" class="spa-view-shield fixed inset-0 z-[200] invisible transition-all duration-500">
+        <div id="article-backdrop" class="absolute inset-0 bg-brand-dark/95 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>
+        <div id="article-panel" class="absolute left-0 top-0 w-full h-full bg-white shadow-2xl transform translate-y-full transition-transform duration-[0.8s] flex flex-col overflow-y-auto">
+            
+            <button id="close-article-modal" class="fixed top-4 right-4 md:top-8 md:right-8 z-[210] w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gray-100 shadow-xl hover:bg-brand-magenta hover:text-white transition-all duration-300 cursor-pointer">
+                <span class="text-2xl md:text-3xl leading-none">&times;</span>
+            </button>
+            
+            <article class="w-full max-w-3xl mx-auto px-6 md:px-12 py-24 md:py-32 relative z-10">
+                <div id="article-header" class="mb-10 md:mb-12 text-center opacity-0 translate-y-8 transition-all duration-700"></div>
+                <div id="article-cover" class="w-full aspect-video bg-gray-100 mb-12 overflow-hidden opacity-0 transition-opacity duration-1000 delay-300"></div>
+                <div id="article-content" class="text-base md:text-lg lg:text-xl font-body text-gray-700 leading-relaxed text-left md:text-justify space-y-6 opacity-0 translate-y-8 transition-all duration-700 delay-500"></div>
+            </article>
         </div>
     </div>
 
