@@ -420,10 +420,11 @@ initSmoothScroll: function() {
     };
   },
 
-  openModal: function(p, modal) {
+openModal: function(p, modal) {
     const textContainer = document.getElementById('modal-text-content');
     const galleryContainer = document.getElementById('m-gallery');
     const galleryScroll = document.getElementById('gallery-scroll');
+    const scrollIndicator = document.getElementById('scroll-indicator'); // Capturamos el indicador
 
     textContainer.innerHTML = `
         <img src="/src/logo/sca_logo.svg" class="w-20 md:w-28 lg:w-40 mb-6 lg:mb-12 opacity-80">
@@ -473,6 +474,25 @@ initSmoothScroll: function() {
         const panel = document.getElementById('modal-panel');
         panel.classList.remove('translate-x-full', 'lg:translate-x-full');
         galleryScroll.scrollTop = 0;
+        
+        // LÓGICA DEL INDICADOR DE SCROLL
+        if (scrollIndicator) {
+            // Lo mostramos al abrir
+            setTimeout(() => scrollIndicator.classList.replace('opacity-0', 'opacity-100'), 800);
+            
+            // Función para ocultarlo al scrollear
+            const hideIndicator = () => {
+                if (galleryScroll.scrollTop > 50) {
+                    scrollIndicator.classList.replace('opacity-100', 'opacity-0');
+                    galleryScroll.removeEventListener('scroll', hideIndicator); // Limpiamos el listener
+                }
+            };
+            
+            // Re-aplicamos el listener cada vez que se abre el modal
+            galleryScroll.removeEventListener('scroll', hideIndicator);
+            galleryScroll.addEventListener('scroll', hideIndicator);
+        }
+
         setTimeout(() => textContainer.classList.remove('opacity-0', 'translate-y-8'), 400);
     });
   },
