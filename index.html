@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="./src/logo/favicon_magenta.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stefany Cano | Arquitectura de Autor</title>
+    <meta name="description" content="Estudio de arquitectura. Más que proyectar viviendas, creamos entornos. Proyectos que respiran en armonía con la vida y la naturaleza.">
+    <meta name="author" content="Neutra Digital">
+    <meta name="theme-color" content="#1a1a1a"> <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.stefanycanoarq.com/">
+    <meta property="og:title" content="Stefany Cano Arquitectura">
+    <meta property="og:description" content="Estudio de arquitectura. Más que proyectar viviendas, creamos entornos que respiran en armonía con la vida y la naturaleza.">
+    
+    <meta property="og:image" content="https://www.stefanycanoarq.com/images/og-cover.jpg">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.stefanycanoarq.com/">
+    <meta property="twitter:title" content="Stefany Cano Arquitectura">
+    <meta property="twitter:description" content="Estudio de arquitectura. Más que proyectar viviendas, creamos entornos que respiran en armonía con la vida y la naturaleza.">
+    <meta property="twitter:image" content="https://www.stefanycanoarq.com/images/og-cover.jpg">
     <script src="https://unpkg.com/lenis@1.0.45/dist/lenis.min.js"></script>
     
     <style>
@@ -172,10 +186,6 @@
                   </div>
 
                   <form id="contact-form" class="flex flex-col gap-6 md:gap-8 font-body w-full">
-                      <input type="hidden" name="access_key" value="a0ab5c88-94f0-42fd-8b09-6fe2c76fa522">
-                      <input type="hidden" name="subject" value="Nuevo Prospecto - Neutra Arquitectura">
-                      <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
                       <input type="text" name="name" placeholder="Nombre" class="form-input text-sm" required>
                       <input type="email" name="email" placeholder="Correo" class="form-input text-sm" required>
                       
@@ -192,6 +202,13 @@
                             <option value="Remodelación">Remodelación</option>
                             <option value="Diseño interior">Diseño interior</option>
                         </select>
+                      </div>
+                      <div class="mt-2 text-[9px] md:text-[10px] text-gray-400 leading-tight bg-gray-50 p-4 rounded-sm border border-gray-100">
+                          <p class="mb-3 text-justify"><strong class="text-brand-dark">Aviso de Privacidad Simplificado:</strong> STEFANY CANO ARQUITECTURA (Zaragoza #88, Col. Centro, Coatepec, Veracruz) recaba su nombre, correo y datos técnicos para generar cotizaciones, desarrollar proyectos y facturación. Puede oponerse a finalidades secundarias (comunicación comercial) escribiendo a stefany.canoarq@gmail.com. Transferencias posibles según Art. 37 LFPDPPP.</p>
+                          <label class="flex items-start gap-2 cursor-pointer group">
+                              <input type="checkbox" name="acepta_privacidad" required class="mt-0.5 border-gray-300 text-brand-dark focus:ring-brand-dark rounded-sm cursor-pointer">
+                              <span class="group-hover:text-brand-dark transition-colors">He leído y acepto el tratamiento de mis datos. <a href="#" id="trigger-legal-form" class="underline text-brand-magenta hover:text-brand-dark">Ver Aviso Integral</a>.</span>
+                          </label>
                       </div>
                       <button type="submit" id="submit-btn" class="bg-brand-dark text-white px-8 md:px-12 py-3 md:py-4 text-[9px] md:text-[10px] uppercase tracking-[0.2em] hover:bg-brand-magenta transition-all w-full lg:w-auto cursor-pointer mt-2">Conversemos</button>
                   </form>
@@ -216,16 +233,25 @@
               </div>
           </section>
 
-          <footer class="bg-white py-6 md:py-8 px-6 md:px-12 lg:px-24">
-              <div class="max-w-[1600px] mx-auto flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 items-center text-center sm:text-left">
-                  <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-6 text-[10px] md:text-xs font-body text-gray-400">
-                      <p>Coatepec, Veracruz.</p>
-                      <span class="hidden sm:block">•</span>
-                      <p>Sonido: TungArt7 vía Pixbay</p>
+        <footer class="bg-white py-2 md:py-10 px-6 md:px-12 lg:px-24">
+              <div class="max-w-[1600px] mx-auto flex flex-col gap-6">
+                  
+                  <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0 items-center text-center sm:text-left border-b border-gray-100 pb-6">
+                      <div class="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-6 text-[10px] md:text-xs font-body text-gray-400">
+                          <p>Coatepec, Veracruz.</p>
+                          <span class="hidden sm:block">•</span>
+                          <p>Sonido: TungArt7 vía Pixbay</p>
+                      </div>
+                      <div class="flex gap-4 md:gap-6 text-[9px] md:text-[10px] uppercase tracking-[0.1em] font-body">
+                            <a href="#" id="trigger-terms" class="text-gray-400 hover:text-brand-magenta transition-colors">Términos y Condiciones</a> 
+                            <a href="#" id="trigger-privacy-footer" class="text-gray-400 hover:text-brand-magenta transition-colors">Aviso de Privacidad Integral</a>
+                      </div>
                   </div>
-                  <div class="flex gap-4 md:gap-6 text-[9px] md:text-[10px] uppercase tracking-[0.1em] font-body">
-                        <a href="#" class="text-gray-400 hover:text-brand-magenta transition-colors">Términos</a> 
-                        <a href="#" class="text-gray-400 hover:text-brand-magenta transition-colors">Privacidad</a>
+
+                  <div class="text-center sm:text-left">
+                      <p class="text-[8px] md:text-[9px] font-body text-gray-400 leading-relaxed max-w-4xl">
+                          Al proporcionar sus datos, acepta su tratamiento para finalidades indispensables del servicio. Puede consultar el aviso integral y ejercer sus derechos ARCO en la sección de Privacidad de este sitio web.
+                      </p>
                   </div>
               </div>
           </footer>
@@ -255,6 +281,271 @@
 
     </main>
 
+    <div id="blog-view" data-lenis-prevent class="spa-view-shield fixed inset-0 z-[65] bg-[#fafafa] opacity-0 pointer-events-none transition-opacity duration-700 overflow-y-auto pt-24 md:pt-32 hidden">
+        <section class="px-6 md:px-12 lg:px-24 py-12 md:py-20 border-b border-gray-200">
+            <div class="max-w-5xl">
+                <h1 class="text-4xl md:text-6xl lg:text-[100px] font-display text-brand-dark mb-4 md:mb-6">Bioblog</h1>
+                <p class="text-base md:text-2xl font-subtitle text-gray-500 max-w-2xl leading-relaxed">
+                    Reflexiones, procesos y aprendizajes sobre el arte de crear espacios que abrazan la naturaleza.
+                </p>
+            </div>
+        </section>
+
+        <section class="px-6 md:px-12 lg:px-24 pb-20 md:pb-32 pt-16 w-full">
+            <div id="blog-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 w-full max-w-[1600px] mx-auto">
+                </div>
+        </section>
+
+        <footer class="bg-gray-100 py-16 md:py-20 px-6 md:px-12 lg:px-24 text-center">
+            <button id="back-to-home-from-blog" class="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] border-b border-brand-dark pb-2 hover:text-brand-magenta transition-colors cursor-pointer">
+                Volver al inicio
+            </button>
+        </footer>
+    </div>
+
+    <div id="legal-view" data-lenis-prevent class="spa-view-shield fixed inset-0 z-[65] bg-white opacity-0 pointer-events-none transition-opacity duration-700 overflow-y-auto pt-24 md:pt-32 hidden">
+            <section class="px-6 md:px-12 lg:px-24 py-12 md:py-20 max-w-4xl mx-auto">
+                <h1 id="legal-title" class="text-3xl md:text-5xl font-display text-brand-dark mb-8 md:mb-12 border-b border-gray-200 pb-6">Documento Legal</h1>
+                
+                <div id="privacy-content" class="hidden max-w-none font-body text-gray-600 text-sm md:text-base text-justify space-y-8">
+                    <div class="bg-gray-50 p-6 border border-gray-100 rounded-sm">
+                        <p class="font-bold text-brand-dark text-lg mb-2">STEFANY CANO ARQUITECTURA</p>
+                        <p><strong>Domicilio:</strong> Calle Zaragoza #88, Col. Centro, C.P. 91500, Coatepec, Veracruz.</p>
+                        <p><strong>Correo de contacto:</strong> <a href="mailto:stefany.canoarq@gmail.com" class="text-brand-magenta hover:underline">stefany.canoarq@gmail.com</a></p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">1. Responsable</h3>
+                        <p><strong>STEFANY CANO ARQUITECTURA</strong> es responsable del tratamiento y protección de sus datos personales conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">2. Datos personales que se recaban</h3>
+                        <p class="mb-4">Recabamos las siguientes categorías de datos:</p>
+                        <ul class="list-disc pl-6 space-y-2">
+                            <li><strong>Datos de identificación:</strong> Nombre completo, teléfono, correo electrónico.</li>
+                            <li><strong>Datos de ubicación:</strong> Dirección del inmueble relacionado con el proyecto.</li>
+                            <li><strong>Datos técnicos y profesionales:</strong> Información técnica del proyecto y requerimientos arquitectónicos.</li>
+                            <li><strong>Datos fiscales:</strong> RFC, razón social y domicilio fiscal (cuando se requieran facturas).</li>
+                            <li><strong>Datos patrimoniales:</strong> Información indispensable para avalúos y dictámenes técnicos.</li>
+                        </ul>
+                        <p class="mt-4 italic text-gray-500">No recabamos datos biométricos, de salud o ideología.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">3. Finalidades del tratamiento</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-bold text-brand-dark">Finalidades primarias (indispensables):</h4>
+                                <p class="mb-2">El tratamiento de sus datos es necesario para:</p>
+                                <ul class="list-disc pl-6 space-y-1">
+                                    <li>Elaboración de cotizaciones y propuestas arquitectónicas.</li>
+                                    <li>Desarrollo de proyectos arquitectónicos y de diseño.</li>
+                                    <li>Diseño de interiores.</li>
+                                    <li>Seguimiento de obra y supervisión técnica.</li>
+                                    <li>Avalúos y dictámenes técnicos.</li>
+                                    <li>Elaboración y validación de contratos.</li>
+                                    <li>Facturación y cumplimiento de obligaciones fiscales.</li>
+                                    <li>Atención y aclaración de solicitudes relacionadas con el servicio.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-brand-dark mt-6">Finalidades secundarias (opcionales):</h4>
+                                <ul class="list-disc pl-6 space-y-1 mb-2">
+                                    <li>Comunicación comercial y envío de información sobre nuevos servicios.</li>
+                                    <li>Encuestas de satisfacción y análisis estadístico interno.</li>
+                                </ul>
+                                <p>El titular puede rechazar las finalidades secundarias enviando un correo a: <a href="mailto:stefany.canoarq@gmail.com" class="text-brand-magenta hover:underline">stefany.canoarq@gmail.com</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">4. Transferencia de datos</h3>
+                        <p class="mb-2">Sus datos podrán ser transferidos a:</p>
+                        <h4 class="font-bold text-brand-dark mt-4">Transferencias que no requieren consentimiento (art. 37 LFPDPPP):</h4>
+                        <ul class="list-disc pl-6 space-y-1 mb-4">
+                            <li>Autoridades competentes, cuando exista un requerimiento legal o administrativo.</li>
+                            <li>Instituciones financieras, cuando los avalúos o trámites lo requieran.</li>
+                        </ul>
+                        <h4 class="font-bold text-brand-dark">Transferencias que sí requieren consentimiento:</h4>
+                        <ul class="list-disc pl-6 space-y-1 mb-4">
+                            <li>Peritos externos y especialistas técnicos.</li>
+                            <li>Proveedores de servicios, productos y materiales relacionados con su proyecto.</li>
+                        </ul>
+                        <p>Si desea negar su consentimiento para las transferencias opcionales, puede solicitarlo mediante los mecanismos ARCO descritos en este aviso.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">5. Mecanismos para ejercer Derechos ARCO</h3>
+                        <p class="mb-4">El titular puede ejercer sus derechos de Acceso, Rectificación, Cancelación u Oposición enviando una solicitud al correo mencionado. La solicitud deberá incluir:</p>
+                        <ol class="list-decimal pl-6 space-y-1 mb-4">
+                            <li>Nombre del titular y medio para comunicar la respuesta.</li>
+                            <li>Identificación oficial o documento acreditativo.</li>
+                            <li>Descripción clara de la corrección que desea ejercer.</li>
+                        </ol>
+                        <p class="mb-2"><strong>Plazos:</strong></p>
+                        <ul class="list-disc pl-6 space-y-1">
+                            <li>Respuesta en máximo 20 días hábiles.</li>
+                            <li>Si procede, los cambios se harán efectivos en un máximo de 15 días hábiles.</li>
+                        </ul>
+                        <p class="mt-2">La respuesta se enviará por correo electrónico.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-gray-100">
+                        <div>
+                            <h3 class="text-xl font-display text-brand-dark mb-4">6. Limitación del uso o divulgación</h3>
+                            <p>Para limitar el uso o difusión de sus datos, puede solicitar la inscripción a nuestra Lista de Exclusión Comercial enviando un correo a: <a href="mailto:stefany.canoarq@gmail.com" class="text-brand-magenta hover:underline">stefany.canoarq@gmail.com</a>.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-display text-brand-dark mb-4">7. Revocación del consentimiento</h3>
+                            <p>El titular podrá revocar en cualquier momento el consentimiento otorgado. La solicitud seguirá el mismo procedimiento ARCO. La revocación no tiene efectos retroactivos.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">8. Uso de cookies y tecnologías similares</h3>
+                        <p class="mb-2">Nuestro sitio utiliza cookies para:</p>
+                        <ul class="list-disc pl-6 space-y-1 mb-4">
+                            <li>Optimizar la navegación.</li>
+                            <li>Mantener sesiones activas.</li>
+                            <li>Analizar tráfico interno del sitio.</li>
+                        </ul>
+                        <p>Usted puede deshabilitarlas desde su navegador. La desactivación podría afectar la funcionalidad del sitio web.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">9. Modificaciones al aviso</h3>
+                        <p>Cualquier cambio será publicado en la página oficial: <strong>www.stefanycanoarq.com</strong>. En caso de modificaciones sustanciales, se notificará por correo electrónico a los titulares registrados.</p>
+                    </div>
+                </div>
+
+                <div id="terms-content" class="hidden max-w-none font-body text-gray-600 text-sm md:text-base text-justify space-y-8">
+                    <div class="bg-gray-50 p-6 border border-gray-100 rounded-sm">
+                        <p class="font-bold text-brand-dark text-lg mb-2">STEFANY CANO ARQUITECTURA</p>
+                        <p><strong>Última actualización:</strong> Febrero 2026</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">1. Identificación del Titular del Sitio Web</h3>
+                        <p>El presente sitio web es propiedad de STEFANY CANO ARQUITECTURA, perteneciente a Stefany Cano, persona física con actividad empresarial, con domicilio en: Calle Zaragoza #88, Colonia Centro, C.P. 91500, Coatepec, Veracruz, México.</p>
+                        <p class="mt-2">Correo de contacto oficial: <a href="mailto:stefany.canoarq@gmail.com" class="text-brand-magenta hover:underline">stefany.canoarq@gmail.com</a></p>
+                        <p class="mt-2">El sitio tiene como finalidad brindar información sobre los servicios profesionales del despacho y ofrecer canales de contacto para usuarios interesados.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">2. Naturaleza del Sitio Web</h3>
+                        <p>El sitio web es un espacio informativo, cuyo propósito es presentar el portafolio, enfoque arquitectónico, servicios disponibles y un medio de contacto.</p>
+                        <p class="mt-2 font-bold text-brand-dark">Este sitio no realiza contrataciones electrónicas, no genera acuerdos vinculantes y no constituye oferta legal de servicios.</p>
+                        <p class="mt-2">La contratación se efectúa únicamente mediante reuniones presenciales, documentos físicos y la firma de un contrato formal. Ningún formulario, mensaje o interacción digital constituye aceptación contractual.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">3. Servicios Ofrecidos</h3>
+                        <p class="mb-2">Los servicios profesionales que se presentan en el sitio incluyen, de manera enunciativa:</p>
+                        <ul class="list-disc pl-6 space-y-1">
+                            <li>Proyectos arquitectónicos</li>
+                            <li>Proyectos ejecutivos</li>
+                            <li>Remodelación y ampliación</li>
+                            <li>Supervisión y construcción</li>
+                            <li>Avalúos</li>
+                            <li>Dictámenes técnicos</li>
+                            <li>Gestiones y permisos</li>
+                        </ul>
+                        <p class="mt-4 italic text-gray-500">La información publicada puede modificarse, ampliarse o actualizarse sin previo aviso.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">4. Proceso de Contratación (Presencial y Documental)</h3>
+                        <p class="mb-2">La prestación de servicios profesionales se realiza únicamente mediante:</p>
+                        <ol class="list-decimal pl-6 space-y-1 mb-4">
+                            <li>Reunión previa para evaluación de necesidades.</li>
+                            <li>Entrega de cotización detallada con alcances, exclusiones y estimación de tiempos.</li>
+                            <li>Aceptación formal por escrito de la cotización.</li>
+                            <li>Firma de contrato físico o documento equivalente.</li>
+                            <li>Pago de anticipo y pagos subsecuentes conforme a lo estipulado en contrato.</li>
+                            <li>Ejecución, entrega y cierre del proyecto, documentados por escrito.</li>
+                        </ol>
+                        <p class="mb-2 font-bold text-brand-dark">El contrato establecerá de forma específica:</p>
+                        <ul class="list-disc pl-6 space-y-1">
+                            <li>Alcances del proyecto y entregables</li>
+                            <li>Calendario de pagos y vigencia</li>
+                            <li>Penalizaciones y políticas de cancelación</li>
+                            <li>Confidencialidad y cesión de derechos de uso (cuando aplique)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">5. Responsabilidad Limitada</h3>
+                        <p class="mb-2">STEFANY CANO ARQUITECTURA no será responsable por:</p>
+                        <ul class="list-disc pl-6 space-y-1 mb-4">
+                            <li>Decisiones técnicas tomadas por el usuario sin supervisión profesional.</li>
+                            <li>Uso indebido, alteración o manipulación de planos, renders o documentos entregados.</li>
+                            <li>Modificaciones realizadas por terceros ajenos al despacho.</li>
+                            <li>Interpretaciones erróneas de información preliminar contenida en el sitio.</li>
+                            <li>Fallas en el funcionamiento del portal, disponibilidad del servidor o interrupciones tecnológicas.</li>
+                            <li>Eventos de fuerza mayor que afecten la prestación del servicio.</li>
+                        </ul>
+                        <p class="italic text-gray-500">El contenido del sitio es informativo y no sustituye la asesoría profesional formal.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">6. Propiedad Intelectual</h3>
+                        <p class="mb-2">Todos los contenidos del sitio web, incluyendo pero no limitados a: planos, renders, modelos 3D, diseño arquitectónico, fotografías, diagramas, textos descriptivos, memorias técnicas e identidad gráfica del despacho <strong>son propiedad intelectual de STEFANY CANO ARQUITECTURA.</strong></p>
+                        <p class="mt-2 text-brand-magenta font-bold">Se prohíbe estrictamente la reproducción, copia, distribución, reutilización o adaptación sin autorización por escrito.</p>
+                        <p class="mt-2">Los derechos patrimoniales de los proyectos solo se transfieren al cliente una vez realizado el pago total y conforme a lo estipulado en el contrato firmado.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-gray-100">
+                        <div>
+                            <h3 class="text-xl font-display text-brand-dark mb-4">7. Uso Permitido y Prohibido</h3>
+                            <p class="font-bold text-brand-dark mb-2">Uso permitido:</p>
+                            <ul class="list-disc pl-6 space-y-1 mb-4">
+                                <li>Consultar información del portafolio y servicios.</li>
+                                <li>Contactar al despacho mediante los medios autorizados.</li>
+                            </ul>
+                            <p class="font-bold text-brand-dark mb-2">Prohibiciones:</p>
+                            <ul class="list-disc pl-6 space-y-1">
+                                <li>Utilizar, copiar o descargar imágenes técnicas o planos sin autorización.</li>
+                                <li>Realizar ingeniería inversa o manipulación del sitio.</li>
+                                <li>Extraer información para fines comerciales no autorizados.</li>
+                                <li>Publicar, redistribuir o modificar contenidos del sitio.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-display text-brand-dark mb-4">8. Transparencia Comercial</h3>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Las cotizaciones tienen una vigencia definida que se comunica de manera escrita.</li>
+                                <li>Los precios pueden ajustarse según condiciones del proyecto.</li>
+                                <li>Las imágenes publicadas son de referencia y pueden diferir de resultados reales por condiciones de obra, materiales o factores externos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">9. Aclaraciones, Consultas o Inconformidades</h3>
+                        <p class="mb-2">El usuario podrá contactar al despacho a través del correo: <a href="mailto:stefany.canoarq@gmail.com" class="text-brand-magenta hover:underline">stefany.canoarq@gmail.com</a></p>
+                        <p class="mb-2">Debe incluir:</p>
+                        <ul class="list-disc pl-6 space-y-1 mb-4">
+                            <li>Nombre y medio de contacto.</li>
+                            <li>Descripción clara de la duda o inquietud.</li>
+                            <li>Documentación relacionada (si aplica).</li>
+                        </ul>
+                        <p class="italic">El tiempo estimado de respuesta es de 5 a 10 días hábiles.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">10. Enlace con Aviso de Privacidad</h3>
+                        <p>El tratamiento de datos personales proporcionados a través del sitio se rige exclusivamente por el Aviso de Privacidad disponible en la sección correspondiente. El usuario declara haber leído y comprendido dicho aviso antes de proporcionar cualquier dato.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6 border-t border-gray-100">
+                        <div>
+                            <h3 class="text-xl font-display text-brand-dark mb-4">11. Modificaciones</h3>
+                            <p>STEFANY CANO ARQUITECTURA podrá modificar este documento en cualquier momento. Las actualizaciones serán publicadas en este mismo sitio. El uso del sitio después de las modificaciones implica aceptación de los nuevos términos.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-display text-brand-dark mb-4">12. Jurisdicción y Ley Aplicable</h3>
+                            <p>Para cualquier controversia, el usuario acepta someterse a la competencia de los tribunales de Veracruz, renunciando a cualquier otra jurisdicción presente o futura.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display text-brand-dark mb-4">13. Interpretación</h3>
+                        <p>La nulidad de algún apartado no afectará la validez del resto del documento. En caso de discrepancia interpretativa, prevalecerá la versión en español publicada en este sitio.</p>
+                    </div>
+                </div>
+
+            </section>
+            
+            <footer class="bg-gray-50 py-12 px-6 text-center mt-20">
+                <button id="back-to-home-from-legal" class="text-[10px] uppercase tracking-[0.2em] border-b border-brand-dark pb-2 hover:text-brand-magenta transition-colors cursor-pointer">
+                    Volver al sitio
+                </button>
+            </footer>
+        </div>
+
     <div id="project-modal" class="spa-view-shield fixed inset-0 z-[200] invisible transition-all duration-500">
         <div id="modal-backdrop" class="absolute inset-0 bg-brand-dark/25 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>
         <div id="modal-panel" class="absolute right-0 top-0 w-full lg:w-[90vw] h-full bg-[#fcfcfc] shadow-2xl transform translate-x-full lg:translate-x-full transition-transform duration-[0.8s] flex flex-col lg:flex-row overflow-hidden">
@@ -278,27 +569,7 @@
         </div>
     </div>
 
-    <div id="blog-view" data-lenis-prevent class="spa-view-shield fixed inset-0 z-[65] bg-[#fafafa] opacity-0 pointer-events-none transition-opacity duration-700 overflow-y-auto pt-24 md:pt-32 hidden">
-        <section class="px-6 md:px-12 lg:px-24 py-12 md:py-20 border-b border-gray-200">
-            <div class="max-w-5xl">
-                <h1 class="text-4xl md:text-6xl lg:text-[100px] font-display text-brand-dark mb-4 md:mb-6">Bioblog</h1>
-                <p class="text-base md:text-2xl font-subtitle text-gray-500 max-w-2xl leading-relaxed">
-                    Reflexiones, procesos y aprendizajes sobre el arte de crear espacios que abrazan la naturaleza.
-                </p>
-            </div>
-        </section>
 
-        <section class="px-6 md:px-12 lg:px-24 pb-20 md:pb-32 pt-16 w-full">
-            <div id="blog-grid-full" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 md:gap-16 w-full max-w-[1600px] mx-auto">
-                </div>
-        </section>
-
-        <footer class="bg-gray-100 py-16 md:py-20 px-6 md:px-12 lg:px-24 text-center">
-            <button id="back-to-home-from-blog" class="text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] border-b border-brand-dark pb-2 hover:text-brand-magenta transition-colors cursor-pointer">
-                Volver al inicio
-            </button>
-        </footer>
-    </div>
 
     <div id="article-modal" class="spa-view-shield fixed inset-0 z-[200] invisible transition-all duration-500">
         <div id="article-backdrop" class="absolute inset-0 bg-brand-dark/95 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>

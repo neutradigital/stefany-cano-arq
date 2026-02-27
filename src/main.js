@@ -79,10 +79,26 @@ const NeutraApp = {
     }, 50);
   },
 
+  showLegal: function() {
+    const legalView = document.getElementById('legal-view');
+    const homeView = document.getElementById('home-view');
+    
+    this.lenisInstance?.stop();
+    legalView.classList.remove('spa-view-shield', 'hidden');
+    
+    setTimeout(() => {
+        legalView.classList.replace('opacity-0', 'opacity-100');
+        legalView.classList.remove('pointer-events-none');
+        homeView.classList.add('opacity-0');
+        legalView.scrollTop = 0;
+    }, 50);
+  },
+
   showHome: function() {
     const projectsView = document.getElementById('projects-view');
     const blogView = document.getElementById('blog-view'); // Integrado
     const homeView = document.getElementById('home-view');
+    const legalView = document.getElementById('legal-view');
     
     // Apagamos visualmente las vistas activas
     if (projectsView && !projectsView.classList.contains('hidden')) {
@@ -93,12 +109,17 @@ const NeutraApp = {
         blogView.classList.replace('opacity-100', 'opacity-0');
         blogView.classList.add('pointer-events-none');
     }
+    if (legalView && !legalView.classList.contains('hidden')) {
+        legalView.classList.replace('opacity-100', 'opacity-0');
+        legalView.classList.add('pointer-events-none');
+    }
 
     homeView.classList.remove('opacity-0');
     
     setTimeout(() => { 
         if(projectsView) projectsView.classList.add('hidden', 'spa-view-shield'); 
         if(blogView) blogView.classList.add('hidden', 'spa-view-shield'); 
+        if(legalView) legalView.classList.add('hidden', 'spa-view-shield');
         this.lenisInstance?.start(); 
     }, 700);
   },
@@ -330,6 +351,38 @@ initSmoothScroll: function() {
             this.lenisInstance?.scrollTo(0);
         }
     };
+// ACTIVADORES DE VISTAS LEGALES (Switch entre Privacidad y Términos)
+    const triggersLegal = ['trigger-legal-form', 'trigger-privacy-footer', 'trigger-terms'];
+    triggersLegal.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) {
+            el.onclick = (e) => {
+                e.preventDefault();
+                const titleEl = document.getElementById('legal-title');
+                const privacyDoc = document.getElementById('privacy-content');
+                const termsDoc = document.getElementById('terms-content');
+                
+                // 1. Apagamos ambos documentos por defecto
+                privacyDoc.classList.add('hidden');
+                termsDoc.classList.add('hidden');
+
+                // 2. Encendemos el documento solicitado y cambiamos el título maestro
+                if(id === 'trigger-terms') {
+                    titleEl.innerText = 'Términos y Condiciones';
+                    termsDoc.classList.remove('hidden');
+                } else {
+                    titleEl.innerText = 'Aviso de Privacidad Integral';
+                    privacyDoc.classList.remove('hidden');
+                }
+                
+                // 3. Mostramos la vista
+                this.showLegal();
+            };
+        }
+    });
+
+    const backLegal = document.getElementById('back-to-home-from-legal');
+    if(backLegal) backLegal.onclick = () => this.showHome();
   },
 
   initPortfolio: function() {
@@ -587,23 +640,25 @@ initSmoothScroll: function() {
       btn.innerText = "Enviando...";
       btn.disabled = true;
 
-      fetch('https://api.web3forms.com/submit', {
+      // REEMPLAZA ESTA URL CON LA QUE TE DIO MAKE.COM
+      const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/f6svkc2kb4jec4etixbowav2xe26jxrl';
+
+      // Mandamos los datos directo a tu servidor de Make
+      fetch(MAKE_WEBHOOK_URL, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: json
       })
-      .then(async (response) => {
-        let result = await response.json();
-        if (response.status === 200) {
+      .then((response) => {
+        // Make.com responde con texto simple ("Accepted"), no con JSON.
+        if (response.ok) {
           btn.innerText = "Mensaje Recibido";
           btn.classList.replace('bg-brand-dark', 'bg-green-600');
           form.reset();
         } else {
-          btn.innerText = "Error en el envío";
-          console.error("Error del servidor:", result.message);
+          throw new Error('Error en el servidor de Make');
         }
       })
       .catch(error => {
