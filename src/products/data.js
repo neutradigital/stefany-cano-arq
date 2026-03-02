@@ -106,8 +106,9 @@ export const projects = [
       "/images/project_pinon/pinion4.png",
       "/images/project_pinon/pinion5.png",
       "/images/project_pinon/pinion6.png",
-      "/images/project_pinon/pinion7.png",
-      "/images/project_pinon/pinion8.png",
+      "/images/project_pinon/pinion7.jpg",
+      "/images/project_pinon/pinion8.jpeg",
+      "/images/project_pinon/pinion9.png",
       "/images/project_pinon/pinion_alta.mp4",
       "/images/project_pinon/pinion_baja.mp4"
     ]

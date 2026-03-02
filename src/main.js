@@ -3,7 +3,7 @@ import { projects } from './products/data.js';
 import ambientMusic from './sound/pista_ambiental_sc.mp3';
 
 const teamData = [
-    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/stefany.png" },
+    { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/arquitecta_stefany.png" },
     { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.png" },
     { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.png" },
     { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.png" },
@@ -477,14 +477,14 @@ openModal: function(p, modal) {
     const textContainer = document.getElementById('modal-text-content');
     const galleryContainer = document.getElementById('m-gallery');
     const galleryScroll = document.getElementById('gallery-scroll');
-    const scrollIndicator = document.getElementById('scroll-indicator'); // Capturamos el indicador
+    const scrollIndicator = document.getElementById('scroll-indicator');
 
     textContainer.innerHTML = `
         <img src="/src/logo/sca_logo.svg" class="w-20 md:w-28 lg:w-40 mb-6 lg:mb-12 opacity-80">
         <h2 class="text-4xl md:text-5xl lg:text-7xl font-display text-brand-dark mb-4 lg:mb-10 leading-tight">${p.editorial_name}</h2>
         <div class="space-y-4 lg:space-y-8 text-sm md:text-base lg:text-lg font-body text-gray-600 leading-relaxed text-left lg:text-justify">
         <p class="text-brand-magenta text-center md:text-[20px] font-subtitle uppercase tracking-wide text-xs">${p.year} ● ${p.location}</p>
-            <p class="leading-6">${p.description}</p>
+            <p>${p.description}</p>
             <p class="font-bold text-brand-dark">${p.narrative_intro}</p>
         </div>
     `;
@@ -498,24 +498,30 @@ openModal: function(p, modal) {
         textContainer.appendChild(videoBtnDesktop);
     }
 
+    // FIX: Forzamos a que las imágenes no tengan márgenes ni espacios fantasma
     galleryContainer.innerHTML = p.gallery
         .filter(f => !f.endsWith('.mp4'))
-        .map(f => `<img src="${f}" class="w-full h-auto block object-cover" loading="eager">`)
+        .map(f => `<img src="${f}" class="w-full h-auto block object-cover m-0 p-0 align-bottom border-none" loading="eager">`)
         .join('');
 
+    // Limpiamos el botón móvil previo si existe
     const existingMobileBtn = document.getElementById('mobile-video-btn');
     if (existingMobileBtn) existingMobileBtn.remove();
 
+    // FIX: El botón móvil ahora flota sobre todo el panel, sin sumar espacio al scroll
     if (videos.length > 0) {
         const mobileBtnWrapper = document.createElement('div');
         mobileBtnWrapper.id = 'mobile-video-btn';
-        mobileBtnWrapper.className = "lg:hidden sticky bottom-0 left-0 w-full p-4 md:p-6 bg-gradient-to-t from-white via-white/90 to-transparent z-30 flex justify-center pb-8 md:pb-10";
+        mobileBtnWrapper.className = "lg:hidden absolute bottom-6 left-0 w-full z-30 flex justify-center pointer-events-none";
+        
         const mobileBtn = document.createElement('button');
-        mobileBtn.className = "w-full max-w-xs py-4 md:py-5 bg-brand-dark text-white text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold shadow-2xl hover:bg-brand-magenta transition-all rounded-sm cursor-pointer";
+        mobileBtn.className = "w-[85%] py-4 md:py-5 bg-brand-dark text-white text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold shadow-2xl hover:bg-brand-magenta transition-all rounded-sm cursor-pointer pointer-events-auto";
         mobileBtn.innerText = "Ver Recorrido";
         mobileBtn.onclick = () => this.openVideoModal(videos);
+        
         mobileBtnWrapper.appendChild(mobileBtn);
-        galleryScroll.appendChild(mobileBtnWrapper);
+        // Lo adjuntamos al panel principal, no al scroll
+        document.getElementById('modal-panel').appendChild(mobileBtnWrapper);
     }
 
     modal.classList.remove('spa-view-shield', 'invisible');
@@ -528,20 +534,14 @@ openModal: function(p, modal) {
         panel.classList.remove('translate-x-full', 'lg:translate-x-full');
         galleryScroll.scrollTop = 0;
         
-        // LÓGICA DEL INDICADOR DE SCROLL
         if (scrollIndicator) {
-            // Lo mostramos al abrir
             setTimeout(() => scrollIndicator.classList.replace('opacity-0', 'opacity-100'), 800);
-            
-            // Función para ocultarlo al scrollear
             const hideIndicator = () => {
                 if (galleryScroll.scrollTop > 50) {
                     scrollIndicator.classList.replace('opacity-100', 'opacity-0');
-                    galleryScroll.removeEventListener('scroll', hideIndicator); // Limpiamos el listener
+                    galleryScroll.removeEventListener('scroll', hideIndicator);
                 }
             };
-            
-            // Re-aplicamos el listener cada vez que se abre el modal
             galleryScroll.removeEventListener('scroll', hideIndicator);
             galleryScroll.addEventListener('scroll', hideIndicator);
         }

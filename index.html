@@ -2,7 +2,8 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./src/logo/favicon_magenta.svg" />
+    <link rel="icon" href="./src/logo/favicon_magenta.svg" type="image/svg+xml" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="./src/logo/favicon_blanco.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stefany Cano | Arquitectura de Autor</title>
     <meta name="description" content="Estudio de arquitectura. Más que proyectar viviendas, creamos entornos. Proyectos que respiran en armonía con la vida y la naturaleza.">
@@ -561,7 +562,7 @@
             </footer>
         </div>
 
-    <div id="project-modal" class="spa-view-shield fixed inset-0 z-[200] invisible transition-all duration-500">
+<div id="project-modal" class="spa-view-shield fixed inset-0 z-[200] invisible transition-all duration-500">
         <div id="modal-backdrop" class="absolute inset-0 bg-brand-dark/25 backdrop-blur-md opacity-0 transition-opacity duration-500"></div>
         <div id="modal-panel" class="absolute right-0 top-0 w-full lg:w-[90vw] h-full bg-[#fcfcfc] shadow-2xl transform translate-x-full lg:translate-x-full transition-transform duration-[0.8s] flex flex-col lg:flex-row overflow-hidden">
             
@@ -574,11 +575,13 @@
                 <div id="video-controls" class="mt-8 md:mt-12 space-y-4 w-full"></div>
             </div>
             
-            <div id="gallery-scroll" data-lenis-prevent class="w-full lg:w-[65%] h-1/2 lg:h-full overflow-y-auto bg-gray-50 relative scroll-smooth flex-1">
-                <div id="m-gallery" class="flex flex-col gap-0 pb-20 md:pb-32 opacity-100 transition-opacity duration-1000 w-full"></div>
+            <div id="gallery-scroll" data-lenis-prevent class="w-full lg:w-[65%] h-1/2 lg:h-full overflow-y-auto bg-gray-100 relative scroll-smooth flex-1">
+                
+                <div id="m-gallery" class="block w-full opacity-100 transition-opacity duration-1000 leading-none"></div>
+                
                 <div id="scroll-indicator" class="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 md:gap-3 opacity-0 transition-all duration-700 pointer-events-none">
-                    <span class="text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] text-white font-body mb-1 md:mb-2 bg-white/80 md:bg-transparent px-2 rounded backdrop-blur-sm md:backdrop-blur-none">Explora</span>
-                    <svg class="w-8 h-8 md:w-12 md:h-12 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    <span class="text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] text-white font-body mb-1 md:mb-2 bg-brand-dark/60 px-3 py-1 rounded backdrop-blur-sm">Explora</span>
+                    <svg class="w-8 h-8 md:w-12 md:h-12 text-white animate-bounce drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                 </div>
             </div>
         </div>
