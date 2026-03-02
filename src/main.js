@@ -275,8 +275,14 @@ initSmoothScroll: function() {
   initHeroEvents: function() {
     const welcomeBtn = document.getElementById('welcome-trigger');
     const welcomeMsg = document.getElementById('welcome-message');
-    const audioBtn = document.getElementById('audio-toggle');
+    
+    // Nodos de los botones de audio
+    const heroAudioBtn = document.getElementById('audio-toggle');
+    const globalAudioBtn = document.getElementById('global-audio-toggle');
+    const iconOn = document.getElementById('icon-sound-on');
+    const iconOff = document.getElementById('icon-sound-off');
 
+    // Lógica del mensaje de bienvenida
     if(welcomeBtn && welcomeMsg) {
         welcomeBtn.onclick = () => {
             welcomeMsg.classList.toggle('opacity-0');
@@ -285,31 +291,78 @@ initSmoothScroll: function() {
         };
     }
 
-    if(audioBtn) {
-        const textSpan = audioBtn.lastElementChild;
-        audioBtn.onclick = () => {
-            if (!audioBtn.style.minWidth) {
-                audioBtn.style.minWidth = `${audioBtn.offsetWidth}px`;
+    // --- SISTEMA CENTRAL DE AUDIO (Single Source of Truth) ---
+    const toggleAudio = () => {
+        // Inicialización perezosa (Lazy Load) del audio
+        if(!this.audioInstance) { 
+            this.audioInstance = new Audio(ambientMusic); 
+            this.audioInstance.loop = true; 
+            this.audioInstance.volume = 0.4;
+        }
+
+        if(this.audioInstance.paused) { 
+            this.audioInstance.play(); 
+            
+            // 1. Actualizar Nav UI (Global)
+            if(globalAudioBtn) {
+                iconOff.classList.replace('block', 'hidden');
+                iconOn.classList.replace('hidden', 'block');
+                globalAudioBtn.classList.add('bg-brand-dark', 'text-white', 'border-brand-dark');
+                globalAudioBtn.classList.remove('bg-white/80', 'text-brand-dark', 'border-gray-100');
+            }
+            
+            // 2. Actualizar Hero UI
+            if(heroAudioBtn) {
+                const textSpan = heroAudioBtn.lastElementChild;
+                heroAudioBtn.classList.add('bg-brand-dark', 'text-white');
+                if(textSpan) textSpan.textContent = "Experiencia activa";
+            }
+        } else { 
+            this.audioInstance.pause(); 
+            
+            // 1. Actualizar Nav UI (Global)
+            if(globalAudioBtn) {
+                iconOn.classList.replace('block', 'hidden');
+                iconOff.classList.replace('hidden', 'block');
+                globalAudioBtn.classList.add('bg-white/80', 'text-brand-dark', 'border-gray-100');
+                globalAudioBtn.classList.remove('bg-brand-dark', 'text-white', 'border-brand-dark');
+            }
+            
+            // 2. Actualizar Hero UI
+            if(heroAudioBtn) {
+                const textSpan = heroAudioBtn.lastElementChild;
+                heroAudioBtn.classList.remove('bg-brand-dark', 'text-white');
+                if(textSpan) textSpan.textContent = "Activa la experiencia sonora";
+            }
+        }
+    };
+
+    // Activador del Botón Global
+    if(globalAudioBtn) {
+        globalAudioBtn.onclick = (e) => {
+            e.preventDefault();
+            toggleAudio();
+        };
+    }
+
+    // Activador del Botón del Hero (con la animación original de expansión)
+    if(heroAudioBtn) {
+        const textSpan = heroAudioBtn.lastElementChild;
+        heroAudioBtn.onclick = (e) => {
+            e.preventDefault();
+            
+            // Mantiene el ancho estático para que no parpadee
+            if (!heroAudioBtn.style.minWidth) {
+                heroAudioBtn.style.minWidth = `${heroAudioBtn.offsetWidth}px`;
                 textSpan.style.display = 'inline-block';
                 textSpan.style.textAlign = 'center';
                 textSpan.style.width = '100%';
             }
-            if(!this.audioInstance) { 
-                this.audioInstance = new Audio(ambientMusic); 
-                this.audioInstance.loop = true; 
-                this.audioInstance.volume = 0.4;
-            }
+            
+            // Suavizamos el cambio de texto
             textSpan.style.opacity = '0';
             setTimeout(() => {
-                if(this.audioInstance.paused) { 
-                    this.audioInstance.play(); 
-                    audioBtn.classList.add('bg-brand-dark', 'text-white');
-                    textSpan.textContent = "Experiencia activa";
-                } else { 
-                    this.audioInstance.pause(); 
-                    audioBtn.classList.remove('bg-brand-dark', 'text-white');
-                    textSpan.textContent = "Activa la experiencia sonora";
-                }
+                toggleAudio(); // Llamamos al motor central
                 textSpan.style.opacity = '1';
             }, 200);
         };
