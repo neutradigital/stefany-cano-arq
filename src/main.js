@@ -486,7 +486,7 @@ openModal: function(p, modal) {
     const scrollIndicator = document.getElementById('scroll-indicator');
 
     textContainer.innerHTML = `
-        <img src="./src/logo/sca_logo.svg" class="w-20 md:w-28 lg:w-40 mb-6 lg:mb-12 opacity-80">
+        <img src="/logo/sca_logo.svg" class="w-20 md:w-28 lg:w-40 mb-6 lg:mb-12 opacity-80">
         <h2 class="text-4xl md:text-5xl lg:text-7xl font-display text-brand-dark mb-4 lg:mb-10 leading-tight">${p.editorial_name}</h2>
         <div class="space-y-4 lg:space-y-8 text-sm md:text-base lg:text-lg font-body text-gray-600 leading-relaxed text-left lg:text-justify">
         <p class="text-brand-magenta text-center md:text-[20px] font-subtitle uppercase tracking-wide text-xs">${p.year} ● ${p.location}</p>
