@@ -19,7 +19,7 @@ const blogData = [
         category: "Reflexión",
         date: "Noviembre 2025",
         read_time: "4 min",
-        cover: "/images/project_maya/maya1.png", 
+        cover: "/images/project_maya/maya1.jpeg", 
         content: "<p>La arquitectura moderna a menudo olvida que no somos máquinas habitando cajas, sino seres vivos que responden a estímulos naturales.</p><br><p>En este artículo exploramos cómo la integración de elementos pasivos y materiales crudos no solo reduce la huella de carbono del proyecto, sino que disminuye los niveles de cortisol de quienes habitan el espacio en su día a día. El lujo real ya no es el mármol importado, sino la capacidad de un espacio para devolvernos la paz mental tras una jornada laboral intensa.</p><br><p>Abrazar la imperfección de la piedra, dejar que la madera respire y permitir que la luz moldee los volúmenes son las directrices de la práctica contemporánea que aplicamos en el estudio.</p>"
     },
     {
@@ -28,7 +28,7 @@ const blogData = [
         category: "Materialidad",
         date: "Diciembre 2025",
         read_time: "6 min",
-        cover: "/images/project_pinon/pinion1.png",
+        cover: "/images/project_pinon/pinion1.jpeg",
         content: "<p>El sonido rebotando en paredes lisas y artificiales genera una fatiga auditiva imperceptible pero constante. Es uno de los males silenciosos de las viviendas genéricas.</p><br><p>Al utilizar maderas sin tratar, estucos naturales y texturas porosas, logramos absorber la reverberación acústica. Devolvemos al espacio el silencio necesario para el descanso y la contemplación profunda.</p>"
     }
 ];
@@ -174,85 +174,90 @@ initSmoothScroll: function() {
     });
   },
 
-  initMobileMenu: function() {
+initMobileMenu: function() {
     const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
     const logo = document.getElementById('nav-logo');
-    if (!menuToggle || !logo) return;
 
-    const navContainer = logo.nextElementSibling;
-    if (!navContainer) return;
+    // 1. CORTAFUEGOS: Debe ir estrictamente al inicio. Si algo falta, abortamos.
+    if (!menuToggle || !mobileMenu || !logo) return;
 
+    // 2. INYECCIÓN DEL LOGO: Con ruta absoluta para producción en Vercel
     let mobileLogo = document.getElementById('mobile-menu-logo');
     if (!mobileLogo) {
         mobileLogo = document.createElement('img');
         mobileLogo.id = 'mobile-menu-logo';
-        mobileLogo.src = './src/logo/sca_logo.svg';
-        mobileLogo.className = 'hidden absolute bottom-12 left-1/2 transform -translate-x-1/2 w-24 opacity-30 pointer-events-none transition-opacity duration-700';
-        navContainer.appendChild(mobileLogo);
+        mobileLogo.src = '/logo/sca_logo.svg';
+        mobileLogo.className = 'absolute bottom-12 left-1/2 transform -translate-x-1/2 w-24 opacity-30 pointer-events-none transition-opacity duration-700 block';
+        mobileMenu.appendChild(mobileLogo);
     }
 
-    const originalClasses = navContainer.className;
-    const mobileClasses = "fixed inset-0 w-full h-[100dvh] bg-white flex flex-col items-center justify-center gap-8 md:gap-12 z-[65] text-2xl md:text-4xl font-display uppercase tracking-[0.2em] text-brand-dark";
-
+    // 3. DEFINICIÓN DE ACCIONES
     const closeMenu = () => {
         menuToggle.classList.remove('active');
-        navContainer.className = originalClasses;
-        mobileLogo.classList.remove('block');
-        mobileLogo.classList.add('hidden');
+        mobileMenu.classList.add('translate-x-full');
+        setTimeout(() => mobileMenu.classList.add('invisible'), 500);
         document.body.style.overflow = '';
         this.lenisInstance?.start();
     };
 
     const openMenu = () => {
-        navContainer.className = mobileClasses;
-        mobileLogo.classList.remove('hidden');
-        mobileLogo.classList.add('block');
+        menuToggle.classList.add('active');
+        mobileMenu.classList.remove('invisible');
+        requestAnimationFrame(() => mobileMenu.classList.remove('translate-x-full'));
         document.body.style.overflow = 'hidden';
         this.lenisInstance?.stop();
     };
 
-    menuToggle.addEventListener('click', () => {
-        if (menuToggle.classList.contains('active')) closeMenu();
-        else { menuToggle.classList.add('active'); openMenu(); }
+    // 4. EL ÚNICO EVENT LISTENER PARA EL BOTÓN (Con bloqueo de burbuja)
+    menuToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation(); 
+        
+        if (menuToggle.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
 
-    navContainer.querySelectorAll('a').forEach(link => {
+    // 5. LÓGICA SPA PARA LOS ENLACES DEL MENÚ MÓVIL
+    mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', (e) => {
-            if (window.innerWidth < 1024) {
-                e.preventDefault(); 
-                const targetId = link.getAttribute('href');
-                closeMenu(); 
+            e.preventDefault(); 
+            const targetId = link.getAttribute('href');
+            closeMenu(); 
 
-                if (link.id === 'trigger-projects-page') {
-                    setTimeout(() => this.showProjects(), 150);
-                } else if (link.id === 'trigger-blog-page') { // Agregado Trigger Blog
-                    setTimeout(() => this.showBlog(), 150);
-                } else if (targetId && targetId !== '#') {
-                    const projectsView = document.getElementById('projects-view');
-                    const blogView = document.getElementById('blog-view');
-                    
-                    const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
-                                           (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
+            if (link.id === 'trigger-projects-mobile' || link.id === 'trigger-projects-page') {
+                setTimeout(() => this.showProjects(), 150);
+            } else if (link.id === 'trigger-blog-mobile' || link.id === 'trigger-blog-page') {
+                setTimeout(() => this.showBlog(), 150);
+            } else if (targetId && targetId !== '#') {
+                const projectsView = document.getElementById('projects-view');
+                const blogView = document.getElementById('blog-view');
+                
+                const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
+                                       (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
 
-                    if (inInternalView) {
-                        this.showHome();
-                        setTimeout(() => {
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement && this.lenisInstance) this.lenisInstance.scrollTo(targetElement);
-                        }, 850);
-                    } else {
-                        setTimeout(() => {
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement && this.lenisInstance) {
-                                this.lenisInstance.scrollTo(targetElement);
-                            }
-                        }, 150);
-                    }
+                if (inInternalView) {
+                    this.showHome();
+                    setTimeout(() => {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement && this.lenisInstance) this.lenisInstance.scrollTo(targetElement);
+                    }, 850);
+                } else {
+                    setTimeout(() => {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement && this.lenisInstance) {
+                            this.lenisInstance.scrollTo(targetElement);
+                        }
+                    }, 150);
                 }
             }
         });
     });
 
+    // 6. LÓGICA DE REGRESO AL INICIO DESDE EL LOGO
     logo.addEventListener('click', () => {
         if (window.innerWidth < 1024 && menuToggle.classList.contains('active')) {
             closeMenu();
@@ -272,9 +277,11 @@ initSmoothScroll: function() {
     });
   },
 
-  initHeroEvents: function() {
+initHeroEvents: function() {
     const welcomeBtn = document.getElementById('welcome-trigger');
     const welcomeMsg = document.getElementById('welcome-message');
+    
+    // ERROR CORREGIDO: Se eliminó this.initMobileMenu() de aquí para evitar el bucle de eventos.
     
     // Nodos de los botones de audio
     const heroAudioBtn = document.getElementById('audio-toggle');
@@ -368,7 +375,6 @@ initSmoothScroll: function() {
         };
     }
   },
-
   initViewManager: function() {
     const triggerBtn = document.getElementById('view-all-projects');
     const backBtn = document.getElementById('back-to-home');
