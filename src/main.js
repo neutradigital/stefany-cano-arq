@@ -134,7 +134,7 @@ const NeutraApp = {
   },
 
   // --- 2. INICIALIZACIONES ---
-  initSmoothScroll: function() {
+initSmoothScroll: function() {
     this.lenisInstance = new Lenis({ 
         duration: 1.2, 
         smooth: true,
@@ -153,15 +153,18 @@ const NeutraApp = {
         e.preventDefault();
         const target = document.querySelector(targetId);
 
+        // CÁLCULO DE OFFSET: -80px en móvil para compensar barras nativas y dar respiro, -40px en escritorio
+        const scrollOffset = window.innerWidth < 1024 ? -80 : -40;
+
         // Control Centralizado
         if (this.isInternalViewActive()) {
             this.showHome();
             setTimeout(() => {
-                if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
+                if (target && this.lenisInstance) this.lenisInstance.scrollTo(target, { offset: scrollOffset });
             }, 750);
         } else {
             if (target && this.lenisInstance) {
-              this.lenisInstance.scrollTo(target);
+              this.lenisInstance.scrollTo(target, { offset: scrollOffset });
             }
         }
       });
@@ -176,7 +179,7 @@ const NeutraApp = {
     });
   },
 
-  initMobileMenu: function() {
+initMobileMenu: function() {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const logo = document.getElementById('nav-logo');
@@ -230,18 +233,22 @@ const NeutraApp = {
             } else if (link.id === 'trigger-blog-mobile' || link.id === 'trigger-blog-page') {
                 setTimeout(() => this.showBlog(), 150);
             } else if (targetId && targetId !== '#') {
+                
+                // CÁLCULO DE OFFSET: Inyectado para proteger los títulos desde la navegación móvil
+                const scrollOffset = window.innerWidth < 1024 ? -80 : -40;
+
                 // Control Centralizado
                 if (this.isInternalViewActive()) {
                     this.showHome();
                     setTimeout(() => {
                         const targetElement = document.querySelector(targetId);
-                        if (targetElement && this.lenisInstance) this.lenisInstance.scrollTo(targetElement);
+                        if (targetElement && this.lenisInstance) this.lenisInstance.scrollTo(targetElement, { offset: scrollOffset });
                     }, 850);
                 } else {
                     setTimeout(() => {
                         const targetElement = document.querySelector(targetId);
                         if (targetElement && this.lenisInstance) {
-                            this.lenisInstance.scrollTo(targetElement);
+                            this.lenisInstance.scrollTo(targetElement, { offset: scrollOffset });
                         }
                     }, 150);
                 }
@@ -461,9 +468,9 @@ const NeutraApp = {
             
             <img src="/logo/sca_logo.svg" class="w-12 sm:w-16 md:w-20 lg:w-24 xl:w-32 mb-3 sm:mb-5 lg:mb-6 xl:mb-8 opacity-80 shrink-0">
             
-            <p class="text-brand-magenta font-subtitle uppercase tracking-widest text-[10px] sm:text-xs lg:text-[11px] xl:text-sm mb-1.5 lg:mb-3 xl:mb-4 shrink-0">${p.year} ● ${p.location}</p>
-            
             <h2 class="text-[24px] leading-[1.05] sm:text-3xl sm:leading-[1.15] md:text-4xl lg:text-4xl xl:text-5xl lg:leading-tight font-display text-brand-dark mb-2.5 sm:mb-5 lg:mb-6 xl:mb-8 shrink-0">${p.editorial_name}</h2>
+
+            <p class="text-brand-magenta font-subtitle uppercase tracking-widest text-[10px] sm:text-xs lg:text-[11px] xl:text-sm mb-1.5 lg:mb-3 xl:mb-4 shrink-0">${p.year} ● ${p.location}</p>
             
             <div class="space-y-3 sm:space-y-4 lg:space-y-4 xl:space-y-6 text-xs sm:text-sm md:text-base lg:text-sm xl:text-lg font-body text-gray-600 leading-[1.5] lg:leading-relaxed text-left lg:text-justify overflow-visible">
                 <p>${p.description}</p>
@@ -610,7 +617,7 @@ const NeutraApp = {
     }
   },
 
-  openArticleModal: function(post, modal) {
+openArticleModal: function(post, modal) {
     const header = document.getElementById('article-header');
     const cover = document.getElementById('article-cover');
     const content = document.getElementById('article-content');
@@ -638,6 +645,10 @@ const NeutraApp = {
     content.classList.add('opacity-0', 'translate-y-8');
 
     modal.classList.remove('spa-view-shield', 'invisible');
+    
+    // --- CONTROL DE ESTADO: Apagamos el motor Lenis y bloqueamos el scroll del body ---
+    this.lenisInstance?.stop();
+    document.body.style.overflow = 'hidden';
     
     requestAnimationFrame(() => {
         document.getElementById('article-backdrop').classList.add('opacity-100');
