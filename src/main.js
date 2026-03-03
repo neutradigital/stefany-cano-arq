@@ -457,14 +457,15 @@ const NeutraApp = {
     const scrollIndicator = document.getElementById('scroll-indicator');
 
     textContainer.innerHTML = `
-        <div class="pb-28 lg:pb-12 w-full max-w-full overflow-hidden">
-            <img src="/logo/sca_logo.svg" class="w-12 sm:w-16 md:w-24 lg:w-32 mb-3 lg:mb-8 opacity-80">
+        <div class="pb-24 sm:pb-28 landscape:pb-16 lg:pb-12 w-full max-w-full overflow-hidden flex flex-col">
             
-            <p class="text-brand-magenta font-subtitle uppercase tracking-widest text-[8px] sm:text-[9px] lg:text-xs mb-1 lg:mb-2">${p.year} ● ${p.location}</p>
+            <img src="/logo/sca_logo.svg" class="w-10 sm:w-16 md:w-20 lg:w-32 mb-2 sm:mb-4 landscape:mb-2 lg:mb-8 opacity-80 shrink-0">
             
-            <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-display text-brand-dark mb-3 lg:mb-8 leading-[1.1] break-words">${p.editorial_name}</h2>
+            <p class="text-brand-magenta font-subtitle uppercase tracking-[0.15em] sm:tracking-widest text-[9px] sm:text-[10px] lg:text-xs mb-1 landscape:mb-1 lg:mb-2 shrink-0">${p.year} ● ${p.location}</p>
             
-            <div class="space-y-2.5 lg:space-y-6 text-xs sm:text-sm md:text-base lg:text-lg font-body text-gray-600 leading-snug lg:leading-relaxed text-left lg:text-justify">
+            <h2 class="text-[22px] leading-[1.05] sm:text-3xl sm:leading-[1.1] md:text-4xl lg:text-6xl lg:leading-tight font-display text-brand-dark mb-2 sm:mb-4 landscape:mb-2 lg:mb-8 break-words shrink-0">${p.editorial_name}</h2>
+            
+            <div class="space-y-2 sm:space-y-3 landscape:space-y-2 lg:space-y-6 text-[11px] sm:text-xs md:text-sm lg:text-lg font-body text-gray-600 leading-[1.4] sm:leading-snug lg:leading-relaxed text-left lg:text-justify">
                 <p>${p.description}</p>
                 <p class="font-bold text-brand-dark pt-1 lg:pt-2">${p.narrative_intro}</p>
             </div>
