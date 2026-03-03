@@ -457,18 +457,19 @@ const NeutraApp = {
     const scrollIndicator = document.getElementById('scroll-indicator');
 
     textContainer.innerHTML = `
-        <div class="pb-24 sm:pb-28 landscape:pb-16 lg:pb-12 w-full max-w-full overflow-hidden flex flex-col">
+        <div class="py-4 sm:py-6 lg:py-2 xl:py-8 w-full flex flex-col">
             
-            <img src="/logo/sca_logo.svg" class="w-10 sm:w-16 md:w-20 lg:w-32 mb-2 sm:mb-4 landscape:mb-2 lg:mb-8 opacity-80 shrink-0">
+            <img src="/logo/sca_logo.svg" class="w-12 sm:w-16 md:w-20 lg:w-24 xl:w-32 mb-3 sm:mb-5 lg:mb-6 xl:mb-8 opacity-80 shrink-0">
             
-            <p class="text-brand-magenta font-subtitle uppercase tracking-[0.15em] sm:tracking-widest text-[9px] sm:text-[10px] lg:text-xs mb-1 landscape:mb-1 lg:mb-2 shrink-0">${p.year} ● ${p.location}</p>
+            <p class="text-brand-magenta font-subtitle uppercase tracking-widest text-[10px] sm:text-xs lg:text-[11px] xl:text-sm mb-1.5 lg:mb-3 xl:mb-4 shrink-0">${p.year} ● ${p.location}</p>
             
-            <h2 class="text-[22px] leading-[1.05] sm:text-3xl sm:leading-[1.1] md:text-4xl lg:text-6xl lg:leading-tight font-display text-brand-dark mb-2 sm:mb-4 landscape:mb-2 lg:mb-8 break-words shrink-0">${p.editorial_name}</h2>
+            <h2 class="text-[24px] leading-[1.05] sm:text-3xl sm:leading-[1.15] md:text-4xl lg:text-4xl xl:text-5xl lg:leading-tight font-display text-brand-dark mb-2.5 sm:mb-5 lg:mb-6 xl:mb-8 shrink-0">${p.editorial_name}</h2>
             
-            <div class="space-y-2 sm:space-y-3 landscape:space-y-2 lg:space-y-6 text-[11px] sm:text-xs md:text-sm lg:text-lg font-body text-gray-600 leading-[1.4] sm:leading-snug lg:leading-relaxed text-left lg:text-justify">
+            <div class="space-y-3 sm:space-y-4 lg:space-y-4 xl:space-y-6 text-xs sm:text-sm md:text-base lg:text-sm xl:text-lg font-body text-gray-600 leading-[1.5] lg:leading-relaxed text-left lg:text-justify overflow-visible">
                 <p>${p.description}</p>
                 <p class="font-bold text-brand-dark pt-1 lg:pt-2">${p.narrative_intro}</p>
             </div>
+            
         </div>
     `;
 

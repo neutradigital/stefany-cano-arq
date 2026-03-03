@@ -65,7 +65,7 @@ export const projects = [
       "/images/project_maya/maya6.jpeg",
       "/images/project_maya/maya7.jpeg",
       "/images/project_maya/maya8.jpeg",
-      "/images/project_maya/maya9.jpeg",
+      "/images/project_maya/maya9.jpg",
       "/images/project_maya/maya10.jpeg",
       "/images/project_maya/maya.mp4",
     ]
