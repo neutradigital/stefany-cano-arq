@@ -37,6 +37,17 @@ const NeutraApp = {
   lenisInstance: null,
   audioInstance: null,
 
+  // ==========================================
+  // CEREBRO CENTRAL DE RUTEO
+  // ==========================================
+  isInternalViewActive: function() {
+    const views = ['projects-view', 'blog-view', 'legal-view'];
+    return views.some(id => {
+        const el = document.getElementById(id);
+        return el && !el.classList.contains('hidden') && !el.classList.contains('spa-view-shield');
+    });
+  },
+
   // --- 1. MÉTODOS MAESTROS DE VISTA ---
   
   revealSite: function() {
@@ -63,7 +74,6 @@ const NeutraApp = {
     }, 50);
   },
 
-  // --- NUEVO: MÉTODO SHOW BLOG ---
   showBlog: function() {
     const blogView = document.getElementById('blog-view');
     const homeView = document.getElementById('home-view');
@@ -96,11 +106,10 @@ const NeutraApp = {
 
   showHome: function() {
     const projectsView = document.getElementById('projects-view');
-    const blogView = document.getElementById('blog-view'); // Integrado
+    const blogView = document.getElementById('blog-view'); 
     const homeView = document.getElementById('home-view');
     const legalView = document.getElementById('legal-view');
     
-    // Apagamos visualmente las vistas activas
     if (projectsView && !projectsView.classList.contains('hidden')) {
         projectsView.classList.replace('opacity-100', 'opacity-0');
         projectsView.classList.add('pointer-events-none');
@@ -125,7 +134,7 @@ const NeutraApp = {
   },
 
   // --- 2. INICIALIZACIONES ---
-initSmoothScroll: function() {
+  initSmoothScroll: function() {
     this.lenisInstance = new Lenis({ 
         duration: 1.2, 
         smooth: true,
@@ -139,20 +148,13 @@ initSmoothScroll: function() {
       anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
         
-        // CORRECCIÓN QUIRÚRGICA: Liberamos a 'Proyectos' de la restricción.
-        // Ahora solo bloqueamos las anclas vacías ('#') y el botón interno del Blog.
         if(anchor.id === 'trigger-blog-page' || targetId === '#') return;
         
         e.preventDefault();
-
-        const projectsView = document.getElementById('projects-view');
-        const blogView = document.getElementById('blog-view');
         const target = document.querySelector(targetId);
 
-        const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
-                               (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
-
-        if (inInternalView) {
+        // Control Centralizado
+        if (this.isInternalViewActive()) {
             this.showHome();
             setTimeout(() => {
                 if (target && this.lenisInstance) this.lenisInstance.scrollTo(target);
@@ -174,15 +176,13 @@ initSmoothScroll: function() {
     });
   },
 
-initMobileMenu: function() {
+  initMobileMenu: function() {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
     const logo = document.getElementById('nav-logo');
 
-    // 1. CORTAFUEGOS: Debe ir estrictamente al inicio. Si algo falta, abortamos.
     if (!menuToggle || !mobileMenu || !logo) return;
 
-    // 2. INYECCIÓN DEL LOGO: Con ruta absoluta para producción en Vercel
     let mobileLogo = document.getElementById('mobile-menu-logo');
     if (!mobileLogo) {
         mobileLogo = document.createElement('img');
@@ -192,7 +192,6 @@ initMobileMenu: function() {
         mobileMenu.appendChild(mobileLogo);
     }
 
-    // 3. DEFINICIÓN DE ACCIONES
     const closeMenu = () => {
         menuToggle.classList.remove('active');
         mobileMenu.classList.add('translate-x-full');
@@ -209,7 +208,6 @@ initMobileMenu: function() {
         this.lenisInstance?.stop();
     };
 
-    // 4. EL ÚNICO EVENT LISTENER PARA EL BOTÓN (Con bloqueo de burbuja)
     menuToggle.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation(); 
@@ -221,7 +219,6 @@ initMobileMenu: function() {
         }
     });
 
-    // 5. LÓGICA SPA PARA LOS ENLACES DEL MENÚ MÓVIL
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault(); 
@@ -233,13 +230,8 @@ initMobileMenu: function() {
             } else if (link.id === 'trigger-blog-mobile' || link.id === 'trigger-blog-page') {
                 setTimeout(() => this.showBlog(), 150);
             } else if (targetId && targetId !== '#') {
-                const projectsView = document.getElementById('projects-view');
-                const blogView = document.getElementById('blog-view');
-                
-                const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
-                                       (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
-
-                if (inInternalView) {
+                // Control Centralizado
+                if (this.isInternalViewActive()) {
                     this.showHome();
                     setTimeout(() => {
                         const targetElement = document.querySelector(targetId);
@@ -257,31 +249,25 @@ initMobileMenu: function() {
         });
     });
 
-    // 6. LÓGICA DE REGRESO AL INICIO DESDE EL LOGO
-    logo.addEventListener('click', () => {
+    logo.addEventListener('click', (e) => {
         if (window.innerWidth < 1024 && menuToggle.classList.contains('active')) {
             closeMenu();
-            const projectsView = document.getElementById('projects-view');
-            const blogView = document.getElementById('blog-view');
-            
-            const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
-                                   (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
-
-            if (inInternalView) {
+            // Control Centralizado
+            if (this.isInternalViewActive()) {
+                e.preventDefault();
                 this.showHome();
                 setTimeout(() => this.lenisInstance?.scrollTo(0), 850);
             } else {
+                e.preventDefault();
                 setTimeout(() => this.lenisInstance?.scrollTo(0), 100);
             }
         }
     });
   },
 
-initHeroEvents: function() {
+  initHeroEvents: function() {
     const welcomeBtn = document.getElementById('welcome-trigger');
     const welcomeMsg = document.getElementById('welcome-message');
-    
-    // ERROR CORREGIDO: Se eliminó this.initMobileMenu() de aquí para evitar el bucle de eventos.
     
     // Nodos de los botones de audio
     const heroAudioBtn = document.getElementById('audio-toggle');
@@ -300,7 +286,6 @@ initHeroEvents: function() {
 
     // --- SISTEMA CENTRAL DE AUDIO (Single Source of Truth) ---
     const toggleAudio = () => {
-        // Inicialización perezosa (Lazy Load) del audio
         if(!this.audioInstance) { 
             this.audioInstance = new Audio(ambientMusic); 
             this.audioInstance.loop = true; 
@@ -310,7 +295,6 @@ initHeroEvents: function() {
         if(this.audioInstance.paused) { 
             this.audioInstance.play(); 
             
-            // 1. Actualizar Nav UI (Global)
             if(globalAudioBtn) {
                 iconOff.classList.replace('block', 'hidden');
                 iconOn.classList.replace('hidden', 'block');
@@ -318,7 +302,6 @@ initHeroEvents: function() {
                 globalAudioBtn.classList.remove('bg-white/80', 'text-brand-dark', 'border-gray-100');
             }
             
-            // 2. Actualizar Hero UI
             if(heroAudioBtn) {
                 const textSpan = heroAudioBtn.lastElementChild;
                 heroAudioBtn.classList.add('bg-brand-dark', 'text-white');
@@ -327,7 +310,6 @@ initHeroEvents: function() {
         } else { 
             this.audioInstance.pause(); 
             
-            // 1. Actualizar Nav UI (Global)
             if(globalAudioBtn) {
                 iconOn.classList.replace('block', 'hidden');
                 iconOff.classList.replace('hidden', 'block');
@@ -335,7 +317,6 @@ initHeroEvents: function() {
                 globalAudioBtn.classList.remove('bg-brand-dark', 'text-white', 'border-brand-dark');
             }
             
-            // 2. Actualizar Hero UI
             if(heroAudioBtn) {
                 const textSpan = heroAudioBtn.lastElementChild;
                 heroAudioBtn.classList.remove('bg-brand-dark', 'text-white');
@@ -344,7 +325,6 @@ initHeroEvents: function() {
         }
     };
 
-    // Activador del Botón Global
     if(globalAudioBtn) {
         globalAudioBtn.onclick = (e) => {
             e.preventDefault();
@@ -352,13 +332,11 @@ initHeroEvents: function() {
         };
     }
 
-    // Activador del Botón del Hero (con la animación original de expansión)
     if(heroAudioBtn) {
         const textSpan = heroAudioBtn.lastElementChild;
         heroAudioBtn.onclick = (e) => {
             e.preventDefault();
             
-            // Mantiene el ancho estático para que no parpadee
             if (!heroAudioBtn.style.minWidth) {
                 heroAudioBtn.style.minWidth = `${heroAudioBtn.offsetWidth}px`;
                 textSpan.style.display = 'inline-block';
@@ -366,15 +344,15 @@ initHeroEvents: function() {
                 textSpan.style.width = '100%';
             }
             
-            // Suavizamos el cambio de texto
             textSpan.style.opacity = '0';
             setTimeout(() => {
-                toggleAudio(); // Llamamos al motor central
+                toggleAudio(); 
                 textSpan.style.opacity = '1';
             }, 200);
         };
     }
   },
+
   initViewManager: function() {
     const triggerBtn = document.getElementById('view-all-projects');
     const backBtn = document.getElementById('back-to-home');
@@ -395,13 +373,8 @@ initHeroEvents: function() {
     if(backBtnBlog) backBtnBlog.onclick = () => this.showHome();
     
     document.getElementById('nav-logo').onclick = (e) => { 
-        const projectsView = document.getElementById('projects-view');
-        const blogView = document.getElementById('blog-view');
-        
-        const inInternalView = (projectsView && !projectsView.classList.contains('hidden') && !projectsView.classList.contains('spa-view-shield')) || 
-                               (blogView && !blogView.classList.contains('hidden') && !blogView.classList.contains('spa-view-shield'));
-
-        if (inInternalView) {
+        // Control Centralizado
+        if (this.isInternalViewActive()) {
             e.preventDefault();
             this.showHome();
             setTimeout(() => this.lenisInstance?.scrollTo(0), 750);
@@ -410,7 +383,8 @@ initHeroEvents: function() {
             this.lenisInstance?.scrollTo(0);
         }
     };
-// ACTIVADORES DE VISTAS LEGALES (Switch entre Privacidad y Términos)
+
+    // ACTIVADORES DE VISTAS LEGALES
     const triggersLegal = ['trigger-legal-form', 'trigger-privacy-footer', 'trigger-terms'];
     triggersLegal.forEach(id => {
         const el = document.getElementById(id);
@@ -421,11 +395,9 @@ initHeroEvents: function() {
                 const privacyDoc = document.getElementById('privacy-content');
                 const termsDoc = document.getElementById('terms-content');
                 
-                // 1. Apagamos ambos documentos por defecto
                 privacyDoc.classList.add('hidden');
                 termsDoc.classList.add('hidden');
 
-                // 2. Encendemos el documento solicitado y cambiamos el título maestro
                 if(id === 'trigger-terms') {
                     titleEl.innerText = 'Términos y Condiciones';
                     termsDoc.classList.remove('hidden');
@@ -434,7 +406,6 @@ initHeroEvents: function() {
                     privacyDoc.classList.remove('hidden');
                 }
                 
-                // 3. Mostramos la vista
                 this.showLegal();
             };
         }
@@ -479,7 +450,7 @@ initHeroEvents: function() {
     };
   },
 
-openModal: function(p, modal) {
+  openModal: function(p, modal) {
     const textContainer = document.getElementById('modal-text-content');
     const galleryContainer = document.getElementById('m-gallery');
     const galleryScroll = document.getElementById('gallery-scroll');
@@ -504,17 +475,14 @@ openModal: function(p, modal) {
         textContainer.appendChild(videoBtnDesktop);
     }
 
-    // FIX: Forzamos a que las imágenes no tengan márgenes ni espacios fantasma
     galleryContainer.innerHTML = p.gallery
         .filter(f => !f.endsWith('.mp4'))
         .map(f => `<img src="${f}" class="w-full h-auto block object-cover m-0 p-0 align-bottom border-none" loading="eager">`)
         .join('');
 
-    // Limpiamos el botón móvil previo si existe
     const existingMobileBtn = document.getElementById('mobile-video-btn');
     if (existingMobileBtn) existingMobileBtn.remove();
 
-    // FIX: El botón móvil ahora flota sobre todo el panel, sin sumar espacio al scroll
     if (videos.length > 0) {
         const mobileBtnWrapper = document.createElement('div');
         mobileBtnWrapper.id = 'mobile-video-btn';
@@ -526,7 +494,6 @@ openModal: function(p, modal) {
         mobileBtn.onclick = () => this.openVideoModal(videos);
         
         mobileBtnWrapper.appendChild(mobileBtn);
-        // Lo adjuntamos al panel principal, no al scroll
         document.getElementById('modal-panel').appendChild(mobileBtnWrapper);
     }
 
@@ -592,7 +559,6 @@ openModal: function(p, modal) {
     };
   },
 
-  // --- NUEVO: MÓDULO DEL BLOG ---
   initBlog: function() {
     const grid = document.getElementById('blog-grid-full');
     const modal = document.getElementById('article-modal');
@@ -621,7 +587,6 @@ openModal: function(p, modal) {
         if (card) this.openArticleModal(blogData.find(post => post.id == card.dataset.id), modal);
     });
 
-    // Control de cierre del artículo
     const closeBtn = document.getElementById('close-article-modal');
     if (closeBtn) {
         closeBtn.onclick = () => {
@@ -719,10 +684,8 @@ openModal: function(p, modal) {
       btn.innerText = "Enviando...";
       btn.disabled = true;
 
-      // REEMPLAZA ESTA URL CON LA QUE TE DIO MAKE.COM
       const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/f6svkc2kb4jec4etixbowav2xe26jxrl';
 
-      // Mandamos los datos directo a tu servidor de Make
       fetch(MAKE_WEBHOOK_URL, {
         method: 'POST',
         headers: {
@@ -731,7 +694,6 @@ openModal: function(p, modal) {
         body: json
       })
       .then((response) => {
-        // Make.com responde con texto simple ("Accepted"), no con JSON.
         if (response.ok) {
           btn.innerText = "Mensaje Recibido";
           btn.classList.replace('bg-brand-dark', 'bg-green-600');
@@ -761,7 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initMobileMenu();
   NeutraApp.initViewManager();
   NeutraApp.initPortfolio();
-  NeutraApp.initBlog(); // Inicializamos el Blog
+  NeutraApp.initBlog(); 
   NeutraApp.initTeam();
   NeutraApp.initHeroEvents();
   NeutraApp.initContactForm(); 
