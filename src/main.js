@@ -716,6 +716,16 @@ openArticleModal: function(post, modal) {
           btn.innerText = "Mensaje Recibido";
           btn.classList.replace('bg-brand-dark', 'bg-green-600');
           form.reset();
+          
+          // --- INICIO DE INFRAESTRUCTURA TIER 1 (REDIRECCIÓN WA) ---
+          const clientName = object.nombre || object.name || 'un cliente';
+          const waNumber = "522225664204"; // <-- 
+          const rawMessage = `Hola Stefany, soy ${clientName}. Acabo de enviar mis datos a través de tu sitio web y me gustaría hablar sobre un proyecto arquitectónico.`;
+          const encodedMessage = encodeURIComponent(rawMessage);
+          
+          window.location.href = `https://wa.me/${waNumber}?text=${encodedMessage}`;
+          // --- FIN DE INFRAESTRUCTURA TIER 1 ---
+          
         } else {
           throw new Error('Error en el servidor de Make');
         }
