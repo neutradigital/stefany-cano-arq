@@ -720,7 +720,7 @@ openArticleModal: function(post, modal) {
           // --- INICIO DE INFRAESTRUCTURA TIER 1 (REDIRECCIÓN WA) ---
           const clientName = object.nombre || object.name || 'un cliente';
           const waNumber = "522225664204"; // <-- 
-          const rawMessage = `Hola Stefany, soy ${clientName}. Acabo de enviar mis datos a través de tu sitio web y me gustaría hablar sobre un proyecto arquitectónico.`;
+          const rawMessage = `Hola, Stefany, soy ${clientName}. Estuve viendo tu trabajo y me gustaría platicarte lo que tengo en mente para mi proyecto y ver cómo podemos desarrollarlo contigo.`;
           const encodedMessage = encodeURIComponent(rawMessage);
           
           window.location.href = `https://wa.me/${waNumber}?text=${encodedMessage}`;
