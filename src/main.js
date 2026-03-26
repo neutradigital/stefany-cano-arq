@@ -743,6 +743,39 @@ openArticleModal: function(post, modal) {
         }, 4000);
       });
     });
+  },
+
+  initNavigationGuard: function() {
+    history.replaceState({ virtualPage: 'home' }, '');
+
+    document.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.closest('.project-card') || 
+            target.closest('.blog-card') || 
+            target.closest('#view-all-projects') || 
+            target.closest('#trigger-blog-page')) {
+            history.pushState({ virtualPage: 'internal' }, '');
+        }
+    });
+
+    window.addEventListener('popstate', (e) => {
+        const videoModal = document.getElementById('video-modal');
+        const projectModal = document.getElementById('project-modal');
+        const articleModal = document.getElementById('article-modal');
+
+        if (videoModal && !videoModal.classList.contains('invisible')) {
+            const closeBtn = document.getElementById('close-video-modal');
+            if (closeBtn) closeBtn.click();
+        } else if (projectModal && !projectModal.classList.contains('invisible')) {
+            const closeBtn = document.getElementById('close-modal');
+            if (closeBtn) closeBtn.click();
+        } else if (articleModal && !articleModal.classList.contains('invisible')) {
+            const closeBtn = document.getElementById('close-article-modal');
+            if (closeBtn) closeBtn.click();
+        } else if (this.isInternalViewActive()) {
+            this.showHome();
+        }
+    });
   }
 };
 
@@ -755,5 +788,6 @@ document.addEventListener('DOMContentLoaded', () => {
   NeutraApp.initTeam();
   NeutraApp.initHeroEvents();
   NeutraApp.initContactForm(); 
+  NeutraApp.initNavigationGuard();
   NeutraApp.revealSite();
 });
