@@ -551,8 +551,8 @@ initMobileMenu: function() {
 
     if (videos.length > 1) {
         videos.forEach((v, idx) => {
-            const label = v.toLowerCase().includes('alta') ? 'Planta Alta' : 
-                          v.toLowerCase().includes('baja') ? 'Planta Baja' : `Vista ${idx + 1}`;
+            const label = (v.toLowerCase().includes('alta') || /pa\.mp4$/i.test(v)) ? 'Planta Alta' : 
+                          (v.toLowerCase().includes('baja') || /pb\.mp4$/i.test(v)) ? 'Planta Baja' : `Vista ${idx + 1}`;
             const btn = document.createElement('button');
             btn.className = "px-6 py-3 border border-white/20 text-white text-[9px] uppercase tracking-widest hover:border-brand-magenta transition-all cursor-pointer";
             btn.innerText = label;
