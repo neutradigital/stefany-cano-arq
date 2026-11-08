@@ -4,7 +4,7 @@ import ambientMusic from './sound/pista_ambiental_sc.mp3';
 
 const teamData = [
     { name: "Stefany", role: "Arquitecta", desc: "La mirada que da forma; su trazo conecta naturaleza y experiencia en cada proyecto.", img: "/images/team/arquitecta_stefany.jpeg" },
-    { name: "Gabriela", role: "Anfitriona", desc: "La presencia que recibe, organiza y acompaña, acercando cada proyecto a quienes lo habitarán.", img: "/images/team/gabriela.jpeg" },
+    { name: "Fernanda", role: "Coordinadora comercial y administrativa.", desc: "Un río que traza su propio cauce, ordena procesos e impulsa la corriente que conquista nuevos territorios.", img: "/images/team/fernanda.jpg" },
     { name: "Elias", role: "Contratista", desc: "La mano firme que hace posible lo imaginado, cuidando cada detalle para que el proyecto cobre vida.", img: "/images/team/elias.jpeg" },
     { name: "Rafael", role: "Cancelero", desc: "El creador de umbrales; diseña aperturas que equilibran luz, aire y movimiento en cada proyecto.", img: "/images/team/rafael.jpeg" },
     { name: "Roberto", role: "Plomero y electricista", desc: "El guardián de la armonía entre agua y luz; asegura que los flujos vitales circulen con equilibrio.", img: "/images/team/roberto.jpeg" },
@@ -474,7 +474,7 @@ initMobileMenu: function() {
             
             <div class="space-y-3 sm:space-y-4 lg:space-y-4 xl:space-y-6 text-xs sm:text-sm md:text-base lg:text-sm xl:text-lg font-body text-gray-600 leading-[1.5] lg:leading-relaxed text-left lg:text-justify overflow-visible">
                 <p>${p.description}</p>
-                <p class="font-bold text-brand-dark pt-1 lg:pt-2">${p.narrative_intro}</p>
+                ${p.narrative_intro ? `<p class="font-bold text-brand-dark pt-1 lg:pt-2">${p.narrative_intro}</p>` : ''}
             </div>
             
         </div>
@@ -719,7 +719,7 @@ openArticleModal: function(post, modal) {
           
           // --- INICIO DE INFRAESTRUCTURA TIER 1 (REDIRECCIÓN WA) ---
           const clientName = object.nombre || object.name || 'un cliente';
-          const waNumber = "522225664204"; // <-- 
+          const waNumber = "522288164792"; // <-- 
           const rawMessage = `Hola, Stefany, soy ${clientName}. Estuve viendo tu trabajo y me gustaría platicarte lo que tengo en mente para mi proyecto y ver cómo podemos desarrollarlo contigo.`;
           const encodedMessage = encodeURIComponent(rawMessage);
           
